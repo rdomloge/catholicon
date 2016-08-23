@@ -1,0 +1,32 @@
+<div class="w3-container">
+
+	<table id="leagueTable" class="w3-table w3-bordered w3-striped w3-card-4 w3-responsive">
+		<tr class="w3-blue">
+			<th>Team</th>
+			<th colspan="2">Matches</th>
+			<th colspan="2">Rubbers</th>
+			<th colspan="2">Games</th>
+			<th>Points</th>
+		</tr>
+		<tr class="w3-blue">
+			<th></th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Won</th>
+			<th>Lost</th>
+			<th>Won</th>
+			<th>Lost</th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="tp in league.positions">
+			<td>{{tp.team}}</td>
+			<td class="table-data">{{tp.played}}</td>
+			<td class="table-data">{{tp.matchesWon}}</td>
+			<td class="table-data">{{tp.rubbersWon}}</td>
+			<td class="table-data">{{tp.rubbersLost}}</td>
+			<td class="table-data">{{tp.gamesWon}}</td>
+			<td class="table-data">{{tp.gamesLost}}</td>
+			<td class="table-data">{{tp.pointsFor}}</td>
+		</tr>
+	</table>
+</div>
