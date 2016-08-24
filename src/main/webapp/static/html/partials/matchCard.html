@@ -1,0 +1,14 @@
+<div class="w3-container">
+
+	<div class="rd-row w3-accordion" ng-repeat="rubber in matchCard.rubbers track by $index" ng-if="$index %3 == 0">
+		<div class="rd-col w3-container w3-section w3-xxlarge w3-center" 
+			ng-repeat="i in [$index, $index+1, $index+2]" 
+			ng-if="matchCard.rubbers[i] != null">
+			
+			<p>{{matchCard.rubbers[i].firstGame.homeScore}} - {{matchCard.rubbers[i].firstGame.awayScore}}</p>
+			<p>{{matchCard.rubbers[i].secondGame.homeScore}} - {{matchCard.rubbers[i].secondGame.awayScore}}</p>
+			<p>{{matchCard.rubbers[i].finalGame.homeScore}} - {{matchCard.rubbers[i].finalGame.awayScore}}</p>
+		</div>
+	</div>
+
+</div>

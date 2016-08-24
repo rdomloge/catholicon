@@ -36,7 +36,7 @@
 			<h5>{{match.date | date : 'fullDate'}}</h5>
 			<h5>
 				{{match.scoreExtracted}}
-				<button class="w3-btn w3-blue w3-border w3-border-blue w3-round" >View card</button>
+				<a href="#/matchcard/{{match.fixtureId}}" ng-click="getMatchCard(match.fixtureId)" class="w3-btn w3-blue w3-border w3-border-blue w3-round" >View card</a>
 			</h5>
 			
 		</footer>
