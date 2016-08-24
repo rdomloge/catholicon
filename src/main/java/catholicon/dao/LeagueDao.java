@@ -2,6 +2,8 @@ package catholicon.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,8 +13,13 @@ import org.jsoup.select.Elements;
 import catholicon.domain.League;
 import catholicon.domain.League.TeamPosition;
 import catholicon.ex.DaoException;
+import catholicon.parser.LeagueListParser;
 
 public class LeagueDao {
+	
+	private static String listUrl = "http://bdbl.org.uk/Live/Leagues.asp?Season=0&website=1";
+	
+	private static final Pattern allLeagueRegExp = Pattern.compile("var leagueMenu = (.*?)];");
 	
 	private static String open1url = 
 			"http://bdbl.org.uk/Live/Division.asp?LeagueTypeID=13&Division=26&Season=0&Juniors=false&Schools=false&Website=1";
@@ -74,5 +81,18 @@ public class LeagueDao {
 		}
 		
 		return new League(teamPositions.toArray(new TeamPosition[teamPositions.size()]));
+	}
+	
+	//var leagueMenu = [{label:"Ladies 4",leagueTypeID:14,action:changeLeague},{label:"Mixed",leagueTypeID:15,action:changeLeague},{label:"Open",leagueTypeID:13,action:changeLeague}];
+	public String[] list() throws DaoException {
+		String page = Loader.load(listUrl);
+		Matcher m = allLeagueRegExp.matcher(page);
+		List<String> list = new LinkedList<>();
+		if(m.find()) {
+			String group = m.group(1) + ']';
+			LeagueListParser parser = new LeagueListParser(group);
+			list.addAll(parser.getLeagues());
+		}
+		return list.toArray(new String[list.size()]);
 	}
 }

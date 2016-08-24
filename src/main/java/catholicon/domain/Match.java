@@ -10,12 +10,16 @@ import java.util.regex.Pattern;
 
 import org.springframework.web.multipart.support.StringMultipartFileEditor;
 
+import catholicon.parser.ParserUtil;
+
 public class Match {
 	
 	private static final String QUOTED_STRING_REGEXP = "\".*\"";
 	private static final String QUOTED_DATE_REGEXP = "new Date\\(\"(.*?)\"\\)";
-	private static final String SCORE_REGEXT = "\\>(\\d\\s-\\s\\d)\\<";
-	private static final Pattern scorePattern = Pattern.compile(SCORE_REGEXT);
+	private static final String SCORE_REGEXP = "\\>(\\d\\s-\\s\\d)\\<";
+	private static final String FIXTURE_REGEXP = "openMatchCard\\((.*?),";
+	private static final Pattern scorePattern = Pattern.compile(SCORE_REGEXP);
+	private static final Pattern fixturePattern = Pattern.compile(FIXTURE_REGEXP);
 	private static final Pattern datePattern = Pattern.compile(QUOTED_DATE_REGEXP);
 	
 	
@@ -23,6 +27,8 @@ public class Match {
 	private String homeTarget;
 	private String date;
 	private int fixtureStatus;
+	private String fixtureText;
+	private String fixtureId;
 	private String matchStatus;
 	private String scoreText;
 	private String scoreExtracted;
@@ -37,16 +43,14 @@ public class Match {
 	 * @param group
 	 */
 	public Match(String group) {
-		System.out.println("Processing "+group);
-		String[] parts = splitOnUnquotedCommas(group);
+		String[] parts = ParserUtil.splitOnUnquotedCommas(group);
 		
 		for (String keyValuePair : parts) {
-			String[] pair = splitOnUnquotedColons(keyValuePair);
+			String[] pair = ParserUtil.splitOnUnquotedColons(keyValuePair);
 			
 			if(pair.length != 2)
 				throw new IllegalStateException(pair.length +" > "+keyValuePair);
 
-			System.out.println("Processing "+pair[0]+":"+pair[1]);
 			String value = stripSurroundingQuotesIfNec(pair[1]);
 			
 			if("awayTarget".equals(pair[0].trim())) {
@@ -75,101 +79,36 @@ public class Match {
 			else if("fixtureStatus".equals(pair[0].trim())) {
 				this.fixtureStatus = Integer.parseInt(pair[1]);
 			}
+			else if("fixtureLink".equals(pair[0].trim())) {
+				fixtureText = pair[1];
+				extractFixtureId();
+			}
 			else if("scoreText".equals(pair[0].trim())) {
 				this.scoreText = pair[1];
 				extractScore();
 			}
 			else if("fixtureLink".equals(pair[0].trim())) {
-				System.out.println("Discarding "+keyValuePair);
 			}
 			else {
-				System.out.println("Ignoring "+pair[0]+":"+pair[1]);
 			}
 		}
-		System.out.println("===========================================");
 	}
 	
-	public Match(String awayTarget, String homeTarget, String date, int fixtureStatus, String matchStatus,
-			String scoreText) {
-		super();
-		this.awayTarget = awayTarget;
-		this.homeTarget = homeTarget;
-		this.date = date;
-		this.fixtureStatus = fixtureStatus;
-		this.matchStatus = matchStatus;
-		this.scoreText = scoreText;
+	/**
+	 * 
+	 * 
+	 * '<td nowrap="nowrap" onclick="openMatchCard(1319,false,false);" class="FakeLink" style="cursor:pointer" id="Card203_202"><img src="BdblImages/ArrowDown.bmp" alt="" />&nbsp;Tue, 1 Dec 2015</td>'
+	 * 
+	 * 
+	 * @param string
+	 */
+	private void extractFixtureId() {
+		Matcher m = fixturePattern.matcher(fixtureText);
+		if(m.find()) {
+			fixtureId = m.group(1);
+		}
 	}
 
-	private String[] splitOnUnquotedCommas(String s) {
-		List<String> parts = new LinkedList<>();
-		StringBuilder buf = new StringBuilder();
-		char[] chars = s.toCharArray();
-		boolean inSingleQuotes = false;
-		boolean inDoubleQuotes = false;
-		
-		for (char c : chars) {
-			switch(c) {
-				case ',':
-					if(inSingleQuotes || inDoubleQuotes) {
-						buf.append(c);
-						break;
-					}
-					parts.add(buf.toString());
-					buf.setLength(0);
-					break;
-				case '"':
-					inDoubleQuotes = !inDoubleQuotes;
-					buf.append(c);
-					break;
-				case '\'':
-					inSingleQuotes = !inSingleQuotes;
-					buf.append(c);
-					break;
-				default:
-					buf.append(c);
-			}
-		}
-		
-		if(buf.length() > 0) parts.add(buf.toString());
-		
-		return parts.toArray(new String[parts.size()]);
-	}
-	
-	private String[] splitOnUnquotedColons(String s) {
-		List<String> parts = new LinkedList<>();
-		StringBuilder buf = new StringBuilder();
-		char[] chars = s.toCharArray();
-		boolean inSingleQuotes = false;
-		boolean inDoubleQuotes = false;
-		
-		for (char c : chars) {
-			switch(c) {
-				case ':':
-					if(inSingleQuotes || inDoubleQuotes) {
-						buf.append(c);
-						break;
-					}
-					parts.add(buf.toString());
-					buf.setLength(0);
-					break;
-				case '"':
-					inDoubleQuotes = !inDoubleQuotes;
-					buf.append(c);
-					break;
-				case '\'':
-					inSingleQuotes = !inSingleQuotes;
-					buf.append(c);
-					break;
-				default:
-					buf.append(c);
-			}
-		}
-		
-		if(buf.length() > 0) parts.add(buf.toString());
-		
-		return parts.toArray(new String[parts.size()]);
-	}
-	
 	/**
 	 * <td nowrap='nowrap' class='borderBottomLR MatchConfirmed' title='Match Result Confirmed'>2 - 7</td>
 	 */
@@ -205,6 +144,10 @@ public class Match {
 
 	public int getFixtureStatus() {
 		return fixtureStatus;
+	}
+
+	public String getFixtureId() {
+		return fixtureId;
 	}
 	
 }
