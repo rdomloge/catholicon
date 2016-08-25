@@ -1,6 +1,8 @@
 package catholicon.dao;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.jsoup.Jsoup;
@@ -41,7 +43,43 @@ public class MatchCardDao {
 			r.setGame(gameNum, homeScore, score);
 			
 		}
-		return new MatchCard(scoreMap);
+		
+		String[] awayPlayers = new String[6];
+		String[] homePlayers = new String[6];
+		Elements players = doc.select("span.Boxed[id*=Player]");
+		for(int i=0; i < players.size(); i++) {
+			Element player = players.get(i);
+			String id = player.attr("id");
+			String playerType = id.substring(0, id.indexOf("Player"));
+			String playerNum = id.substring(id.indexOf("Player")+6);
+			if("home".equalsIgnoreCase(playerType)) {
+				homePlayers[Integer.parseInt(playerNum)] = player.text();
+			}
+			else {
+				awayPlayers[Integer.parseInt(playerNum)] = player.text();
+			}
+		}
+		
+		String homeTeam = doc.select("#homeTeam").first().attr("value");
+		String awayTeam = doc.select("#awayTeam").first().attr("value");
+		
+		String matchDate = doc.select("#matchDate").first().attr("value");
+		String score = doc.select("#ScoreBoard").first().text();
+		int hyphen = score.indexOf("-");
+		int homeScore = Integer.parseInt(score.substring(0, hyphen).trim());
+		int awayScore = Integer.parseInt(score.substring(hyphen+1).trim());
+		
+		Elements results = doc.select("input[id^=Result]");
+		boolean[] homeTeamWins = new boolean[9];
+		for(int i=0; i < results.size(); i++) {
+			String result = results.get(i).attr("value");
+			String rubberNumStr = results.get(i).attr("id");
+			int rubberNum = Integer.parseInt(rubberNumStr.substring(rubberNumStr.indexOf("Result")+6)) - 1;
+			homeTeamWins[rubberNum] = result.toLowerCase().contains("home") ? true : false;
+		}
+		
+		return new MatchCard(scoreMap, homePlayers, awayPlayers, homeTeam, awayTeam, matchDate, 
+				homeScore, awayScore, homeTeamWins);
 	}
 
 	

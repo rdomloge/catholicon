@@ -1,9 +1,17 @@
 .rd-row {
-	background-color: red;
 	clear: left;
 }
 
 .rd-col {
-	background-color: green;
 	float: left;
+}
+
+#matchcard th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#matchcard td.table-data {
+	text-align: center;
+	vertical-align: middle;
 }
