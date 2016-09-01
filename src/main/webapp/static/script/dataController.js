@@ -54,9 +54,12 @@ myApp.controller('leagueListController', function($scope, $log, dataFactory, $ro
 	});
 });
 
-myApp.controller('divisionController', function($scope, $log, dataFactory, $routeParams) {
-	dataFactory.getDivision();
-});
+myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
+		$log.debug("Data received for division "+$routeParams.divisionId, data);
+		$scope.division = data;
+	});
+}]);
 
 
 myApp.controller('dataController', function ($scope, $log, $http, dataFactory) {
