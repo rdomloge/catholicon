@@ -8,7 +8,7 @@
 	<artifactId>Catholicon</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>Catholicon - 'a panacea, a silver bullet' My Solution to the BDBL website</name>
+	<name>Catholicon - 'Better BDBL'</name>
 
 	<properties>
 		<springframework.version>4.3.0.RELEASE</springframework.version>

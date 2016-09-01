@@ -3,9 +3,11 @@ package catholicon.parser;
 import java.util.LinkedList;
 import java.util.List;
 
+import catholicon.domain.League;
+
 public class LeagueListParser {
 	
-	private List<String> leagues = new LinkedList<>();
+	private List<League> leagues = new LinkedList<>();
 
 	public LeagueListParser(String data) {
 		String[] parts = data.split("\\},\\{");
@@ -14,16 +16,22 @@ public class LeagueListParser {
 			if(part.startsWith("[")) part = part.substring(1);
 			if(part.startsWith("{")) part = part.substring(1);
 			String[] props = ParserUtil.splitOnUnquotedCommas(part);
+			String label = null;
+			int leagueTypeId = -1;
 			for (String propertyKeyPair : props) {
 				String[] splitProps = ParserUtil.splitOnUnquotedColons(propertyKeyPair);
 				if("label".equalsIgnoreCase(splitProps[0])) {
-					leagues.add(splitProps[1].replace("\"", ""));
+					label = splitProps[1].replace("\"", "");
+				}
+				else if("leagueTypeId".equalsIgnoreCase(splitProps[0])) {
+					leagueTypeId = Integer.parseInt(splitProps[1]);
 				}
 			}
+			leagues.add(new League(label, leagueTypeId));
 		}
 	}
 
-	public List<? extends String> getLeagues() {
+	public List<League> getLeagues() {
 		return leagues;
 	}
 

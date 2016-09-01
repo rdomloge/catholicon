@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="dataController">
+<html ng-app="app">
 <head>
 	<title>Catholicon - better BDBL</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
@@ -38,6 +38,12 @@
 				<a href="#/league/mixed2" ng-click="getLeague('mixed2')">Mixed Div 2</a>
 			</div>
 		</li>
+		<li class="w3-dropdown-hover" ng-controller="leagueListController">
+			<a href="javascript:void(0)">Leagues (new)</a>
+			<div class="w3-dropdown-content w3-card-4">
+				<a ng-repeat="league in leagues" href="#/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
+			</div>
+		</li>
 	</ul>
 	
 	<br/>
@@ -52,9 +58,15 @@
 					{
 						templateUrl: 'partials/matches.html',
 					})
-				.when('/league/:team',
+				.when('/league/:leagueTypeId/divisions',
 					{
-						templateUrl: 'partials/league.html'
+						templateUrl: 'partials/divisionList.html',
+						controller: 'leagueDivisionListController'
+					})
+				.when('/league/:leagueTypeId/division/:divisionId', 
+					{
+						templateUrl: 'partials/division.html',
+						controller: 'divisionController'
 					})
 				.when('/matchcard/:fixtureId',
 					{

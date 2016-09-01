@@ -2,14 +2,20 @@ var myApp = angular.module('app', ['ngRoute']);
 
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
+	
+	factory.getLeagues = function() {
+		$log.info("Fetching list of leagues");
+		return $http.get('/catholicon/league/list');
+	}
+	
 	factory.getMatches = function(team) {
 		$log.info("Loading matches for "+team);
 		return $http.get('/catholicon/matches/'+team+'/list');
 	}
 	
-	factory.getLeague = function(league) {
-		$log.info("Loading league for "+league);
-		return $http.get('/catholicon/league/'+league);
+	factory.getDivisions = function(leagueTypeId) {
+		$log.info("Loading divisions for league " + leagueTypeId);
+		return $http.get('/catholicon/league/'+leagueTypeId+'/divisions');
 	}
 
 	factory.getMatchCard = function(fixtureId) {
@@ -17,27 +23,44 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/matchcard/'+fixtureId);
 	}
 	
+	factory.getDivision = function(leagueTypeId, divisionId) {
+		$log.info("Loading division '+divisionId+' for "+leagueTypeId);
+		return $http.get('/catholicon/league/'+leagueTypeId+"/division/"+divisionId);
+	};
+	
 	return factory;
+});
+
+myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
+	dataFactory.getDivisions($routeParams.leagueTypeId).success(function(data) {
+		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
+		$scope.divisions = data;
+	});
+}]);
+
+myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+	$log.debug("Fetching league "+$routeParams.leagueTypeId);
+	dataFactory.getLeague($routeParams.leagueTypeId).success(function (data){
+		$log.debug("Data received for league", data);
+		$scope.league = data;
+	});
+}]);
+
+myApp.controller('leagueListController', function($scope, $log, dataFactory, $routeParams) {
+	dataFactory.getLeagues().success(function(data) {
+		$log.debug("Data received for leagues", data);
+		$scope.leagues = data;
+	});
+});
+
+myApp.controller('divisionController', function($scope, $log, dataFactory, $routeParams) {
+	dataFactory.getDivision();
 });
 
 
 myApp.controller('dataController', function ($scope, $log, $http, dataFactory) {
 	$log.debug('Data controller initiated');
-	$scope.getMatches = function(team){
-		$log.debug('getMatches() called');
-		dataFactory.getMatches(team).success(function(data) {
-			$log.debug("Data received for matches", data);
-			$scope.matches = data;
-		});
-	}
-	
-	$scope.getLeague = function(league) {
-		$log.debug("getLeague() called for "+league);
-		dataFactory.getLeague(league).success(function(data) {
-			$log.debug("Data received for league", data);
-			$scope.league = data;
-		});
-	}
 	
 	$scope.getMatchCard = function(fixtureId) {
 		$log.debug("Getting match card for "+fixtureId);

@@ -11,30 +11,15 @@ import catholicon.parser.MatchParser;
 
 public class MatchDao {
 	
-	private static final String openaurl = 
-			"http://bdbl.org.uk/Live/TeamFixtureList.asp?ID=164&Season=0&Juniors=false&Schools=false&Website=1";
-	
-	private static final String mixedaurl = 
-			"http://bdbl.org.uk/Live/TeamFixtureList.asp?ID=203&Season=0&Juniors=false&Schools=false&Website=1";
+	private static final String url = 
+			"http://bdbl.org.uk/Live/TeamFixtureList.asp?ID=%1$s&Season=0&Juniors=false&Schools=false&Website=1";
 	
 	private static final Pattern allMatchesDataLineRegExp = Pattern.compile("var data = (.*?)];");
 	
 
 	public Match[] load(String team) throws DaoException {
-		String url = null;
 		
-		switch(team) {
-			case "opena":
-				url = openaurl;
-				break;
-			case "mixeda":
-				url = mixedaurl;
-				break;
-			default:
-				throw new IllegalArgumentException("Unknown team: "+team);
-		}
-		
-		String page = Loader.load(url);
+		String page = Loader.load(String.format(url, team));
 		
 		Matcher dataLineMatcher = allMatchesDataLineRegExp.matcher(page);
 		
