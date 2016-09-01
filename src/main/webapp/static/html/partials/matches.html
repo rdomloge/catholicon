@@ -8,7 +8,7 @@
 		</h2>
 	</div>
 	<form class="w3-container w3-margin-bottom">
-		<label>Date</label> 
+		<label class="w3-xxlarge">Date</label> 
 		<input class="w3-input" ng-model="search" name="teamFilter"/>
 	</form>
 	
@@ -32,7 +32,7 @@
 			<h5>{{match.date | date : 'fullDate'}}</h5>
 			<h5>
 				{{match.scoreExtracted}}
-				<a href="#/matchcard/{{match.fixtureId}}" ng-click="getMatchCard(match.fixtureId)" class="w3-btn w3-blue w3-border w3-border-blue w3-round" >View card</a>
+				<a href="#/matchcard/{{match.fixtureId}}" ng-click="getMatchCard(match.fixtureId)" class="w3-btn w3-blue w3-border w3-border-blue w3-round w3-xlarge" >View card</a>
 			</h5>
 			
 		</footer>
