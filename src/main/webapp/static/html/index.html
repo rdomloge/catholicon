@@ -21,25 +21,8 @@
 	
 	<ul class="w3-navbar w3-border w3-green">
 		<li><a href="#" class="w3-red">Home</a></li>
-		<li class="w3-dropdown-hover">
-			<a href="javascript:void(0)">Results</a>
-			<div class="w3-dropdown-content w3-card-4">
-				<a href="#/matches/opena" ng-click="getMatches('opena')">Open A</a>
-				<a href="#/matches/mixeda" ng-click="getMatches('mixeda')">Mixed A</a>
-			</div>
-		</li>
-		<li class="w3-dropdown-hover">
-			<a href="javascript:void(0)">Leagues</a>
-			<div class="w3-dropdown-content w3-card-4">
-				<a href="#/league/open1" ng-click="getLeague('open1')">Open Div 1</a>
-				<a href="#/league/open2" ng-click="getLeague('open2')">Open Div 2</a>
-				<a href="#/league/open3" ng-click="getLeague('open3')">Open Div 3</a>
-				<a href="#/league/mixed1" ng-click="getLeague('mixed1')">Mixed Div 1</a>
-				<a href="#/league/mixed2" ng-click="getLeague('mixed2')">Mixed Div 2</a>
-			</div>
-		</li>
 		<li class="w3-dropdown-hover" ng-controller="leagueListController">
-			<a href="javascript:void(0)">Leagues (new)</a>
+			<a href="javascript:void(0)">Leagues</a>
 			<div class="w3-dropdown-content w3-card-4">
 				<a ng-repeat="league in leagues" href="#/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
 			</div>
@@ -54,9 +37,10 @@
 	<script>
 		myApp.config(function ($routeProvider) {
 			$routeProvider
-				.when('/matches/:team',
+				.when('/matches/:teamId/list',
 					{
 						templateUrl: 'partials/matches.html',
+						controller: 'matchListController'
 					})
 				.when('/league/:leagueTypeId/divisions',
 					{

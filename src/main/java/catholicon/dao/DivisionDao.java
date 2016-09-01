@@ -59,7 +59,14 @@ public class DivisionDao {
 			String gamesWon = cells.select("td[id^=GamesWon]").text();
 			String gamesLost = cells.select("td[id^=GamesLost]").text();
 			String pointsFor = cells.select("td[id^=PointsFor]").text();
-			teamPositions.add(new TeamPosition(teamName, played, matchesWon, rubbersWon, rubbersLost, gamesWon, gamesLost, pointsFor));
+			// showTeamFixtures(null,242);
+			String teamIdAttr = cells.select("[onclick]").attr("onclick");
+			int teamId = Integer.parseInt(
+					teamIdAttr.substring(
+							teamIdAttr.indexOf(',')+1, 
+							teamIdAttr.indexOf(')')
+							));
+			teamPositions.add(new TeamPosition(teamName, teamId, played, matchesWon, rubbersWon, rubbersLost, gamesWon, gamesLost, pointsFor));
 		}
 		
 		return new Division(teamPositions.toArray(new TeamPosition[teamPositions.size()]));

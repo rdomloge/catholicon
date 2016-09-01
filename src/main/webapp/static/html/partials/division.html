@@ -19,7 +19,7 @@
 			<th></th>
 		</tr>
 		<tr ng-repeat="tp in division.positions">
-			<td>{{tp.team}}</td>
+			<td><a href="#/matches/{{tp.teamId}}/list">{{tp.team}}</a></td>
 			<td class="table-data">{{tp.played}}</td>
 			<td class="table-data">{{tp.matchesWon}}</td>
 			<td class="table-data">{{tp.rubbersWon}}</td>
