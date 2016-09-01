@@ -4,6 +4,7 @@ public class Division {
 	
 	public static class TeamPosition {
 		private String team;
+		private int teamId;
 		private String played;
 		private String matchesWon;
 		private String rubbersWon;
@@ -14,10 +15,11 @@ public class Division {
 
 		
 
-		public TeamPosition(String team, String played, String matchesWon, String rubbersWon, String rubbersLost,
+		public TeamPosition(String team, int teamId, String played, String matchesWon, String rubbersWon, String rubbersLost,
 				String gamesWon, String gamesLost, String pointsFor) {
 			super();
 			this.team = team;
+			this.teamId = teamId;
 			this.played = played;
 			this.matchesWon = matchesWon;
 			this.rubbersWon = rubbersWon;
@@ -31,6 +33,11 @@ public class Division {
 		public String getTeam() {
 			return team;
 		}
+
+		public int getTeamId() {
+			return teamId;
+		}
+
 
 		public String getPlayed() {
 			return played;

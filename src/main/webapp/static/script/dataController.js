@@ -24,7 +24,7 @@ myApp.factory('dataFactory', function($http, $log) {
 	}
 	
 	factory.getDivision = function(leagueTypeId, divisionId) {
-		$log.info("Loading division '+divisionId+' for "+leagueTypeId);
+		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
 		return $http.get('/catholicon/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
@@ -61,8 +61,14 @@ myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '
 	});
 }]);
 
+myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+	dataFactory.getMatches($routeParams.teamId).success(function(data) {
+		$log.debug("Data received for matches", data);
+		$scope.matches = data;
+	});
+}]);
 
-myApp.controller('dataController', function ($scope, $log, $http, dataFactory) {
+myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory) {
 	$log.debug('Data controller initiated');
 	
 	$scope.getMatchCard = function(fixtureId) {
