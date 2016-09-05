@@ -29,7 +29,6 @@ public class Match {
 	private int fixtureStatus;
 	private String fixtureText;
 	private String fixtureId;
-	private String matchStatus;
 	private String scoreText;
 	private String scoreExtracted;
 	

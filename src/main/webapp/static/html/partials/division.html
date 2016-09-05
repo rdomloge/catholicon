@@ -5,7 +5,9 @@
 			<th>Team</th>
 			<th colspan="2">Matches</th>
 			<th colspan="2">Rubbers</th>
-			<th colspan="2">Games</th>
+			<th colspan="2" class="rd-mobile-div-hidden-cols">
+				Games
+			</th>
 			<th>Points</th>
 		</tr>
 		<tr class="w3-blue">
@@ -14,20 +16,20 @@
 			<th>Won</th>
 			<th>Won</th>
 			<th>Lost</th>
-			<th>Won</th>
-			<th>Lost</th>
+			<th class="rd-mobile-div-hidden-cols">Won</th>
+			<th class="rd-mobile-div-hidden-cols">Lost</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="tp in division.positions">
-			<td><a class="w3-xlarge w3-btn w3-indigo w3-round w3-hover-teal w3-btn-block" 
+			<td><a class="w3-btn w3-indigo w3-round w3-hover-teal w3-btn-block" 
 					href="#/matches/{{tp.teamId}}/list">{{tp.team}}</a>
 			</td>
 			<td class="table-data">{{tp.played}}</td>
 			<td class="table-data">{{tp.matchesWon}}</td>
 			<td class="table-data">{{tp.rubbersWon}}</td>
 			<td class="table-data">{{tp.rubbersLost}}</td>
-			<td class="table-data">{{tp.gamesWon}}</td>
-			<td class="table-data">{{tp.gamesLost}}</td>
+			<td class="table-data rd-mobile-div-hidden-cols">{{tp.gamesWon}}</td>
+			<td class="table-data rd-mobile-div-hidden-cols">{{tp.gamesLost}}</td>
 			<td class="table-data">{{tp.pointsFor}}</td>
 		</tr>
 	</table>

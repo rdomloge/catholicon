@@ -18,21 +18,31 @@
 			<h1>Match</h1>
 		</header>
 		
-		<div class="w3-container w3-center">
-			<p>
-			{{match.homeTarget}}  
-			<br/>
-			Vs 
-			<br/>
-			{{match.awayTarget}}
-			</p>
+		<div class="w3-center">
+			<h1 class="rd-match-declaration">
+				{{match.homeTarget}}  
+				<br/>
+				Vs 
+				<br/>
+				{{match.awayTarget}}
+			</h1>
 		</div>
 		
 		<footer class="w3-container w3-blue">
 			<h5>{{match.date | date : 'fullDate'}}</h5>
 			<h5>
 				{{match.scoreExtracted}}
-				<a href="#/matchcard/{{match.fixtureId}}" ng-click="getMatchCard(match.fixtureId)" class="w3-btn w3-blue w3-border w3-border-blue w3-round w3-xlarge" >View card</a>
+				<div ng-switch on="match.fixtureStatus">
+					<div ng-switch-when="5">
+						<a href="#/matchcard/{{match.fixtureId}}" ng-click="getMatchCard(match.fixtureId)" 
+							class="w3-btn w3-blue w3-border w3-border-blue w3-round w3-xlarge">
+							View card
+						</a>
+					</div>
+					<div ng-switch-default>
+						<p>Not yet played</p>
+					</div>
+				</div>
 			</h5>
 			
 		</footer>
