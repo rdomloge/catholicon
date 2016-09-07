@@ -48,11 +48,27 @@ myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$s
 }]);
 
 myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope) {
-	$scope.contentLoading = true;
+	$timeout(function(){
+		$rootScope.$broadcast('started-thinking', 'leagueListController');	
+	});
 	
 	dataFactory.getLeagues().success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
+		$timeout(function(){
+			$rootScope.$broadcast('finished-thinking', 'leagueListController');
+		}, 3000);
+	});
+}]);
+
+myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
+	$scope.$on('started-thinking', function(event, sourceController) {
+		$log.debug('Started thinking', sourceController);
+		$scope.contentLoading = true;
+	});
+	
+	$scope.$on('finished-thinking', function(event, sourceController) {
+		$log.debug('Finished thinking', sourceController);
 		$scope.contentLoading = false;
 	});
 }]);
