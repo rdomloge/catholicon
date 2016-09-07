@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="../style/match.css">
 	<link rel="stylesheet" type="text/css" href="../style/league.css">
 	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
-	
+	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
 </head>
 <body>
 
@@ -39,10 +39,10 @@
 		</ul>
 	</div>
 	
-	<div id="thinking" ng-show="contentLoading" class="thinking" ng-controller="thinkingController">
+	<div id="thinking" ng-class="contentLoading ? 'slide-in' : 'slide-out'" class="thinking" ng-controller="thinkingController">
 		<img alt="Loading..."
 			height="100px" 
-			src="https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif">
+			src="../img/loading.gif">
 	</div> 
 
 	<!-- Placeholder for views -->

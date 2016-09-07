@@ -31,11 +31,15 @@ myApp.factory('dataFactory', function($http, $log) {
 	return factory;
 });
 
-myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
+	$timeout(function(){
+		$rootScope.$broadcast('started-thinking', 'leagueDivisionListController');	
+	});
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
 	dataFactory.getDivisions($routeParams.leagueTypeId).success(function(data) {
 		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
 		$scope.divisions = data;
+		$rootScope.$broadcast('finished-thinking', 'leagueListController');
 	});
 }]);
 
@@ -55,35 +59,31 @@ myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$rou
 	dataFactory.getLeagues().success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
-		$timeout(function(){
-			$rootScope.$broadcast('finished-thinking', 'leagueListController');
-		}, 3000);
+		$rootScope.$broadcast('finished-thinking', 'leagueListController');
 	});
 }]);
 
-myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
-	$scope.$on('started-thinking', function(event, sourceController) {
-		$log.debug('Started thinking', sourceController);
-		$scope.contentLoading = true;
+myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
+	$timeout(function(){
+		$rootScope.$broadcast('started-thinking', 'divisionController');	
 	});
 	
-	$scope.$on('finished-thinking', function(event, sourceController) {
-		$log.debug('Finished thinking', sourceController);
-		$scope.contentLoading = false;
-	});
-}]);
-
-myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
 	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
+		$rootScope.$broadcast('finished-thinking', 'divisionController');
 	});
 }]);
 
-myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
+myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
+	$timeout(function(){
+		$rootScope.$broadcast('started-thinking', 'matchListController');	
+	});
+	
 	dataFactory.getMatches($routeParams.teamId).success(function(data) {
 		$log.debug("Data received for matches", data);
 		$scope.matches = data;
+		$rootScope.$broadcast('finished-thinking', 'matchListController');
 	});
 }]);
 
@@ -99,3 +99,15 @@ myApp.controller('matchCardController', function ($scope, $log, $http, dataFacto
 		
 	}
 });
+
+myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
+	$scope.$on('started-thinking', function(event, sourceController) {
+		$log.debug('Started thinking', sourceController);
+		$scope.contentLoading = true;
+	});
+	
+	$scope.$on('finished-thinking', function(event, sourceController) {
+		$log.debug('Finished thinking', sourceController);
+		$scope.contentLoading = false;
+	});
+}]);
