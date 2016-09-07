@@ -3,9 +3,9 @@
 <head>
 	<title>Catholicon - better BDBL</title>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
 	<script src="../script/dataController.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,17 +27,28 @@
 		</h1>
 	</div>
 	
-	<ul class="w3-navbar w3-border w3-green w3-xxlarge">
-		<li><a href="#" class="w3-red">Home</a></li>
-		<li class="w3-dropdown-hover" ng-controller="leagueListController">
-			<a href="javascript:void(0)">Leagues</a>
-			<div class="w3-dropdown-content w3-card-4">
-				<a ng-repeat="league in leagues" href="#/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
-			</div>
-		</li>
-	</ul>
+	<div id="menuDiv" ng-controller="leagueListController">
+		<ul class="w3-navbar w3-border w3-green w3-xxlarge">
+			<li><a href="#" class="w3-red">Home</a></li>
+			<li class="w3-dropdown-hover">
+				<a href="javascript:void(0)">Leagues</a>
+				<div class="w3-dropdown-content w3-card-4">
+					<a ng-repeat="league in leagues" href="#/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
+				</div>
+			</li>
+		</ul>
+		
+		<br/>
 	
-	<br/>
+	<div id="thinking" ng-show="contentLoading" class="thinking" >
+		<img alt="Loading..."
+			height="100px" 
+			src="https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif">
+	</div>	
+		
+	</div>
+	
+	 
 
 	<!-- Placeholder for views -->
 	<ng-view/>

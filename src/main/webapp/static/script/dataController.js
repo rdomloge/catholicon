@@ -47,12 +47,15 @@ myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$s
 	});
 }]);
 
-myApp.controller('leagueListController', function($scope, $log, dataFactory, $routeParams) {
+myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope) {
+	$scope.contentLoading = true;
+	
 	dataFactory.getLeagues().success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
+		$scope.contentLoading = false;
 	});
-});
+}]);
 
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
 	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
