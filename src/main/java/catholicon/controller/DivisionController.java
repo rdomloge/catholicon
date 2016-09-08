@@ -14,16 +14,19 @@ import catholicon.ex.DaoException;
 @RestController
 public class DivisionController {
 	
-	@RequestMapping("/league/{leagueTypeId}/division/{divisionId}")
+	@RequestMapping("/season/{seasonStartYear}/league/{leagueTypeId}/division/{divisionId}")
 	public Division getLeague(@PathVariable("leagueTypeId") String leagueTypeId,
-			@PathVariable("divisionId") int divisionId) throws DaoException {
+			@PathVariable("divisionId") int divisionId,
+			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {
 		
-		return new DivisionDao().load(leagueTypeId, divisionId);
+		return new DivisionDao().load(leagueTypeId, divisionId, seasonStartYear);
 	}
 	
-	@RequestMapping("/league/{leagueTypeId}/divisions")
-	public List<DivisionDescriptor> getDivisionsForLeague(@PathVariable("leagueTypeId") int leagueTypeId) throws DaoException {
+	@RequestMapping("/season/{seasonStartYear}/league/{leagueTypeId}/divisions")
+	public List<DivisionDescriptor> getDivisionsForLeague(
+			@PathVariable("leagueTypeId") int leagueTypeId,
+			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {
 		
-		return new DivisionDao().getDivisionsForLeague(leagueTypeId);
+		return new DivisionDao().getDivisionsForLeague(leagueTypeId, seasonStartYear);
 	}
 }

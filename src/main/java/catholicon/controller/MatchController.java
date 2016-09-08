@@ -12,10 +12,12 @@ import catholicon.ex.DaoException;
 public class MatchController {
 	
 	
-	@RequestMapping("/matches/{team}/list")
-	public Match[] loadMatches(@PathVariable("team") String team) 
+	@RequestMapping("/season/{seasonStartYear}/matches/{team}/list")
+	public Match[] loadMatches(
+			@PathVariable("team") String team, 
+			@PathVariable("seasonStartYear") int seasonStartYear) 
 			throws DaoException {
 		
-		return new MatchDao().load(team);
+		return new MatchDao().load(seasonStartYear, team);
 	}
 }

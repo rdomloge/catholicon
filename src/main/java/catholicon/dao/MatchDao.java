@@ -12,14 +12,14 @@ import catholicon.parser.MatchParser;
 public class MatchDao {
 	
 	private static final String url = 
-			"http://bdbl.org.uk/Live/TeamFixtureList.asp?ID=%1$s&Season=0&Juniors=false&Schools=false&Website=1";
+			"http://bdbl.org.uk/Live/TeamFixtureList.asp?ID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	private static final Pattern allMatchesDataLineRegExp = Pattern.compile("var data = (.*?)];");
 	
 
-	public Match[] load(String team) throws DaoException {
+	public Match[] load(int seasonStartYear, String team) throws DaoException {
 		
-		String page = Loader.load(String.format(url, team));
+		String page = Loader.load(String.format(url, team, seasonStartYear));
 		
 		Matcher dataLineMatcher = allMatchesDataLineRegExp.matcher(page);
 		

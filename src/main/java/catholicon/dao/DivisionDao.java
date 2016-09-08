@@ -16,14 +16,14 @@ import catholicon.ex.DaoException;
 public class DivisionDao {
 	
 	private static final String url = 
-			"http://bdbl.org.uk/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=0&Juniors=false&Schools=false&Website=1";
+			"http://bdbl.org.uk/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	private static String leagueUrl = 
-			"http://bdbl.org.uk/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=0&Juniors=false&Schools=false&Website=1";
+			"http://bdbl.org.uk/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
 	
-	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId) throws DaoException {
+	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId, int seasonStartYear) throws DaoException {
 		
-		String page = Loader.load(String.format(url, leagueTypeId));
+		String page = Loader.load(String.format(url, leagueTypeId, seasonStartYear));
 		List<DivisionDescriptor> divisions = new LinkedList<>();
 		
 		Document doc = Jsoup.parse(page);
@@ -38,9 +38,9 @@ public class DivisionDao {
 		return divisions;
 	}
 
-	public Division load(String leagueTypeId, int divisionId) throws DaoException {
+	public Division load(String leagueTypeId, int divisionId, int seasonStartYear) throws DaoException {
 		
-		String page = Loader.load(String.format(leagueUrl, leagueTypeId, divisionId));
+		String page = Loader.load(String.format(leagueUrl, leagueTypeId, divisionId, seasonStartYear));
 		
 		Document doc = Jsoup.parse(page);
 		
