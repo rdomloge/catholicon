@@ -8,6 +8,10 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/league/list');
 	}
 	
+	factory.getSeasonList = function() {
+		return $http.get('/catholicon/season/list');
+	}
+	
 	factory.getMatches = function(team) {
 		$log.info("Loading matches for "+team);
 		return $http.get('/catholicon/matches/'+team+'/list');
@@ -32,14 +36,10 @@ myApp.factory('dataFactory', function($http, $log) {
 });
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	$timeout(function(){
-		$rootScope.$broadcast('started-thinking', 'leagueDivisionListController');	
-	});
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
 	dataFactory.getDivisions($routeParams.leagueTypeId).success(function(data) {
 		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
 		$scope.divisions = data;
-		$rootScope.$broadcast('finished-thinking', 'leagueListController');
 	});
 }]);
 
@@ -51,54 +51,63 @@ myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$s
 	});
 }]);
 
-myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope) {
-	$timeout(function(){
-		$rootScope.$broadcast('started-thinking', 'leagueListController');	
-	});
-	
+myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', '$location', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope, $location) {
+	var seasonId = $location.search().season;
 	dataFactory.getLeagues().success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
-		$rootScope.$broadcast('finished-thinking', 'leagueListController');
 	});
 }]);
 
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	$timeout(function(){
-		$rootScope.$broadcast('started-thinking', 'divisionController');	
-	});
-	
 	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
-		$rootScope.$broadcast('finished-thinking', 'divisionController');
 	});
 }]);
 
 myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	$timeout(function(){
-		$rootScope.$broadcast('started-thinking', 'matchListController');	
-	});
-	
 	dataFactory.getMatches($routeParams.teamId).success(function(data) {
 		$log.debug("Data received for matches", data);
 		$scope.matches = data;
-		$rootScope.$broadcast('finished-thinking', 'matchListController');
 	});
 }]);
 
 myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory) {
-	$log.debug('Data controller initiated');
-	
 	$scope.getMatchCard = function(fixtureId) {
 		$log.debug("Getting match card for "+fixtureId);
 		dataFactory.getMatchCard(fixtureId).success(function(data) {
 			$log.debug("Data received for match card", data);
 			$scope.matchCard = data;
 		});
-		
 	}
 });
+
+myApp.controller('seasonListController', function($scope, $log, dataFactory) {
+	dataFactory.getSeasonList().success(function(data) {
+		$log.debug("Data received for seasons", data);
+		$scope.seasons = data;
+	});
+});
+
+myApp.config(["$httpProvider", function ($httpProvider) {
+	$httpProvider.interceptors.push(function($q, $log, $rootScope) {
+		  return {
+		   'request': function(config) {
+		       $log.debug('Request started');
+		       $rootScope.$broadcast('started-thinking', 'matchListController');
+		       return config;
+		    },
+
+		    'response': function(response) {
+		       $log.debug('Response received');
+		       $rootScope.$broadcast('finished-thinking', 'matchListController');
+		       return response;
+		    }
+		  };
+		});
+   }]);
+
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
 	$scope.$on('started-thinking', function(event, sourceController) {

@@ -3,12 +3,8 @@ package catholicon.domain;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.springframework.web.multipart.support.StringMultipartFileEditor;
 
 import catholicon.parser.ParserUtil;
 
