@@ -95,13 +95,13 @@ myApp.config(["$httpProvider", function ($httpProvider) {
 		  return {
 		   'request': function(config) {
 		       $log.debug('Request started');
-		       $rootScope.$broadcast('started-thinking', 'matchListController');
+		       $rootScope.$broadcast('started-thinking');
 		       return config;
 		    },
 
 		    'response': function(response) {
 		       $log.debug('Response received');
-		       $rootScope.$broadcast('finished-thinking', 'matchListController');
+		       $rootScope.$broadcast('finished-thinking');
 		       return response;
 		    }
 		  };
@@ -110,13 +110,21 @@ myApp.config(["$httpProvider", function ($httpProvider) {
 
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
-	$scope.$on('started-thinking', function(event, sourceController) {
-		$log.debug('Started thinking', sourceController);
+	
+	var thinkers = 0;
+	
+	$scope.$on('started-thinking', function(event) {
+		thinkers++;
+		$log.debug('Started thinking', thinkers);
 		$scope.contentLoading = true;
 	});
 	
-	$scope.$on('finished-thinking', function(event, sourceController) {
-		$log.debug('Finished thinking', sourceController);
-		$scope.contentLoading = false;
+	$scope.$on('finished-thinking', function(event) {
+		thinkers--;
+		$log.debug('Finished thinking', thinkers);
+		if(thinkers < 1) {
+			$scope.contentLoading = false;
+			$log.debug('Hiding throbber');
+		}
 	});
 }]);
