@@ -5,7 +5,12 @@ myApp.factory('dataFactory', function($http, $log) {
 	
 	factory.getLeagues = function(seasonStartYear) {
 		$log.info("Fetching list of leagues");
-		return $http.get('/catholicon/season/'+seasonStartYear+'/league/list');	
+		if(seasonStartYear) {
+			return $http.get('/catholicon/season/'+seasonStartYear+'/league/list');	
+		}
+		else {
+			return $http.get('/catholicon/season/0/league/list');
+		}
 	}
 	
 	factory.getSeasonList = function() {

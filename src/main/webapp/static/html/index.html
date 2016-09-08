@@ -34,7 +34,7 @@
 			<li ng-controller="seasonListController" class="w3-dropdown-hover w3-right w3-blue" ng-show="seasons">
 				<a href="javascript:void(0)">Seasons</a>
 				<div class="w3-dropdown-content w3-card-4">
-					<a ng-repeat="season in seasons" href="?season={{season.seasonStartYear}}" 
+					<a ng-repeat="season in seasons.seasons" href="?season={{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}" 
 						ng-click="$scope.seasonId = season.id">{{season.seasonStartYear}}</a>
 				</div>
 			</li>

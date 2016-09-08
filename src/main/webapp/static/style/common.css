@@ -10,5 +10,10 @@ html,body {
 	table th.rd-mobile-div-hidden-cols, table td.rd-mobile-div-hidden-cols {
 		display: none;
 	}
+	
+	table#leagueTable {
+		font-size: 50%;
+		width=100%;
+	}
 }
 

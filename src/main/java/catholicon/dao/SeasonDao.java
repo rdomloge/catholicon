@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import catholicon.domain.Season;
+import catholicon.domain.SeasonsDescriptor;
 import catholicon.ex.DaoException;
 
 public class SeasonDao {
@@ -14,8 +15,9 @@ public class SeasonDao {
 	
 	private static final Pattern firstSeasonPattern = Pattern.compile("var firstSeason = (.*?);");
 	private static final Pattern latestSeasonPattern = Pattern.compile("var latestSeason = (.*?);");
+	private static final Pattern currentSeasonPattern = Pattern.compile("var currSeason = (.*?);");
 	
-	public List<Season> loadSeasons() throws DaoException {
+	public SeasonsDescriptor loadSeasonsDescriptor() throws DaoException {
 //		http://bdbl.org.uk/Live/Main.asp?Website=1&Browser=Google%20Chrome&Version=52.0.2743.116&OS=Mac%20OS%20X%2010.10.5&Engine=Web%20Kit&EngineVersion=537.36
 
 //		var firstSeason = 2012;
@@ -29,6 +31,7 @@ public class SeasonDao {
 		String page = Loader.load(url);
 		int firstSeason = find(page, firstSeasonPattern);
 		int latestSeason = find(page, latestSeasonPattern);
+		int currentSeason = find(page, currentSeasonPattern);
 		List<Season> seasons = new LinkedList<>();
 		
 		for(int i=0; i <= latestSeason-firstSeason; i++) {
@@ -38,12 +41,12 @@ public class SeasonDao {
 			seasons.add(s);
 		}
 		
-		return seasons;
+		return new SeasonsDescriptor(seasons, currentSeason);
 	}
 	
 	public static void main(String[] args) throws DaoException {
 		SeasonDao sd = new SeasonDao();
-		sd.loadSeasons();
+		sd.loadSeasonsDescriptor();
 	}
 	
 	private int find(String page, Pattern p) {
