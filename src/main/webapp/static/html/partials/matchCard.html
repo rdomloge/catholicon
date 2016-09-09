@@ -1,27 +1,31 @@
 <div class="w3-container w3-card-4">
 
-<header class="w3-container w3-orange w3-padding=16">
-	<h1>{{matchCard.homeTeam}} Vs {{matchCard.awayTeam}}</h1>
+<header class="w3-center">
+	<h2>{{matchCard.homeTeam}} 
+	<br/>
+	Vs
+	<br/>
+	{{matchCard.awayTeam}}</h2>
 </header>
 
-<header class="w3-container w3-orange w3-padding=16">
-	<h2>{{matchCard.matchDate}}</h2>
+<header class="">
+	<h3>{{matchCard.matchDate}}</h3>
 </header>
 
-<header class="w3-container w3-orange w3-padding=16">
+<header class="">
 	<h1>{{matchCard.homeScore}} - {{matchCard.awayScore}}</h1>
 </header>
 
-<table id="matchcard" class="w3-container w3-table w3-bordered w3-card-4 w3-responsive w3-center w3-xlarge">
+<table id="matchcard" class="">
   <tr>
   	<th>
   	</th>
-    <th class="table-data w3-green">
+    <th class="w3-green">
     	{{matchCard.awayPlayers[0]}}
     	<br/>
     	{{matchCard.awayPlayers[1]}}
     </th>
-    <th class="table-data w3-green">
+    <th class="w3-green">
     	{{matchCard.awayPlayers[2]}}
     	<br/>
     	{{matchCard.awayPlayers[3]}}
@@ -35,9 +39,11 @@
   </tr>
   <tr>
     <th class="w3-blue">
-    	{{matchCard.homePlayers[0]}}
-    	<br/>
-    	{{matchCard.homePlayers[1]}}
+    	<div class="rd-home-players">
+	    	{{matchCard.homePlayers[0]}}
+	    	<br/>
+	    	{{matchCard.homePlayers[1]}}
+    	</div>
     </th>
     <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[0], 'w3-green':!matchCard.homeTeamWins[0]}">
     	<p>{{matchCard.rubbers[0].firstGame.homeScore}} - {{matchCard.rubbers[0].firstGame.awayScore}}</p>
@@ -57,9 +63,11 @@
   </tr>
   <tr>
     <th class="w3-blue">
-    	{{matchCard.homePlayers[2]}}
-    	<br/>
-    	{{matchCard.homePlayers[3]}}
+    	<div class="rd-home-players">
+	    	{{matchCard.homePlayers[2]}}
+	    	<br/>
+	    	{{matchCard.homePlayers[3]}}
+	    </div>
     </th>
     <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[3], 'w3-green':!matchCard.homeTeamWins[3]}">
     	<p>{{matchCard.rubbers[3].firstGame.homeScore}} - {{matchCard.rubbers[3].firstGame.awayScore}}</p>
@@ -79,9 +87,11 @@
   </tr>
   <tr>
     <th class="w3-blue">
-    	{{matchCard.homePlayers[4]}}
-    	<br/>
-    	{{matchCard.homePlayers[5]}}
+    	<div class="rd-home-players">
+	    	{{matchCard.homePlayers[4]}}
+	    	<br/>
+	    	{{matchCard.homePlayers[5]}}
+	    </div>
     </th>
     <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[6], 'w3-green':!matchCard.homeTeamWins[6]}">
     	<p>{{matchCard.rubbers[6].firstGame.homeScore}} - {{matchCard.rubbers[6].firstGame.awayScore}}</p>

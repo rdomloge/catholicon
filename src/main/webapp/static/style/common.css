@@ -11,9 +11,25 @@ html,body {
 		display: none;
 	}
 	
-	table#leagueTable {
-		font-size: 50%;
+	table#leagueTable, table#leagueTable td {
+		font-size: 75%;
 		width=100%;
+	}
+	
+	table#matchcard {
+		font-size: 65%;
+	}
+	
+	table#leagueTable th {
+		font-size: 55%;
+		width=100%;
+	}
+	
+	td a.rd-division-link-to-matches {
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 110%;
+		line-height: 2.5em;
 	}
 }
 

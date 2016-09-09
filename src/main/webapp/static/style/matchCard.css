@@ -14,9 +14,19 @@
 #matchcard td.table-data {
 	text-align: center;
 	vertical-align: middle;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+#matchcard th {
+	text-align: center;
+	vertical-align: middle;
+	font-family: 'Open Sans Condensed', sans-serif;
 }
 
 h1.rd-match-declaration {
 	font-family: 'Titillium Web', sans-serif;
 }
 
+.rd-home-players {
+	line-height: 2em;
+}
