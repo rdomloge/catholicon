@@ -30,3 +30,7 @@ h1.rd-match-declaration {
 .rd-home-players {
 	line-height: 2em;
 }
+
+.matchcardScore {
+	font-size: 120%;
+}

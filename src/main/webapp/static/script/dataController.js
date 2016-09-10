@@ -3,28 +3,23 @@ var myApp = angular.module('app', ['ngRoute']);
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
 	
-	factory.getLeagues = function(seasonStartYear) {
+	factory.getLeagues = function() {
 		$log.info("Fetching list of leagues");
-		if(seasonStartYear) {
-			return $http.get('/catholicon/season/'+seasonStartYear+'/league/list');	
-		}
-		else {
-			return $http.get('/catholicon/season/0/league/list');
-		}
+		return $http.get('/catholicon/season/{SEASON}/league/list');	
 	}
 	
 	factory.getSeasonList = function() {
 		return $http.get('/catholicon/season/list');
 	}
 	
-	factory.getMatches = function(team, seasonStartYear) {
+	factory.getMatches = function(team) {
 		$log.info("Loading matches for "+team);
-		return $http.get('/catholicon/season/'+seasonStartYear+'/matches/'+team+'/list');
+		return $http.get('/catholicon/season/{SEASON}/matches/'+team+'/list');
 	}
 	
-	factory.getDivisions = function(leagueTypeId, seasonStartYear) {
+	factory.getDivisions = function(leagueTypeId) {
 		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get('/catholicon/season/'+seasonStartYear+'/league/'+leagueTypeId+'/divisions');
+		return $http.get('/catholicon/season/{SEASON}/league/'+leagueTypeId+'/divisions');	
 	}
 
 	factory.getMatchCard = function(fixtureId) {
@@ -32,9 +27,9 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/matchcard/'+fixtureId);
 	}
 	
-	factory.getDivision = function(leagueTypeId, divisionId, seasonStartYear) {
+	factory.getDivision = function(leagueTypeId, divisionId) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
-		return $http.get('/catholicon/season/'+seasonStartYear+'/league/'+leagueTypeId+"/division/"+divisionId);
+		return $http.get('/catholicon/season/{SEASON}/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
 	return factory;
@@ -42,9 +37,7 @@ myApp.factory('dataFactory', function($http, $log) {
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
-	var query = getQueryParams(document.location.search);
-	var seasonStartYear = query.season;
-	dataFactory.getDivisions($routeParams.leagueTypeId, seasonStartYear).success(function(data) {
+	dataFactory.getDivisions($routeParams.leagueTypeId).success(function(data) {
 		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
 		$scope.divisions = data;
 	});
@@ -59,9 +52,7 @@ myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$s
 }]);
 
 myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', '$location', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope, $location) {
-	var query = getQueryParams(document.location.search);
-	var seasonStartYear = query.season;
-	dataFactory.getLeagues(seasonStartYear).success(function(data) {
+	dataFactory.getLeagues().success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
 	});
@@ -82,18 +73,15 @@ function getQueryParams(qs) {
 }
 
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	var query = getQueryParams(document.location.search);
-	var seasonStartYear = query.season;
-	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId, seasonStartYear).success(function(data) {
+	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
+		$rootScope.$broadcast('breadcrumb');
 	});
 }]);
 
 myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	var query = getQueryParams(document.location.search);
-	var seasonStartYear = query.season;
-	dataFactory.getMatches($routeParams.teamId, seasonStartYear).success(function(data) {
+	dataFactory.getMatches($routeParams.teamId).success(function(data) {
 		$log.debug("Data received for matches", data);
 		$scope.matches = data;
 	});
@@ -114,23 +102,28 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	});
 });
 
-myApp.config(["$httpProvider", function ($httpProvider) {
+myApp.config([ "$httpProvider", function($httpProvider) {
 	$httpProvider.interceptors.push(function($q, $log, $rootScope) {
-		  return {
-		   'request': function(config) {
-		       $log.debug('Request started');
-		       $rootScope.$broadcast('started-thinking');
-		       return config;
-		    },
+		return {
+			'request' : function(config) {
+				$log.debug('Request started');
+				$rootScope.$broadcast('started-thinking');
+				var query = getQueryParams(document.location.search);
+				var seasonStartYear = query.season ? query.season : 0;
+				if(config.url.includes('{SEASON}')) {
+					config.url = config.url.replace('{SEASON}', seasonStartYear);
+				}
+				return config;
+			},
 
-		    'response': function(response) {
-		       $log.debug('Response received');
-		       $rootScope.$broadcast('finished-thinking');
-		       return response;
-		    }
-		  };
-		});
-   }]);
+			'response' : function(response) {
+				$log.debug('Response received');
+				$rootScope.$broadcast('finished-thinking');
+				return response;
+			}
+		};
+	});
+} ]);
 
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
@@ -152,3 +145,13 @@ myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log)
 		}
 	});
 }]);
+
+myApp.controller('breadcrumbController', function($scope, $log) {
+	
+	$scope.trail = [ ];
+	
+	$scope.$on('breadcrumb', function(event) {
+		$log.debug('New breadcrumb', event);
+		$scope.trail.push("New:");
+	});
+});
