@@ -1,6 +1,6 @@
 package catholicon.domain;
 
-public class DivisionDescriptor {
+public class DivisionDescriptor extends Seasonal {
 	
 	private String label;
 	
@@ -9,8 +9,8 @@ public class DivisionDescriptor {
 	private int leagueTypeId;
 	
 
-	public DivisionDescriptor(String label, int divisionId, int leagueTypeId) {
-		super();
+	public DivisionDescriptor(String label, int divisionId, int leagueTypeId, int season) {
+		super(season);
 		this.label = label;
 		this.divisionId = divisionId;
 		this.leagueTypeId = leagueTypeId;

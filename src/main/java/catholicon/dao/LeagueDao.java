@@ -21,7 +21,7 @@ public class LeagueDao {
 		Matcher m = allLeagueRegExp.matcher(page);
 		if(m.find()) {
 			String group = m.group(1) + ']';
-			LeagueListParser parser = new LeagueListParser(group);
+			LeagueListParser parser = new LeagueListParser(group, seasonStartYear);
 			return parser.getLeagues();
 		}
 		

@@ -9,7 +9,7 @@ public class LeagueListParser {
 	
 	private List<League> leagues = new LinkedList<>();
 
-	public LeagueListParser(String data) {
+	public LeagueListParser(String data, int season) {
 		String[] parts = data.split("\\},\\{");
 		
 		for (String part : parts) {
@@ -27,7 +27,7 @@ public class LeagueListParser {
 					leagueTypeId = Integer.parseInt(splitProps[1]);
 				}
 			}
-			leagues.add(new League(label, leagueTypeId));
+			leagues.add(new League(label, leagueTypeId, season));
 		}
 	}
 

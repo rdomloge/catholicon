@@ -25,28 +25,16 @@
 	<div id="menuDiv">
 		<ul class="w3-navbar w3-border w3-green w3-xxlarge">
 			<li><a href="#" class="w3-red">Home</a></li>
-			<li ng-controller="leagueListController" class="w3-dropdown-hover" ng-show="leagues">
-				<a href="javascript:void(0)">Leagues</a>
-				<div class="w3-dropdown-content w3-card-4">
-					<a ng-repeat="league in leagues" href="#/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
-				</div>
-			</li>
 			<li ng-controller="seasonListController" class="w3-dropdown-hover w3-right w3-blue" ng-show="seasons">
 				<a href="javascript:void(0)">Seasons</a>
 				<div class="w3-dropdown-content w3-card-4">
 					<a ng-repeat="season in seasons.seasons" 
-						href="?season={{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}">
+						href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
 						{{season.seasonStartYear}}
 					</a>
 				</div>
 			</li>
 		</ul>
-	</div>
-	
-	<div ng-controller="breadcrumbController"S>
-		<div ng-repeat="crumb in trail">
-			<p>{{crumb}}</p>
-		</div>
 	</div>
 	
 	
@@ -64,17 +52,22 @@
 	<script>
 		myApp.config(function ($routeProvider) {
 			$routeProvider
-				.when('/matches/:teamId/list',
+				.when('/season/:season', 
+					{
+						templateUrl: 'partials/leagueList.html',
+						controller: 'leagueListController'
+					})
+				.when('/season/:season/matches/:teamId/list',
 					{
 						templateUrl: 'partials/matches.html',
 						controller: 'matchListController'
 					})
-				.when('/league/:leagueTypeId/divisions',
+				.when('/season/:season/league/:leagueTypeId/divisions',
 					{
 						templateUrl: 'partials/divisionList.html',
 						controller: 'leagueDivisionListController'
 					})
-				.when('/league/:leagueTypeId/division/:divisionId', 
+				.when('/season/:season/league/:leagueTypeId/division/:divisionId', 
 					{
 						templateUrl: 'partials/division.html',
 						controller: 'divisionController'

@@ -1,0 +1,5 @@
+<div ng-controller="leagueListController" class="" ng-show="leagues">
+	<span ng-repeat="league in leagues">
+		<a href="#/season/{{league.season}}/league/{{league.leagueTypeId}}/divisions">{{league.label}}</a>
+	</span>
+</li>
