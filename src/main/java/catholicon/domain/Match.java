@@ -1,8 +1,5 @@
 package catholicon.domain;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,12 +8,12 @@ import catholicon.parser.ParserUtil;
 public class Match {
 	
 	private static final String QUOTED_STRING_REGEXP = "\".*\"";
-	private static final String QUOTED_DATE_REGEXP = "new Date\\(\"(.*?)\"\\)";
+	
 	private static final String SCORE_REGEXP = "\\>(\\d\\s-\\s\\d)\\<";
 	private static final String FIXTURE_REGEXP = "openMatchCard\\((.*?),";
 	private static final Pattern scorePattern = Pattern.compile(SCORE_REGEXP);
 	private static final Pattern fixturePattern = Pattern.compile(FIXTURE_REGEXP);
-	private static final Pattern datePattern = Pattern.compile(QUOTED_DATE_REGEXP);
+	
 	
 	
 	private String awayTarget;
@@ -55,21 +52,7 @@ public class Match {
 				homeTarget = value;
 			}
 			else if("matchDate".equals(pair[0].trim())) {
-				String dateString;
-				Matcher m = datePattern.matcher(pair[1]);
-				if(m.find()) {
-					dateString = m.group(1);
-				}
-				else {
-					dateString = pair[1];
-				}
-				try {
-					Date dateObj = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
-					date = new SimpleDateFormat("yyyy-MM-dd").format(dateObj);
-				} 
-				catch (ParseException e) {
-					date = dateString;
-				}
+				date = ParserUtil.parseDate(pair[1]);
 			}
 			else if("fixtureStatus".equals(pair[0].trim())) {
 				this.fixtureStatus = Integer.parseInt(pair[1]);
@@ -145,4 +128,15 @@ public class Match {
 		return fixtureId;
 	}
 	
+	public boolean isPlayed() {
+		return 5 == getFixtureStatus();
+	}
+	
+	public boolean isUnPlayed() {
+		return 3 == getFixtureStatus();
+	}
+	
+	public boolean isUnConfirmed() {
+		return 4 == getFixtureStatus();
+	}
 }

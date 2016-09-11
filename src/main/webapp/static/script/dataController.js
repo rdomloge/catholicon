@@ -32,6 +32,11 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
+	factory.getUpcomingFixtures = function() {
+		$log.info("Loading upcoming fixtures");
+		return $http.get('/catholicon/frontpage/upcoming');
+	};
+	
 	return factory;
 });
 
@@ -87,6 +92,13 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	dataFactory.getSeasonList().success(function(data) {
 		$log.debug("Data received for seasons", data);
 		$scope.seasons = data;
+	});
+});
+
+myApp.controller('frontPageController', function($scope, $log, dataFactory) {
+	dataFactory.getUpcomingFixtures().success(function(data) {
+		$log.debug("Data received for upcoming fixtures", data);
+		$scope.upcomingFixtures = data;
 	});
 });
 
