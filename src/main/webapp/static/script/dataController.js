@@ -3,23 +3,23 @@ var myApp = angular.module('app', ['ngRoute']);
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
 	
-	factory.getLeagues = function() {
+	factory.getLeagues = function(season) {
 		$log.info("Fetching list of leagues");
-		return $http.get('/catholicon/season/{SEASON}/league/list');	
+		return $http.get('/catholicon/season/'+season+'/league/list');	
 	}
 	
 	factory.getSeasonList = function() {
 		return $http.get('/catholicon/season/list');
 	}
 	
-	factory.getMatches = function(team) {
+	factory.getMatches = function(team, season) {
 		$log.info("Loading matches for "+team);
-		return $http.get('/catholicon/season/{SEASON}/matches/'+team+'/list');
+		return $http.get('/catholicon/season/'+season+'/matches/'+team+'/list');
 	}
 	
-	factory.getDivisions = function(leagueTypeId) {
+	factory.getDivisions = function(leagueTypeId, season) {
 		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get('/catholicon/season/{SEASON}/league/'+leagueTypeId+'/divisions');	
+		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+'/divisions');	
 	}
 
 	factory.getMatchCard = function(fixtureId) {
@@ -27,9 +27,14 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/matchcard/'+fixtureId);
 	}
 	
-	factory.getDivision = function(leagueTypeId, divisionId) {
+	factory.getDivision = function(leagueTypeId, divisionId, season) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
-		return $http.get('/catholicon/season/{SEASON}/league/'+leagueTypeId+"/division/"+divisionId);
+		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
+	};
+	
+	factory.getUpcomingFixtures = function() {
+		$log.info("Loading upcoming fixtures");
+		return $http.get('/catholicon/frontpage/upcoming');
 	};
 	
 	return factory;
@@ -37,43 +42,31 @@ myApp.factory('dataFactory', function($http, $log) {
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
-	dataFactory.getDivisions($routeParams.leagueTypeId).success(function(data) {
+	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).success(function(data) {
 		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
 		$scope.divisions = data;
 	});
 }]);
 
 myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
-	$log.debug("Fetching league "+$routeParams.leagueTypeId);
-	dataFactory.getLeague($routeParams.leagueTypeId).success(function (data){
+	$log.debug("Fetching league "+$routeParams.leagueTypeId+' for season '+$routeParams.season);
+	
+	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).success(function (data){
 		$log.debug("Data received for league", data);
 		$scope.league = data;
 	});
 }]);
 
 myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', '$location', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope, $location) {
-	dataFactory.getLeagues().success(function(data) {
+	dataFactory.getLeagues($routeParams.season).success(function(data) {
 		$log.debug("Data received for leagues", data);
 		$scope.leagues = data;
 	});
 }]);
 
-function getQueryParams(qs) {
-    qs = qs.split('+').join(' ');
-
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-
-    return params;
-}
-
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId).success(function(data) {
+	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId, $routeParams.season)
+			.success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
 		$rootScope.$broadcast('breadcrumb');
@@ -81,7 +74,7 @@ myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '
 }]);
 
 myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	dataFactory.getMatches($routeParams.teamId).success(function(data) {
+	dataFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
 		$log.debug("Data received for matches", data);
 		$scope.matches = data;
 	});
@@ -102,17 +95,19 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	});
 });
 
+myApp.controller('frontPageController', function($scope, $log, dataFactory) {
+	dataFactory.getUpcomingFixtures().success(function(data) {
+		$log.debug("Data received for upcoming fixtures", data);
+		$scope.upcomingFixtures = data;
+	});
+});
+
 myApp.config([ "$httpProvider", function($httpProvider) {
 	$httpProvider.interceptors.push(function($q, $log, $rootScope) {
 		return {
 			'request' : function(config) {
 				$log.debug('Request started');
 				$rootScope.$broadcast('started-thinking');
-				var query = getQueryParams(document.location.search);
-				var seasonStartYear = query.season ? query.season : 0;
-				if(config.url.includes('{SEASON}')) {
-					config.url = config.url.replace('{SEASON}', seasonStartYear);
-				}
 				return config;
 			},
 
@@ -152,6 +147,6 @@ myApp.controller('breadcrumbController', function($scope, $log) {
 	
 	$scope.$on('breadcrumb', function(event) {
 		$log.debug('New breadcrumb', event);
-		$scope.trail.push("New:");
+//		$scope.trail.push("New:");
 	});
 });

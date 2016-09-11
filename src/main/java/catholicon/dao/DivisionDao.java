@@ -32,7 +32,7 @@ public class DivisionDao {
 			String label = option.text();
 			int id = Integer.parseInt(option.attr("value"));
 			if(0 == id) continue;
-			divisions.add(new DivisionDescriptor(label, id, leagueTypeId));
+			divisions.add(new DivisionDescriptor(label, id, leagueTypeId, seasonStartYear));
 		}
 		
 		return divisions;
@@ -69,6 +69,6 @@ public class DivisionDao {
 			teamPositions.add(new TeamPosition(teamName, teamId, played, matchesWon, rubbersWon, rubbersLost, gamesWon, gamesLost, pointsFor));
 		}
 		
-		return new Division(teamPositions.toArray(new TeamPosition[teamPositions.size()]));
+		return new Division(teamPositions.toArray(new TeamPosition[teamPositions.size()]), seasonStartYear);
 	}
 }

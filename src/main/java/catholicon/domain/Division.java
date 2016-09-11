@@ -1,6 +1,6 @@
 package catholicon.domain;
 
-public class Division {
+public class Division extends Seasonal {
 	
 	public static class TeamPosition {
 		private String team;
@@ -80,8 +80,8 @@ public class Division {
 	private TeamPosition[] positions;
 
 	
-	public Division(TeamPosition[] positions) {
-		super();
+	public Division(TeamPosition[] positions, int season) {
+		super(season);
 		this.positions = positions;
 	}
 

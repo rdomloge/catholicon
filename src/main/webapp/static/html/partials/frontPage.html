@@ -1,0 +1,8 @@
+<ul ng-controller="frontPageController" class="w3-ul w3-card-4">
+	<li ng-repeat="fixture in upcomingFixtures" class="w3-padding-16">
+		<img src="http://www.freeiconspng.com/uploads/shuttlecock-icon-32.jpg" 
+			class="w3-left w3-circle" style="width:60px">
+	    <span class="w3-large">{{fixture.homeTeamName}} vs {{fixture.awayTeamName}}</span><br>
+	    <span>{{fixture.fixtureDate}}</span>
+	</li>
+</ul>
