@@ -1,19 +1,19 @@
-<h1>Divisions</h1>
 
 <div ng-repeat="division in divisions" class="w3-card-12" 
 		style="float:left; margin:20px">
+	
+	<a class="w3-xxlarge"  style="text-decoration: none;"
+		href="#/season/{{division.season}}/league/{{division.leagueTypeId}}/division/{{division.divisionId}}">
 		
 	<header class="w3-container w3-teal w3-xxlarge">
 		{{division.label}}
 	</header>	
 	
-	
+		
 	<img src="../img/trophy.jpg" style="width:100%" class="w3-padding-medium"/>
-	
-	<div class="w3-container w3-center">
-		<a class="w3-btn-floating w3-teal w3-xxlarge" 
-				href="#/season/{{division.season}}/league/{{division.leagueTypeId}}/division/{{division.divisionId}}">
-			<i class="material-icons">arrow_forward</i>
-		</a>
-	</div>
+		
+	<footer class="w3-container w3-center w3-teal rd-division-card-footer">
+		<i class="w3-btn-floating material-icons">arrow_forward</i>
+	</footer>
+	</a>
 </div>

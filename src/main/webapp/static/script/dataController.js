@@ -69,7 +69,6 @@ myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '
 			.success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
-		$rootScope.$broadcast('breadcrumb');
 	});
 }]);
 
@@ -143,10 +142,4 @@ myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log)
 
 myApp.controller('breadcrumbController', function($scope, $log) {
 	
-	$scope.trail = [ ];
-	
-	$scope.$on('breadcrumb', function(event) {
-		$log.debug('New breadcrumb', event);
-//		$scope.trail.push("New:");
-	});
 });
