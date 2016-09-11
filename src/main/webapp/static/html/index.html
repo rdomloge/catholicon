@@ -22,28 +22,42 @@
 </head>
 <body>
 
-	<div id="menuDiv">
-		<ul class="w3-navbar w3-border w3-green w3-xxlarge">
-			<li><a href="#/" class="w3-red">Home</a></li>
-			<li ng-controller="seasonListController" class="w3-dropdown-hover w3-right w3-blue" ng-show="seasons">
-				<a href="javascript:void(0)">Seasons</a>
-				<div class="w3-dropdown-content w3-card-4">
-					<a ng-repeat="season in seasons.seasons" 
-						href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
-						{{season.seasonStartYear}}
-					</a>
-				</div>
-			</li>
-		</ul>
-	</div>
+<nav class="w3-sidenav w3-collapse w3-blue" style="width:200px" id="mySidenav">
+	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close">Close &times;</a> 
+	<a href="#/" onclick="w3_close()" class="w3-red" style="font-size:105%">Home</a>
+	<div ng-controller="seasonListController">
+		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
+			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
+			{{season.seasonStartYear}}
+		</a>
+	</div> 
+</nav>
+<script>
+	function w3_open() {
+	  document.getElementById("mySidenav").style.display = "block";
+	}
+	function w3_close() {
+	  document.getElementById("mySidenav").style.display = "none";
+	}
+</script>
+
+<div class="w3-main" style="margin-left:200px">
+	<span class="w3-opennav w3-hide-large" onclick="w3_open()">&#9776;</span>
 	
+	<span class="siteTitle">Catholicon - <i>Better BDBL</i></span>
 	
 	<div id="thinking" ng-class="contentLoading ? 'slide-in' : 'slide-out'" 
 			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-orange" ng-controller="thinkingController">
 		<img alt="Loading..."
-			height="100px" 
+			height="50px" 
 			src="../img/loading.gif">
 	</div> 
+	
+	<div id="breadcrumbs" ng-controller="breadcrumbController">
+		<span ng-repeat="crumb in breadcrumbs">
+			{{crumb.name}}
+		</span>
+	</div>
 	
 
 	<!-- Placeholder for views -->
@@ -86,8 +100,7 @@
 		});
 		
 	</script>
-	
-	
+</div>
 	
 </body>
 </html>

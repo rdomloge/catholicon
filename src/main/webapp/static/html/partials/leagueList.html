@@ -1,12 +1,12 @@
 <div class="" ng-show="leagues">
 	<div ng-repeat="league in leagues" class="w3-container w3-card-12"
-			style="float:left; margin:20px">
-		<img src="../img/group.png"
-			 style="width:100%"/>
-		<div class="w3-container w3-center">
-			<a href="#/season/{{league.season}}/league/{{league.leagueTypeId}}/divisions">
+			style="float:left; margin:20px; width:200px">
+		<a href="#/season/{{league.season}}/league/{{league.leagueTypeId}}/divisions">
+			<img src="../img/group.png"
+				 style="width:100%"/>
+			<div class="w3-container w3-center">
 				{{league.label}}
-			</a>
-		</div>
-	</>
+			</div>
+		</a>
+	</div>
 </div>

@@ -31,5 +31,17 @@ html,body {
 		font-size: 110%;
 		line-height: 2.5em;
 	}
+	
+	.siteTitle {
+		font-size: 60%;
+	}
+	
+	.rd-nav-close {
+		font-size: 65%;
+	}
+	
+	.rd-division-card-footer {
+		line-height: 1em;
+		padding: 6px 0 2px 0;
 }
 
