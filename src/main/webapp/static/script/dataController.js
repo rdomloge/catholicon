@@ -140,6 +140,10 @@ myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log)
 	});
 }]);
 
-myApp.controller('breadcrumbController', function($scope, $log) {
-	
+myApp.directive('rdMatchCardRow', function() {
+	return {
+		templateUrl: 'partials/matchCardRow.html'
+	};
 });
+
+

@@ -1,0 +1,38 @@
+<th class="w3-blue" style="width: 55px">
+	<div class="rd-home-players"
+		ng-click="name1 = matchCard.homePlayers[0]; name2 = matchCard.homePlayers[1]"
+		style="transform: rotate(-90deg); position: absolute; height: 50px; line-height: 1em; margin: 0 auto">
+		{{matchCard.homePlayers[0] | limitTo: 10}} <br />
+		{{matchCard.homePlayers[1] | limitTo: 10}}
+	</div>
+</th>
+<td class="table-data"
+	ng-class="{'w3-blue':matchCard.homeTeamWins[0], 'w3-green':!matchCard.homeTeamWins[0]}">
+	<p>{{matchCard.rubbers[0].firstGame.homeScore}} -
+		{{matchCard.rubbers[0].firstGame.awayScore}}</p>
+	<p>{{matchCard.rubbers[0].secondGame.homeScore}} -
+		{{matchCard.rubbers[0].secondGame.awayScore}}</p>
+	<p ng-show="matchCard.rubbers[0].finalGame.homeScore > 0 && matchCard.rubbers[0].finalGame.awayScore > 0">
+		{{matchCard.rubbers[0].finalGame.homeScore}} -
+		{{matchCard.rubbers[0].finalGame.awayScore}}</p>
+</td>
+<td class="table-data"
+	ng-class="{'w3-blue':matchCard.homeTeamWins[1], 'w3-green':!matchCard.homeTeamWins[1]}">
+	<p>{{matchCard.rubbers[1].firstGame.homeScore}} -
+		{{matchCard.rubbers[1].firstGame.awayScore}}</p>
+	<p>{{matchCard.rubbers[1].secondGame.homeScore}} -
+		{{matchCard.rubbers[1].secondGame.awayScore}}</p>
+	<p ng-show="matchCard.rubbers[1].finalGame.homeScore > 0 && matchCard.rubbers[1].finalGame.awayScore > 0">
+		{{matchCard.rubbers[1].finalGame.homeScore}} -
+		{{matchCard.rubbers[1].finalGame.awayScore}}</p>
+</td>
+<td class="table-data"
+	ng-class="{'w3-blue':matchCard.homeTeamWins[2], 'w3-green':!matchCard.homeTeamWins[2]}">
+	<p>{{matchCard.rubbers[2].firstGame.homeScore}} -
+		{{matchCard.rubbers[2].firstGame.awayScore}}</p>
+	<p>{{matchCard.rubbers[2].secondGame.homeScore}} -
+		{{matchCard.rubbers[2].secondGame.awayScore}}</p>
+	<p ng-show="matchCard.rubbers[2].finalGame.homeScore > 0 && matchCard.rubbers[2].finalGame.awayScore > 0">
+		{{matchCard.rubbers[2].finalGame.homeScore}} -
+		{{matchCard.rubbers[2].finalGame.awayScore}}</p>
+</td>
