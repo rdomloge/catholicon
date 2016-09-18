@@ -78,14 +78,20 @@ public class Division extends Seasonal {
 
 	
 	private TeamPosition[] positions;
+	private int leagueTypeId;
 
 	
-	public Division(TeamPosition[] positions, int season) {
+	public Division(TeamPosition[] positions, int season, int leagueTypeId) {
 		super(season);
 		this.positions = positions;
+		this.leagueTypeId = leagueTypeId;
 	}
 
 	public TeamPosition[] getPositions() {
 		return positions;
+	}
+
+	public int getLeagueTypeId() {
+		return leagueTypeId;
 	} 
 }

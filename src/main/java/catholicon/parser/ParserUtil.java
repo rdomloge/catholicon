@@ -32,7 +32,8 @@ public class ParserUtil {
 				return dateString;
 			}
 		}
-		throw new RuntimeException("Could not parse "+s);
+		
+		return "TBA";
 	}
 
 	public static String[] splitOnUnquotedCommas(String s) {

@@ -37,7 +37,24 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/frontpage/upcoming');
 	};
 	
+	factory.getPlayerReport = function(season, league) {
+		$log.info("Loading player report");
+		return $http.get('/catholicon/season/'+season+'/league/'+league+'/report');
+	};
+	
 	return factory;
+});
+
+myApp.factory('errorHandlerFactory', function($log, $rootScope) {
+	var fac = {};
+	fac.getHandler = function() {
+		return function(error, status, headers, config, statusText) {
+			$log.debug('Call failed ('+status+'): ', config.url);
+			$rootScope.$broadcast('finished-thinking');
+			$rootScope.$broadcast('error-occurred');
+		};
+	}	
+	return fac;
 });
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
@@ -94,11 +111,19 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	});
 });
 
-myApp.controller('frontPageController', function($scope, $log, dataFactory) {
+myApp.controller('frontPageController', ['$scope', '$log', 'dataFactory', 'errorHandlerFactory', function($scope, $log, dataFactory, errorHandlerFactory) {
 	dataFactory.getUpcomingFixtures().success(function(data) {
 		$log.debug("Data received for upcoming fixtures", data);
 		$scope.upcomingFixtures = data;
+	}).error(errorHandlerFactory.getHandler());
+}]);
+
+myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {
+	dataFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {
+		$log.debug("Data received for playerReport", data);
+		$scope.playerReport = data;
 	});
+	
 });
 
 myApp.config([ "$httpProvider", function($httpProvider) {
@@ -137,6 +162,14 @@ myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log)
 			$scope.contentLoading = false;
 			$log.debug('Hiding throbber');
 		}
+	});
+}]);
+
+myApp.controller('errorController', ['$scope', '$log', function($scope, $log) {
+	
+	$scope.$on('error-occurred', function(event) {
+		$log.debug('Showing error notification');
+		$scope.errorOccurred = true;
 	});
 }]);
 

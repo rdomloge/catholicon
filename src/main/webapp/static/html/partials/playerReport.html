@@ -1,0 +1,22 @@
+<table id="playerReportTable">
+	<tr>
+		<th style="width: 10%">#</th>
+		<th>Player Name</th>
+		<th>Team Name</th>
+		<th class="rd-mobile-div-hidden-cols">Division</th>
+		<th class="rd-mobile-div-hidden-cols">Matches Played</th>
+		<th class="rd-mobile-div-hidden-cols">Rubbers</th>
+		<th class="rd-mobile-div-hidden-cols">Rating</th>
+		<th style="width: 10%">Pts</th>
+	</tr>
+	<tr ng-repeat="player in playerReport">
+		<td>{{player.position}}</td>
+		<td>{{player.playerName}}</td>
+		<td>{{player.teamName}}</td>
+		<td class="rd-mobile-div-hidden-cols">{{player.division}}</td>
+		<td class="rd-mobile-div-hidden-cols">{{player.matchesPlayed}}</td>
+		<td class="rd-mobile-div-hidden-cols">{{player.rubbers}}</td>
+		<td class="rd-mobile-div-hidden-cols">{{player.rating}}</td>
+		<td class="w3-right">{{player.pointsDiff}}</td>
+	</tr>
+</table>

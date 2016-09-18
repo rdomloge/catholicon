@@ -52,10 +52,10 @@ public class Match {
 				homeTarget = value;
 			}
 			else if("matchDate".equals(pair[0].trim())) {
-				date = ParserUtil.parseDate(pair[1]);
+				date = ParserUtil.parseDate(value);
 			}
 			else if("fixtureStatus".equals(pair[0].trim())) {
-				this.fixtureStatus = Integer.parseInt(pair[1]);
+				this.fixtureStatus = Integer.parseInt(value);
 			}
 			else if("fixtureLink".equals(pair[0].trim())) {
 				fixtureText = pair[1];

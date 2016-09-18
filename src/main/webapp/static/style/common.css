@@ -16,11 +16,23 @@ html,body {
 		width=100%;
 	}
 	
+	table#playerReportTable, table#playerReportTable td {
+		font-size: 65%;
+		width=100%;
+		table-layout: fixed;
+		word-wrap: break-word;
+	}
+	
 	table#matchcard {
 		font-size: 65%;
 	}
 	
 	table#leagueTable th {
+		font-size: 55%;
+		width=100%;
+	}
+	
+	table#playerReportTable th {
 		font-size: 55%;
 		width=100%;
 	}

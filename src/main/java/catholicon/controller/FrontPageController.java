@@ -15,7 +15,6 @@ public class FrontPageController {
 	
 	@RequestMapping("/frontpage/upcoming")
 	public List<UpcomingFixture> getUpcomingFixtures() throws DaoException {
-		
 		return new FrontPageDao().getUpcomingFixtures();
 	}
 }

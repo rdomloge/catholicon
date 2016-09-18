@@ -22,9 +22,9 @@
 </head>
 <body>
 
-<nav class="w3-sidenav w3-collapse w3-blue" style="width:200px" id="mySidenav">
+<nav class="w3-sidenav w3-collapse" style="width:200px; background-color:#1881d4; color:white" id="mySidenav">
 	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close">Close &times;</a> 
-	<a href="#/" onclick="w3_close()" class="w3-red" style="font-size:105%">Home</a>
+	<a href="#/" onclick="w3_close()" class="" style="font-size:105%; background-color:coral">Home</a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
 			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
@@ -51,7 +51,14 @@
 		<img alt="Loading..."
 			height="50px" 
 			src="../img/loading.gif">
-	</div> 
+	</div>
+	
+	<div id="error" ng-class="errorOccurred ? 'slide-in' : ''" class="" ng-controller="errorController">
+		<img alt="Error"
+			height="50px" 
+			src="../img/error.gif"/>
+		<p class="w3-closebtn" ng-click="errorOccurred = false">&times;</p>
+	</div>
 	
 
 	<!-- Placeholder for views -->
@@ -74,6 +81,11 @@
 					{
 						templateUrl: 'partials/divisionList.html',
 						controller: 'leagueDivisionListController'
+					})
+				.when('/season/:season/league/:league/report',
+					{
+						templateUrl: 'partials/playerReport.html',
+						controller: 'playerReportController'
 					})
 				.when('/season/:season/league/:leagueTypeId/division/:divisionId', 
 					{

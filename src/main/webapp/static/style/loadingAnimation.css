@@ -1,8 +1,11 @@
 #thinking {
     position: absolute;
-    /*width: 100px;
-    height: 100px;
-    background: blue;*/
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+}
+
+#error {
+    position: absolute;
     transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
 }

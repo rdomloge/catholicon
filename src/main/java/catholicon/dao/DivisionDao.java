@@ -69,6 +69,6 @@ public class DivisionDao {
 			teamPositions.add(new TeamPosition(teamName, teamId, played, matchesWon, rubbersWon, rubbersLost, gamesWon, gamesLost, pointsFor));
 		}
 		
-		return new Division(teamPositions.toArray(new TeamPosition[teamPositions.size()]), seasonStartYear);
+		return new Division(teamPositions.toArray(new TeamPosition[teamPositions.size()]), seasonStartYear, Integer.parseInt(leagueTypeId));
 	}
 }
