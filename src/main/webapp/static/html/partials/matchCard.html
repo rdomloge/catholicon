@@ -1,143 +1,48 @@
-<div class="w3-container w3-card-4">
+<div ng-controller="matchCardController"  class="w3-container w3-card-4">
 
-<header class="w3-center">
-	<h2>{{matchCard.homeTeam}} 
-	<br/>
-	Vs
-	<br/>
-	{{matchCard.awayTeam}}</h2>
-</header>
+	<header class="w3-center">
+		<h2>
+			{{matchCard.homeTeam}} <br /> Vs <br /> {{matchCard.awayTeam}}
+		</h2>
+	</header>
 
-<header class="">
-	<h3>{{matchCard.matchDate}}</h3>
-</header>
+	<header class="">
+		<h3>{{matchCard.matchDate}}</h3>
+	</header>
 
-<header class="matchcardScore">
-	<h1>{{matchCard.homeScore}} - {{matchCard.awayScore}}</h1>
-</header>
+	<header class="matchcardScore">
+		<h1>{{matchCard.homeScore}} - {{matchCard.awayScore}}</h1>
+	</header>
 
-<div class="w3-modal" ng-style="name1 ? {display: 'block'} : {display: 'none'}">
-	<div class="w3-modal-content">
-		<div class="w3-container">
-			<p>{{name1}} <br/> {{name2}}</p>
-			<p class="w3-closebtn" ng-click="name1 = null; name2 = null">&times;</p>
+	<div class="w3-modal"
+		ng-style="name1 ? {display: 'block'} : {display: 'none'}">
+		<div class="w3-modal-content">
+			<div class="w3-container">
+				<p>
+					{{name1}} <br /> {{name2}}
+				</p>
+				<p class="w3-closebtn" ng-click="name1 = null; name2 = null">&times;</p>
+			</div>
 		</div>
 	</div>
-</div>
 
-<table id="matchcard" class="">
-  <tr>
-  	<th>
-  	</th>
-    <th class="w3-green">
-    	{{matchCard.awayPlayers[0]}}
-    	<br/>
-    	{{matchCard.awayPlayers[1]}}
-    </th>
-    <th class="w3-green">
-    	{{matchCard.awayPlayers[2]}}
-    	<br/>
-    	{{matchCard.awayPlayers[3]}}
-    </th>
-    
-    <th class="table-data w3-green">
-    	{{matchCard.awayPlayers[4]}}
-    	<br/>
-    	{{matchCard.awayPlayers[5]}}
-    </th>
-  </tr>
-  <tr>
-    <th class="w3-blue" style="width: 55px">
-    	<div class="rd-home-players" ng-click="name1 = matchCard.homePlayers[0]; name2 = matchCard.homePlayers[1]"
-    		style="transform: rotate(-90deg); position: absolute; height: 50px; line-height: 1em; margin: 0 auto">
-	    	{{matchCard.homePlayers[0] | limitTo: 10}}
-	    	<br/>
-	    	{{matchCard.homePlayers[1] | limitTo: 10}}
-    	</div>
-    </th>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[0], 'w3-green':!matchCard.homeTeamWins[0]}">
-    	<p>{{matchCard.rubbers[0].firstGame.homeScore}} - {{matchCard.rubbers[0].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[0].secondGame.homeScore}} - {{matchCard.rubbers[0].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[0].finalGame.homeScore > 0 && matchCard.rubbers[0].finalGame.awayScore > 0">
-			{{matchCard.rubbers[0].finalGame.homeScore}} - {{matchCard.rubbers[0].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[1], 'w3-green':!matchCard.homeTeamWins[1]}">
-    	<p>{{matchCard.rubbers[1].firstGame.homeScore}} - {{matchCard.rubbers[1].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[1].secondGame.homeScore}} - {{matchCard.rubbers[1].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[1].finalGame.homeScore > 0 && matchCard.rubbers[1].finalGame.awayScore > 0">
-			{{matchCard.rubbers[1].finalGame.homeScore}} - {{matchCard.rubbers[1].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[2], 'w3-green':!matchCard.homeTeamWins[2]}">
-    	<p>{{matchCard.rubbers[2].firstGame.homeScore}} - {{matchCard.rubbers[2].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[2].secondGame.homeScore}} - {{matchCard.rubbers[2].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[2].finalGame.homeScore > 0 && matchCard.rubbers[2].finalGame.awayScore > 0">
-			{{matchCard.rubbers[2].finalGame.homeScore}} - {{matchCard.rubbers[2].finalGame.awayScore}}
-		</p>
-    </td>
-  </tr>
-  <tr>
-    <th class="w3-blue" style="width: 55px">
-    	<div class="rd-home-players" ng-click="name1 = matchCard.homePlayers[2]; name2 = matchCard.homePlayers[3]" 
-    	style="transform: rotate(-90deg); position: absolute; height: 50px; line-height: 1em; margin: 0 auto">
-	    	{{matchCard.homePlayers[2] | limitTo: 10}}
-	    	<br/>
-	    	{{matchCard.homePlayers[3] | limitTo: 10}}
-	    </div>
-    </th>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[3], 'w3-green':!matchCard.homeTeamWins[3]}">
-    	<p>{{matchCard.rubbers[3].firstGame.homeScore}} - {{matchCard.rubbers[3].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[3].secondGame.homeScore}} - {{matchCard.rubbers[3].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[3].finalGame.homeScore > 0 && matchCard.rubbers[3].finalGame.awayScore > 0">
-			{{matchCard.rubbers[3].finalGame.homeScore}} - {{matchCard.rubbers[3].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[4], 'w3-green':!matchCard.homeTeamWins[4]}">
-    	<p>{{matchCard.rubbers[4].firstGame.homeScore}} - {{matchCard.rubbers[4].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[4].secondGame.homeScore}} - {{matchCard.rubbers[4].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[4].finalGame.homeScore > 0 && matchCard.rubbers[4].finalGame.awayScore > 0">
-			{{matchCard.rubbers[4].finalGame.homeScore}} - {{matchCard.rubbers[4].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[5], 'w3-green':!matchCard.homeTeamWins[5]}">
-    	<p>{{matchCard.rubbers[5].firstGame.homeScore}} - {{matchCard.rubbers[5].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[5].secondGame.homeScore}} - {{matchCard.rubbers[5].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[5].finalGame.homeScore > 0 && matchCard.rubbers[5].finalGame.awayScore > 0">
-			{{matchCard.rubbers[5].finalGame.homeScore}} - {{matchCard.rubbers[5].finalGame.awayScore}}
-		</p>
-    </td>
-  </tr>
-  <tr>
-    <th class="w3-blue" style="width: 55px">
-    	<div class="rd-home-players" ng-click="name1 = matchCard.homePlayers[4]; name2 = matchCard.homePlayers[5]" 
-    	style="transform: rotate(-90deg); position: absolute; height: 50px; line-height: 1em; margin: 0 auto">
-	    	{{matchCard.homePlayers[4] | limitTo: 10}}
-	    	<br/>
-	    	{{matchCard.homePlayers[5] | limitTo: 10}}
-	    </div>
-    </th>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[6], 'w3-green':!matchCard.homeTeamWins[6]}">
-    	<p>{{matchCard.rubbers[6].firstGame.homeScore}} - {{matchCard.rubbers[6].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[6].secondGame.homeScore}} - {{matchCard.rubbers[6].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[6].finalGame.homeScore > 0 && matchCard.rubbers[6].finalGame.awayScore > 0">
-			{{matchCard.rubbers[6].finalGame.homeScore}} - {{matchCard.rubbers[6].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[7], 'w3-green':!matchCard.homeTeamWins[7]}">
-    	<p>{{matchCard.rubbers[7].firstGame.homeScore}} - {{matchCard.rubbers[7].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[7].secondGame.homeScore}} - {{matchCard.rubbers[7].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[7].finalGame.homeScore > 0 && matchCard.rubbers[7].finalGame.awayScore > 0">
-			{{matchCard.rubbers[7].finalGame.homeScore}} - {{matchCard.rubbers[7].finalGame.awayScore}}
-		</p>
-    </td>
-    <td class="table-data" ng-class="{'w3-blue':matchCard.homeTeamWins[8], 'w3-green':!matchCard.homeTeamWins[8]}">
-    	<p>{{matchCard.rubbers[8].firstGame.homeScore}} - {{matchCard.rubbers[8].firstGame.awayScore}}</p>
-		<p>{{matchCard.rubbers[8].secondGame.homeScore}} - {{matchCard.rubbers[8].secondGame.awayScore}}</p>
-		<p ng-show="matchCard.rubbers[8].finalGame.homeScore > 0 && matchCard.rubbers[8].finalGame.awayScore > 0">
-			{{matchCard.rubbers[8].finalGame.homeScore}} - {{matchCard.rubbers[8].finalGame.awayScore}}
-		</p>
-    </td>
-  </tr>
-</table>
+	<table id="matchcard" class="" ng-show="matchCard">
+		<tr>
+			<th></th>
+			<th class="w3-green">{{matchCard.awayPlayers[0]}} <br />
+				{{matchCard.awayPlayers[1]}}
+			</th>
+			<th class="w3-green">{{matchCard.awayPlayers[2]}} <br />
+				{{matchCard.awayPlayers[3]}}
+			</th>
+
+			<th class="table-data w3-green">{{matchCard.awayPlayers[4]}} <br />
+				{{matchCard.awayPlayers[5]}}
+			</th>
+		</tr>
+		
+		<tr ng-show="matchCard.homeScore" ng-repeat="rowNum in [0,1,2]" 
+			match-card="matchCard" row-num="rowNum"
+			match-card-row> </match-card-row>
+	</table>
 </div>

@@ -17,6 +17,8 @@ public class Loader {
 			HttpClient client = new HttpClient();
 			client.executeMethod(method);
 			byte[] responseBody = method.getResponseBody();
+			int statusCode = method.getStatusCode();
+			if(statusCode != 200) throw new DaoException("Server responded with a bad code: "+statusCode);
 			String page = new String(responseBody);
 			
 			return page;

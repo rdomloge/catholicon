@@ -96,14 +96,6 @@ myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', 
 	});
 }]);
 
-myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory, $routeParams) {
-	$log.debug("Getting match card for "+$routeParams.fixtureId);
-	dataFactory.getMatchCard($routeParams.fixtureId).success(function(data) {
-		$log.debug("Data received for match card", data);
-		$scope.matchCard = data;
-	});
-});
-
 myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	dataFactory.getSeasonList().success(function(data) {
 		$log.debug("Data received for seasons", data);
@@ -130,13 +122,11 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 	$httpProvider.interceptors.push(function($q, $log, $rootScope) {
 		return {
 			'request' : function(config) {
-				$log.debug('Request started');
 				$rootScope.$broadcast('started-thinking');
 				return config;
 			},
 
 			'response' : function(response) {
-				$log.debug('Response received');
 				$rootScope.$broadcast('finished-thinking');
 				return response;
 			}
@@ -151,16 +141,13 @@ myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log)
 	
 	$scope.$on('started-thinking', function(event) {
 		thinkers++;
-		$log.debug('Started thinking', thinkers);
 		$scope.contentLoading = true;
 	});
 	
 	$scope.$on('finished-thinking', function(event) {
 		thinkers--;
-		$log.debug('Finished thinking', thinkers);
 		if(thinkers < 1) {
 			$scope.contentLoading = false;
-			$log.debug('Hiding throbber');
 		}
 	});
 }]);
@@ -172,11 +159,3 @@ myApp.controller('errorController', ['$scope', '$log', function($scope, $log) {
 		$scope.errorOccurred = true;
 	});
 }]);
-
-myApp.directive('rdMatchCardRow', function() {
-	return {
-		templateUrl: 'partials/matchCardRow.html'
-	};
-});
-
-

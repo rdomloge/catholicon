@@ -1,22 +1,11 @@
-<ul class="w3-ul w3-card-4">
+<ul ng-controller="frontPageController" class="w3-ul w3-card-4">
 	<li ng-repeat="fixture in upcomingFixtures" class="w3-padding-16">
 		<img src="../img/upcomingFixtureIcon.png" 
 			class="w3-left w3-circle" style="width:60px; margin: 10px; margin-left: 2px">
 	    <div class="w3-large">{{fixture.homeTeamName}}</div>
 	    <div class="w3-large">{{fixture.awayTeamName}}</div>
 	    <div class="w3-xlarge">{{fixture.fixtureDate | date: 'EEE, dd MMM'}}</div>
-	    <div ng-switch on="fixture.ttg">
-	    	<div class="w3-panel w3-red" style="margin-left: 50px"
-	    			ng-switch-when="0">
-	    		Today
-	    	</div>
-	    	<div class="w3-panel w3-yellow"  style="margin-left: 50px"
-	    		ng-switch-when="1">
-	    		Tomorrow
-	    	</div>
-	    	<div class="w3-panel" style="margin-left: 50px"
-	    		ng-switch-default>
-	    		{{fixture.ttg | date : 'd' }} days from now</div>
-	    </div>
+	    
+	    <nice-date date="fixture.fixtureDate"/>
 	</li>
 </ul>

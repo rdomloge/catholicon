@@ -7,6 +7,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
 	<script src="../script/dataController.js"></script>
+	<script src="../script/niceDate.js"></script>
+	<script src="../script/matchCard.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -19,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../style/league.css">
 	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
 	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
+	<link rel="stylesheet" type="text/css" href="../style/niceDate.css">
 </head>
 <body>
 
@@ -94,15 +97,17 @@
 					})
 				.when('/matchcard/:fixtureId',
 					{
-						templateUrl: 'partials/matchCard.html',
-						controller: 'matchCardController'
+						templateUrl: 'partials/matchCard.html'
+					})
+				.when('/test',
+					{
+						templateUrl: 'test.html'
 					})
 				.when('/',
 					{
-						templateUrl: 'partials/frontPage.html',
-						controller: 'frontPageController'
+						templateUrl: 'partials/frontPage.html'
 					})
-				.otherwise({ redirectTo: '#/'});
+				.otherwise({ redirectTo: '#'});
 		});
 		
 	</script>
