@@ -3,16 +3,18 @@
 <head>
 	<title>Catholicon - better BDBL</title>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
 	<script src="../script/dataController.js"></script>
 	<script src="../script/niceDate.js"></script>
 	<script src="../script/matchCard.js"></script>
+	<script src="../script/frontPageController.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="https://fonts.googleapis.com/css?family=Titillium+Web|Open+Sans+Condensed:300" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Titillium+Web|Open+Sans+Condensed:300" rel="stylesheet">
 	
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../style/w3.css">
@@ -22,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
 	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
 	<link rel="stylesheet" type="text/css" href="../style/niceDate.css">
+	<link rel="stylesheet" type="text/css" href="../style/filter-animation.css">
 </head>
 <body>
 
@@ -49,7 +52,7 @@
 	
 	<span class="siteTitle">Catholicon - <i>Better BDBL</i></span>
 	
-	<div id="thinking" ng-class="contentLoading ? 'slide-in' : 'slide-out'" 
+	<div id="thinking" ng-class="contentLoading ? 'slide-in-from-left' : 'slide-out-from-left'" 
 			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-orange" ng-controller="thinkingController">
 		<img alt="Loading..."
 			height="50px" 

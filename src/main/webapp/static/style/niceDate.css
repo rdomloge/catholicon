@@ -30,8 +30,9 @@
 }
 
 .nd-2d {
-	color: black;
-    font-size: 75%;
+	color: darkgray;
+    font-style: italic;
+    font-size: 65%;
     border-width: thin;
     border-style: dotted;
     border-right-style: hidden;
@@ -47,8 +48,10 @@
 }
 
 .nd-future {
-	border-style: dashed;
+	color: darkgray;
+    font-style: italic;
+    font-size: 65%;
     border-width: thin;
-    font-size: 50%;
-    color: gray;
+    border-style: dotted;
+    border-right-style: hidden;
 }

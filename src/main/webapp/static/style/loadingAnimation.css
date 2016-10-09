@@ -1,3 +1,8 @@
+#filterInfo {
+	background: deepskyblue;
+	color: #fff;
+}
+
 #thinking {
     position: absolute;
     transform: translateX(-100%);
@@ -10,30 +15,30 @@
     -webkit-transform: translateX(-100%);
 }
 
-.slide-in {
-    animation: slide-in 0.5s forwards;
-    -webkit-animation: slide-in 0.5s forwards;
+.slide-in-from-left {
+    animation: slide-in-from-left 0.5s forwards;
+    -webkit-animation: slide-in-from-left 0.5s forwards;
 }
 
-.slide-out {
-    animation: slide-out 0.5s forwards;
-    -webkit-animation: slide-out 0.5s forwards;
+.slide-out-from-left {
+    animation: slide-out-from-left 0.5s forwards;
+    -webkit-animation: slide-out-from-left 0.5s forwards;
 }
     
-@keyframes slide-in {
+@keyframes slide-in-from-left {
     100% { transform: translateX(0%); }
 }
 
-@-webkit-keyframes slide-in {
+@-webkit-keyframes slide-in-from-left {
     100% { -webkit-transform: translateX(0%); }
 }
     
-@keyframes slide-out {
+@keyframes slide-out-from-left {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-100%); }
 }
 
-@-webkit-keyframes slide-out {
+@-webkit-keyframes slide-out-from-left {
     0% { -webkit-transform: translateX(0%); }
     100% { -webkit-transform: translateX(-100%); }
 }

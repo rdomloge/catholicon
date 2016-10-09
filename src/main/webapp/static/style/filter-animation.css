@@ -1,0 +1,35 @@
+#filterInfo {
+    position: absolute;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+	background: deepskyblue;
+	color: #fff;
+}
+
+.slide-in-from-right {
+    animation: slide-in-from-right 2s forwards;
+    -webkit-animation: slide-in-from-right 2s forwards;
+}
+
+.slide-out-from-right {
+    animation: slide-out-from-right 2s forwards;
+    -webkit-animation: slide-out-from-right 2s forwards;
+}
+    
+@keyframes slide-in-from-right {
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-in-from-right {
+    100% { -webkit-transform: translateX(0%); }
+}
+    
+@keyframes slide-out-from-right {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
+}
+
+@-webkit-keyframes slide-out-from-right {
+    0% { -webkit-transform: translateX(0%); }
+    100% { -webkit-transform: translateX(100%); }
+}

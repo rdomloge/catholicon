@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ngRoute']);
+var myApp = angular.module('app', ['ngRoute', 'ngCookies']);
 
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
@@ -102,13 +102,6 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 		$scope.seasons = data;
 	});
 });
-
-myApp.controller('frontPageController', ['$scope', '$log', 'dataFactory', 'errorHandlerFactory', function($scope, $log, dataFactory, errorHandlerFactory) {
-	dataFactory.getUpcomingFixtures().success(function(data) {
-		$log.debug("Data received for upcoming fixtures", data);
-		$scope.upcomingFixtures = data;
-	}).error(errorHandlerFactory.getHandler());
-}]);
 
 myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {
 	dataFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {

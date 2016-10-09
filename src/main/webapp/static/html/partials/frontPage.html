@@ -1,5 +1,28 @@
+
+<div class="w3-dropdown-hover w3-right">
+  <img src="../img/filter.png" alt="Filter" style="width: 1.6em">
+  <div class="w3-dropdown-content w3-panel w3-card-8" style="width:300px; right:0">
+    <form class="w3-container w3-margin-bottom">
+		<input class="w3-input" ng-model="search" name="fixtureFilter"/>
+		<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
+	</form>
+  </div>
+</div>
+
+<div id="filterInfo" style="right: 0" ng-show="search" 
+		ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'" 
+		class="w3-panel w3-blue w3-card-8">
+	<img alt="Filter info"
+		height="25px" 
+		src="../img/filter.png"/>
+	<span class="w3-small filter-writing">
+		Filter: '{{search}}'
+	</span>
+</div>
+
+
 <ul ng-controller="frontPageController" class="w3-ul w3-card-4">
-	<li ng-repeat="fixture in upcomingFixtures" class="w3-padding-16">
+	<li ng-repeat="fixture in upcomingFixtures | filter: search" class="w3-padding-16">
 		<img src="../img/upcomingFixtureIcon.png" 
 			class="w3-left w3-circle" style="width:60px; margin: 10px; margin-left: 2px">
 	    <div class="w3-large">{{fixture.homeTeamName}}</div>
