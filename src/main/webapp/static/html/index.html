@@ -28,9 +28,9 @@
 </head>
 <body>
 
-<nav class="w3-sidenav w3-collapse" style="width:200px; background-color:#1881d4; color:white" id="mySidenav">
-	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close">Close &times;</a> 
-	<a href="#/" onclick="w3_close()" class="" style="font-size:105%; background-color:coral">Home</a>
+<nav class="w3-sidenav w3-collapse w3-card-8" style="width:200px; background-color:#f5f4f4; color:#a55b5b" id="mySidenav">
+	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close"><i class="material-icons">&#xE14C;</i></a> 
+	<a href="#/" onclick="w3_close()" class="" style="font-size:105%"><i class="material-icons">&#xE88A;</i></a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
 			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">

@@ -6,6 +6,13 @@
 	color: #fff;
 }
 
+.filter-writing {
+	font-size: 0.5em;
+	margin-top: 0.6em;
+	float: right;
+	padding: 0 10px 0 10px;
+}
+
 .slide-in-from-right {
     animation: slide-in-from-right 2s forwards;
     -webkit-animation: slide-in-from-right 2s forwards;

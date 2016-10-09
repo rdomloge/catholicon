@@ -1,6 +1,6 @@
 
 <div class="w3-dropdown-hover w3-right">
-  <img src="../img/filter.png" alt="Filter" style="width: 1.6em">
+  <i class="material-icons" style="padding: 3px">&#xE152;</i>
   <div class="w3-dropdown-content w3-panel w3-card-8" style="width:300px; right:0">
     <form class="w3-container w3-margin-bottom">
 		<input class="w3-input" ng-model="search" name="fixtureFilter"/>
@@ -12,12 +12,10 @@
 <div id="filterInfo" style="right: 0" ng-show="search" 
 		ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'" 
 		class="w3-panel w3-blue w3-card-8">
-	<img alt="Filter info"
-		height="25px" 
-		src="../img/filter.png"/>
-	<span class="w3-small filter-writing">
+	<i class="material-icons" style="padding: 3px">&#xE152;</i>
+	<div class="filter-writing">
 		Filter: '{{search}}'
-	</span>
+	</div>
 </div>
 
 
