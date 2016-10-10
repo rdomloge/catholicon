@@ -10,7 +10,7 @@
 		<h3>{{matchCard.matchDate}}</h3>
 	</header>
 
-	<header class="matchcardScore">
+	<header class="matchcardScore" ng-click="hideNames()">
 		<h1>{{matchCard.homeScore}} - {{matchCard.awayScore}}</h1>
 	</header>
 	
@@ -21,7 +21,7 @@
 				<p>
 					{{name1}} <br /> {{name2}}
 				</p>
-				<p class="w3-closebtn" ng-click="name1 = undefined; name2 = undefined">&times;</p>
+				<p class="w3-closebtn" ng-click="hideNames()">&times;</p>
 			</div>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 		</tr>
 		
 		<tr ng-show="matchCard.homeScore" ng-repeat="rowNum in [0,1,2]" 
-			match-card="matchCard" row-num="rowNum"
+			match-card="matchCard" row-num="rowNum" name1="" name2=""
 			match-card-row> </match-card-row>
 	</table>
 </div>

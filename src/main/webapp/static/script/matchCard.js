@@ -4,6 +4,16 @@ myApp.controller('matchCardController', function ($scope, $log, $http, dataFacto
 		$log.debug("Data received for match card", data);
 		$scope.matchCard = data;
 	});
+
+	$scope.showNames = function(name1, name2) {
+		$scope.name1 = name1;
+		$scope.name2 = name2;
+	};
+	
+	$scope.hideNames = function() {
+		$scope.name1 = undefined;
+		$scope.name2 = undefined;
+	};
 });
 
 myApp.directive('matchCardRow', function($log, $rootScope) {
@@ -13,7 +23,8 @@ myApp.directive('matchCardRow', function($log, $rootScope) {
 		templateUrl: 'partials/matchCardRow.html',
 		scope: {
 			matchCard: "=",
-			rowNum: "="
+			rowNum: "=",
+			showNames: "&"
 		},
 		controller: function($scope) {
 			$scope.rubber = function(colNum) {
@@ -21,10 +32,11 @@ myApp.directive('matchCardRow', function($log, $rootScope) {
 					return $scope.matchCard.rubbers[($scope.rowNum*3)+colNum];
 				}
 			}
-			$scope.showNames = function(name1, name2) {
-				$rootScope.name1 = name1;
-				$rootScope.name2 = name2;
-			};
+			
+			$scope.test = function() {
+				$log.debug($scope.name1);
+				$scope.showNames('this', 'that');
+			}
 		},
 		link: function($scope) {
 			$log.debug('Rubber', $scope.rubber());
