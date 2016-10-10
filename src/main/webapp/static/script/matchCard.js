@@ -6,7 +6,7 @@ myApp.controller('matchCardController', function ($scope, $log, $http, dataFacto
 	});
 });
 
-myApp.directive('matchCardRow', function($log) {
+myApp.directive('matchCardRow', function($log, $rootScope) {
 	return {
 		restrict : 'AE',
 		replace : true,
@@ -21,8 +21,9 @@ myApp.directive('matchCardRow', function($log) {
 					return $scope.matchCard.rubbers[($scope.rowNum*3)+colNum];
 				}
 			}
-			$scope.parp = function() {
-				return 'blam';
+			$scope.showNames = function(name1, name2) {
+				$rootScope.name1 = name1;
+				$rootScope.name2 = name2;
 			};
 		},
 		link: function($scope) {

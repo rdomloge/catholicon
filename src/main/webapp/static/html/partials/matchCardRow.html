@@ -1,7 +1,7 @@
 <tr>
 	<th class="w3-blue" style="width: 55px">
 		<div class="rd-home-players"
-			ng-click="name1 = matchCard.homePlayers[rowNum*colNum]; name2 = matchCard.homePlayers[1]"
+			ng-click="showNames(matchCard.homePlayers[rowNum], matchCard.homePlayers[rowNum+1])"
 			style="transform: rotate(-90deg); position: absolute; height: 50px; line-height: 1em; margin: 0 auto">
 			{{matchCard.homePlayers[(rowNum*2)] | limitTo: 10}} <br />
 			{{matchCard.homePlayers[(rowNum*2)+1] | limitTo: 10}}

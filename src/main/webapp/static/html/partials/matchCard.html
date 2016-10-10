@@ -13,7 +13,7 @@
 	<header class="matchcardScore">
 		<h1>{{matchCard.homeScore}} - {{matchCard.awayScore}}</h1>
 	</header>
-
+	
 	<div class="w3-modal"
 		ng-style="name1 ? {display: 'block'} : {display: 'none'}">
 		<div class="w3-modal-content">
@@ -21,7 +21,7 @@
 				<p>
 					{{name1}} <br /> {{name2}}
 				</p>
-				<p class="w3-closebtn" ng-click="name1 = null; name2 = null">&times;</p>
+				<p class="w3-closebtn" ng-click="name1 = undefined; name2 = undefined">&times;</p>
 			</div>
 		</div>
 	</div>
