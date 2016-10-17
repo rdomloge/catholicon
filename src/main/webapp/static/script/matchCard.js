@@ -1,18 +1,13 @@
-myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory, $routeParams) {
+myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory, $routeParams, $rootScope) {
 	$log.debug("Getting match card for "+$routeParams.fixtureId);
 	dataFactory.getMatchCard($routeParams.fixtureId).success(function(data) {
 		$log.debug("Data received for match card", data);
 		$scope.matchCard = data;
 	});
 
-	$scope.showNames = function(name1, name2) {
-		$scope.name1 = name1;
-		$scope.name2 = name2;
-	};
-	
 	$scope.hideNames = function() {
-		$scope.name1 = undefined;
-		$scope.name2 = undefined;
+		$rootScope.name1 = undefined;
+		$rootScope.name2 = undefined;
 	};
 });
 
@@ -24,7 +19,6 @@ myApp.directive('matchCardRow', function($log, $rootScope) {
 		scope: {
 			matchCard: "=",
 			rowNum: "=",
-			showNames: "&"
 		},
 		controller: function($scope) {
 			$scope.rubber = function(colNum) {
@@ -32,6 +26,11 @@ myApp.directive('matchCardRow', function($log, $rootScope) {
 					return $scope.matchCard.rubbers[($scope.rowNum*3)+colNum];
 				}
 			}
+			
+			$scope.showNames = function(name1, name2) {
+				$rootScope.name1 = name1;
+				$rootScope.name2 = name2;
+			};
 			
 			$scope.test = function() {
 				$log.debug($scope.name1);
