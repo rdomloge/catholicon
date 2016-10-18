@@ -21,30 +21,27 @@
 	</div>
 </div>
 
-<div class="w3-modal"
+<div class="w3-container w3-modal"
 	ng-style="showFixtureDetailsDialogue ? {display: 'block'} : {display: 'none'}">
 	<div class="w3-modal-content w3-card-8">
 		<header class="w3-container w3-blue">
 			<h1>Fixture details</h1>
 		</header>
-		<div class="w3-container">
-			<section class="w3-container w3-center">
-			    <span class="w3-large w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small">(home)</span>
-			    <br/>
-			    <span class="w3-large w3-center">{{fixtureDetails.awayTeam}}</span>
-			</section>
-			    <br/>
-				<span class="w3-small">{{fixtureDetails.venue}}</span>
-			    <br/>
-			<section class="w3-container w3-center">
-				<span class="w3-large">{{fixtureDetails.matchTime}} {{fixtureDetails.matchDate}}</span>
-			    <br/>
-				<span class="w3-xlarge">{{fixtureDetails.numberOfCourts}} courts</span>
-			    <br/>
-				<span class="w3-small">{{fixtureDetails.league}}</span>
-			</section>
+		<section class="w3-container w3-center">
+		    <span class="w3-xlarge w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small"> (H)</span>
+		    <br/>
+		    <span class="w3-xlarge w3-center">{{fixtureDetails.awayTeam}}</span><span class="w3-small"> (A)</span>
+		</section>
+		<section class="w3-margin w3-center">
+			<p class="w3-small">{{fixtureDetails.venue}}</p>
+		</section>
+		<section class="w3-blue w3-container w3-center">
+			<span class="w3-xlarge">{{fixtureDetails.matchTime}}</span><span class="w3-large">{{fixtureDetails.matchDate}}</span>
+		    <br/>
+			<span class="w3-xlarge">{{fixtureDetails.numberOfCourts}} courts</span>
+		    <br/>
 			<p class="w3-closebtn" ng-click="hideFixtureDetails()">&times;</p>
-		</div>
+		</section>
 	</div>
 </div>
 

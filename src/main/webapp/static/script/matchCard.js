@@ -31,11 +31,6 @@ myApp.directive('matchCardRow', function($log, $rootScope) {
 				$rootScope.name1 = name1;
 				$rootScope.name2 = name2;
 			};
-			
-			$scope.test = function() {
-				$log.debug($scope.name1);
-				$scope.showNames('this', 'that');
-			}
 		},
 		link: function($scope) {
 			$log.debug('Rubber', $scope.rubber());

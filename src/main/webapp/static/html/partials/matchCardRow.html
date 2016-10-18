@@ -9,7 +9,6 @@
 	</th>
 	<td ng-repeat="colNum in [0,1,2]" class="table-data"
 		ng-class="{'w3-blue':matchCard.homeTeamWins[(rowNum*3)+colNum], 'w3-green':!matchCard.homeTeamWins[(rowNum*3)+colNum]}">
-		<p ng-click="test()">TEST</p>
 		<p>{{rubber(colNum).firstGame.homeScore}} 
 			- 
 			{{rubber(colNum).firstGame.awayScore}}</p>
