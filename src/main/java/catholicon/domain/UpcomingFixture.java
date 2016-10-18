@@ -11,14 +11,16 @@ public class UpcomingFixture {
 	
 	private String fixtureDate;
 	
+	private int fixtureId;
+	
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	
-	public UpcomingFixture(String homeTeamName, String awayTeamName, String fixtureDate) {
-		super();
+	public UpcomingFixture(String homeTeamName, String awayTeamName, String fixtureDate, int fixtureId) {
 		this.homeTeamName = homeTeamName;
 		this.awayTeamName = awayTeamName;
 		this.fixtureDate = fixtureDate;
+		this.fixtureId = fixtureId;
 	}
 
 	public String getHomeTeamName() {
@@ -33,6 +35,10 @@ public class UpcomingFixture {
 		return fixtureDate;
 	}
 	
+	public int getFixtureId() {
+		return fixtureId;
+	}
+
 	public String getTtg() {
 		try {
 			long ttg = format.parse(fixtureDate).getTime() - System.currentTimeMillis();
@@ -49,6 +55,8 @@ public class UpcomingFixture {
 	@Override
 	public String toString() {
 		return "UpcomingFixture [homeTeamName=" + homeTeamName + ", awayTeamName=" + awayTeamName + ", fixtureDate="
-				+ fixtureDate + "]";
+				+ fixtureDate + ", fixtureId=" + fixtureId + "]";
 	}
+
+	
 }

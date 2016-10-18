@@ -43,7 +43,8 @@ public class FrontPageDao {
 					UpcomingFixture fixture = new UpcomingFixture(
 									map.get("homeTeamName"), 
 									map.get("awayTeamName"), 
-									ParserUtil.parseDate(map.get("matchDate")));
+									ParserUtil.parseDate(map.get("matchDate")),
+									Integer.parseInt(map.get("fixtureID")));
 					fixtures.add(fixture);
 				}
 			}

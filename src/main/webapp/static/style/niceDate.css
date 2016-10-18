@@ -1,3 +1,7 @@
+.niceDateContainer {
+	clear: left;
+}
+
 .nd-common {
 	margin-left: 35px;
     padding-left: 5px;
