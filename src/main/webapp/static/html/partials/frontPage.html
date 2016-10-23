@@ -1,60 +1,61 @@
-
-<div class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
-  <i ng-click="showFilter = !showFilter" class="material-icons" style="padding: 3px">&#xE152;</i>
-  
-  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
-  		style="width:300px; right:0">
-    
-    <form class="w3-container w3-margin-bottom">
-		<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
-		<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
-	</form>
-  </div>
-</div>
-
-<div id="filterInfo" style="right: 0" ng-show="search" 
-		ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'" 
-		class="w3-panel w3-blue w3-card-8">
-	<i class="material-icons" style="padding: 3px">&#xE152;</i>
-	<div class="filter-writing">
-		Filter: '{{frontPageFilter}}'
-	</div>
-</div>
-
-<div class="w3-container w3-modal"
-	ng-style="showFixtureDetailsDialogue ? {display: 'block'} : {display: 'none'}">
-	<div class="w3-modal-content w3-card-8">
-		<header class="w3-container w3-blue">
-			<h1>Fixture details</h1>
-		</header>
-		<section class="w3-container w3-center">
-		    <span class="w3-xlarge w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small"> (H)</span>
-		    <br/>
-		    <span class="w3-xlarge w3-center">{{fixtureDetails.awayTeam}}</span><span class="w3-small"> (A)</span>
-		</section>
-		<section class="w3-margin w3-center">
-			<p class="w3-small">{{fixtureDetails.venue}}</p>
-		</section>
-		<section class="w3-blue w3-container w3-center">
-			<span class="w3-xlarge">{{fixtureDetails.matchTime}}</span><span class="w3-large">{{fixtureDetails.matchDate}}</span>
-		    <br/>
-			<span class="w3-xlarge">{{fixtureDetails.numberOfCourts}} courts</span>
-		    <br/>
-			<p class="w3-closebtn" ng-click="hideFixtureDetails()">&times;</p>
-		</section>
-	</div>
-</div>
-
-
-<ul ng-controller="frontPageController" class="w3-ul w3-card-4">
-	<li ng-repeat="fixture in upcomingFixtures | filter: frontPageFilter" class="w3-padding-16">
-		<img src="../img/upcomingFixtureIcon.png" 
-			class="w3-left w3-circle" style="width:60px; margin: 10px; margin-left: 2px">
-	    <div class="w3-large">{{fixture.homeTeamName}}</div>
-	    <div class="w3-large">{{fixture.awayTeamName}}</div>
-	    <div class="w3-xlarge w3-left">{{fixture.fixtureDate | date: 'EEE, dd MMM'}}</div>
-	    <img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)" class="frontPageInfoIcon"/>
+<div ng-controller="frontPageController">
+	<div class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
+	  <img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="padding: 3px; width: 30px">
+	  
+	  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
+	  		style="width:300px; right:0">
 	    
-	    <nice-date date="fixture.fixtureDate"/>
-	</li>
-</ul>
+	    <form class="w3-container w3-margin-bottom">
+			<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
+			<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
+		</form>
+	  </div>
+	</div>
+	
+	<div id="filterInfo" style="right: 0" ng-show="frontPageFilter && !showFixtureDetailsDialogue"
+			ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'" 
+			class="w3-panel w3-blue w3-card-8">
+		<img src="../img/filter.png" width="30px" alt="filter"/>
+		<div class="filter-writing">
+			Filter: '{{frontPageFilter}}'
+		</div>
+	</div>
+	
+	<div class="w3-container w3-modal"
+		ng-style="showFixtureDetailsDialogue ? {display: 'block'} : {display: 'none'}">
+		<div class="w3-modal-content w3-card-8">
+			<header class="w3-container w3-blue">
+				<h1>Fixture details</h1>
+			</header>
+			<section class="w3-container w3-center">
+			    <span class="w3-xlarge w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small"> (H)</span>
+			    <br/>
+			    <span class="w3-xlarge w3-center">{{fixtureDetails.awayTeam}}</span><span class="w3-small"> (A)</span>
+			</section>
+			<section class="w3-margin w3-center">
+				<p class="w3-small">{{fixtureDetails.venue}}</p>
+			</section>
+			<section class="w3-blue w3-container w3-center">
+				<span class="w3-xlarge">{{fixtureDetails.matchTime}}</span><span class="w3-large">{{fixtureDetails.matchDate}}</span>
+			    <br/>
+				<span class="w3-xlarge">{{fixtureDetails.numberOfCourts}} courts</span>
+			    <br/>
+				<p class="w3-closebtn" ng-click="hideFixtureDetails()"><img src="../img/close.png" alt="close" width="35px"/></p>
+			</section>
+		</div>
+	</div>
+	
+	
+	<ul class="w3-ul w3-card-4">
+		<li ng-repeat="fixture in upcomingFixtures | filter: frontPageFilter" class="w3-padding-16">
+			<img src="../img/upcomingFixtureIcon.png" 
+				class="w3-left w3-circle" style="width:60px; margin: 10px; margin-left: 2px">
+		    <div class="w3-large">{{fixture.homeTeamName}}</div>
+		    <div class="w3-large">{{fixture.awayTeamName}}</div>
+		    <div class="w3-xlarge w3-left">{{fixture.fixtureDate | date: 'EEE, dd MMM'}}</div>
+		    <img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)" class="frontPageInfoIcon"/>
+		    
+		    <nice-date date="fixture.fixtureDate"/>
+		</li>
+	</ul>
+</div>

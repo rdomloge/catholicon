@@ -1,16 +1,34 @@
-myApp.controller('frontPageController', 
-		['$scope', '$log', 'dataFactory', 'errorHandlerFactory', '$cookies', '$rootScope', '$timeout',
-        function($scope, $log, dataFactory, errorHandlerFactory, $cookies, $rootScope, $timeout) {
+myApp.factory('frontPageFactory', function($http, $log) {
+	
+	var frontPageFactory = {};
+	
+	frontPageFactory.getUpcomingFixtures = function() {
+		$log.info("Loading upcoming fixtures");
+		return $http.get('/catholicon/frontpage/upcoming');
+	};
+	
+	frontPageFactory.getFixtureDetail = function(fixtureId) {
+		$log.info("Loading fixture detail for "+fixtureId);
+		return $http.get('/catholicon/fixture/'+fixtureId);
+	};
+	
+	return frontPageFactory;
+});
 
-	$rootScope.frontPageFilter = $cookies.get('front-page-search');
-	if(null != $rootScope.frontPageFilter) {
-		$rootScope.showFilteringMsg = true;
+
+myApp.controller('frontPageController', 
+		['$scope', '$log', 'frontPageFactory', 'errorHandlerFactory', '$cookies', '$timeout',
+        function($scope, $log, frontPageFactory, errorHandlerFactory, $cookies, $timeout) {
+
+	$scope.frontPageFilter = $cookies.get('front-page-search');
+	if(null != $scope.frontPageFilter) {
+		$scope.showFilteringMsg = true;
 		$timeout(function() {
-			$rootScope.showFilteringMsg = false;	
+			$scope.showFilteringMsg = false;	
 		}, 3000);
 	}
 	
-	dataFactory.getUpcomingFixtures().success(function(data) {
+	frontPageFactory.getUpcomingFixtures().success(function(data) {
 		$log.debug("Data received for upcoming fixtures", data);
 		$scope.upcomingFixtures = data;
 	}).error(errorHandlerFactory.getHandler());
@@ -21,16 +39,16 @@ myApp.controller('frontPageController',
 	});
 	
 	$scope.showFixture = function(fixtureId) {
-		$rootScope.showFixtureDetailsDialogue = true;
-		dataFactory.getFixtureDetail(fixtureId).success(function(data) {
+		$scope.showFixtureDetailsDialogue = true;
+		frontPageFactory.getFixtureDetail(fixtureId).success(function(data) {
 			$log.debug("Data received for fixture", data);
-			$rootScope.fixtureDetails = data;
+			$scope.fixtureDetails = data;
 		});
 	}
 	
-	$rootScope.hideFixtureDetails = function() {
-		$rootScope.showFixtureDetailsDialogue = false;
-		$rootScope.fixtureDetails = undefined;
+	$scope.hideFixtureDetails = function() {
+		$scope.showFixtureDetailsDialogue = false;
+		$scope.fixtureDetails = undefined;
 	}
 }]);
 

@@ -1,33 +1,35 @@
-<div ng-switch on="future" class="niceDateContainer">
-	<div ng-switch-when="false">
-		<div ng-if="daysDifference == 1" class="nd-common nd-yesterday">
-			Yesterday
+<div class="niceDateContainer">
+	<div ng-switch on="future">
+		<div ng-switch-when="false">
+			<div ng-if="daysDifference == 1" class="nd-common nd-yesterday">
+				Yesterday
+			</div>
+			<div ng-if="daysDifference == 2" class="nd-common nd-2da">
+				Couple of days ago
+			</div>
+			<div ng-if="daysDifference > 2 && daysDifference < 8" class="nd-common nd-Nda">
+				{{daysDifference}} days back
+			</div>
+			<div ng-if="daysDifference > 7" class="nd-common nd-old">
+				Back when the dinosaurs ruled the earth
+			</div>
+			<div ng-if="daysDifference == 0" class="nd-common nd-today">
+				Today
+			</div>
 		</div>
-		<div ng-if="daysDifference == 2" class="nd-common nd-2da">
-			Couple of days ago
-		</div>
-		<div ng-if="daysDifference > 2 && daysDifference < 8" class="nd-common nd-Nda">
-			{{daysDifference}} days back
-		</div>
-		<div ng-if="daysDifference > 7" class="nd-common nd-old">
-			Back when the dinosaurs ruled the earth
-		</div>
-		<div ng-if="daysDifference == 0" class="nd-common nd-today">
-			Today
-		</div>
-	</div>
-	<div ng-switch-when="true">
-		<div ng-if="daysDifference == 1" class="nd-common nd-tomorrow">
-			Tomorrow
-		</div>
-		<div ng-if="daysDifference == 2" class="nd-common nd-2d">
-			In a couple of days
-		</div>
-		<div ng-if="daysDifference > 2 && daysDifference < 8" class="nd-common nd-Nd">
-			{{daysDifference}} days from now
-		</div>
-		<div ng-if="daysDifference > 7" class="nd-common nd-future">
-			Ages
+		<div ng-switch-when="true">
+			<div ng-if="daysDifference == 1" class="nd-common nd-tomorrow">
+				Tomorrow
+			</div>
+			<div ng-if="daysDifference == 2" class="nd-common nd-2d">
+				In a couple of days
+			</div>
+			<div ng-if="daysDifference > 2 && daysDifference < 8" class="nd-common nd-Nd">
+				{{daysDifference}} days from now
+			</div>
+			<div ng-if="daysDifference > 7" class="nd-common nd-future">
+				Ages
+			</div>
 		</div>
 	</div>
 </div>

@@ -32,16 +32,6 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
-	factory.getUpcomingFixtures = function() {
-		$log.info("Loading upcoming fixtures");
-		return $http.get('/catholicon/frontpage/upcoming');
-	};
-	
-	factory.getFixtureDetail = function(fixtureId) {
-		$log.info("Loading fixture detail for "+fixtureId);
-		return $http.get('/catholicon/fixture/'+fixtureId);
-	};
-	
 	factory.getPlayerReport = function(season, league) {
 		$log.info("Loading player report");
 		return $http.get('/catholicon/season/'+season+'/league/'+league+'/report');
