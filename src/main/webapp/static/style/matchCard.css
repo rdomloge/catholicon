@@ -29,6 +29,11 @@ h1.rd-match-declaration {
 
 .rd-home-players {
 	line-height: 2em;
+	transform: rotate(-90deg) translateX(25px); 
+	position: absolute; 
+	height: 50px; 
+	line-height: 1em; 
+	margin: 0 auto
 }
 
 .matchcardScore {
