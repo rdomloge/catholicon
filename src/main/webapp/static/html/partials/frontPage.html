@@ -12,7 +12,7 @@
 	  </div>
 	</div>
 	
-	<div id="filterInfo" style="right: 0" ng-show="frontPageFilter && !showFixtureDetailsDialogue"
+	<div id="filterInfo" ng-show="frontPageFilter" style="right: 0px; transform: translateX(100%)"
 			ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'" 
 			class="w3-panel w3-blue w3-card-8">
 		<img src="../img/filter.png" width="30px" alt="filter"/>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	
-	<div class="w3-container w3-modal"
+	<div class="w3-container w3-modal" ng-cloak
 		ng-style="showFixtureDetailsDialogue ? {display: 'block'} : {display: 'none'}">
 		<div class="w3-modal-content w3-card-8">
 			<header class="w3-container w3-blue">

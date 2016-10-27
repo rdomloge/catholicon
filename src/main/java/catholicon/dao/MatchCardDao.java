@@ -16,6 +16,7 @@ public class MatchCardDao {
 	
 	private static final String urlTemplate = 
 			"http://bdbl.org.uk/Live/MatchCard6.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
+	private static final String NAME_WITHHELD = "Name withheld";
 	
 	public MatchCard load(String fixtureId) throws DaoException {
 		String url = String.format(urlTemplate, fixtureId);
@@ -42,8 +43,8 @@ public class MatchCardDao {
 			
 		}
 		
-		String[] awayPlayers = new String[6];
-		String[] homePlayers = new String[6];
+		String[] awayPlayers = preFillNamesWithWitheld(new String[6]);
+		String[] homePlayers = preFillNamesWithWitheld(new String[6]);
 		Elements players = doc.select("span.Boxed[id*=Player]");
 		for(int i=0; i < players.size(); i++) {
 			Element player = players.get(i);
@@ -78,6 +79,13 @@ public class MatchCardDao {
 		
 		return new MatchCard(scoreMap, homePlayers, awayPlayers, homeTeam, awayTeam, matchDate, 
 				homeScore, awayScore, homeTeamWins);
+	}
+	
+	private String[] preFillNamesWithWitheld(String[] empty) {
+		for (int i = 0; i < empty.length; i++) {
+			empty[i] = NAME_WITHHELD;
+		}
+		return empty;
 	}
 
 	

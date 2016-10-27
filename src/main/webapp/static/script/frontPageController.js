@@ -48,7 +48,6 @@ myApp.controller('frontPageController',
 	
 	$scope.hideFixtureDetails = function() {
 		$scope.showFixtureDetailsDialogue = false;
-		$scope.fixtureDetails = undefined;
 	}
 }]);
 
