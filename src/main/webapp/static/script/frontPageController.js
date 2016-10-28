@@ -23,8 +23,12 @@ myApp.controller('frontPageController',
 	$scope.frontPageFilter = $cookies.get('front-page-search');
 	if(null != $scope.frontPageFilter) {
 		$scope.showFilteringMsg = true;
+		$scope.filteringMsgVisible = true;
 		$timeout(function() {
-			$scope.showFilteringMsg = false;	
+			$scope.showFilteringMsg = false;
+			$timeout(function() {
+				$scope.filteringMsgVisible = false;
+			}, 2000);
 		}, 3000);
 	}
 	
