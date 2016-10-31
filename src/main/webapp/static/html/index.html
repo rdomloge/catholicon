@@ -11,6 +11,7 @@
 	<script src="../script/niceDate.js"></script>
 	<script src="../script/matchCard.js"></script>
 	<script src="../script/frontPageController.js"></script>
+	<script src="../script/secure.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -32,12 +33,18 @@
 	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close">
 		<img src="../img/close.png" alt="close" width="30px">
 	</a> 
-	<a href="#/" onclick="w3_close()" class="" style="font-size:105%">
+	<a href="#/" onclick="w3_close()">
 		<img src="../img/home.png" alt="home" width="30px">
+		Home
+	</a>
+	<a href="#/secure/login" onclick="w3_close()" ng-show="false">
+		<img src="../img/secure.png" alt="Secure area" width="30px"/>
+		Login
 	</a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
 			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
+			<img src="../img/seasonIcon.png" alt="Season" width="30px"/>
 			{{season.seasonStartYear}}
 		</a>
 	</div> 
@@ -63,11 +70,13 @@
 			src="../img/loading.gif">
 	</div>
 	
-	<div id="error" ng-class="errorOccurred ? 'slide-in' : ''" class="" ng-controller="errorController">
+	<div id="error" ng-class="errorOccurred ? 'slide-in-from-left' : ''" class="" ng-controller="errorController">
 		<img alt="Error"
 			height="50px" 
-			src="../img/error.gif"/>
-		<p class="w3-closebtn" ng-click="errorOccurred = false">&times;</p>
+			src="../img/disconnect.gif"/>
+		<img src="../img/close.png" alt="dismiss" width="35px" 
+			style="transform: translateY(20px) translateX(-14px); background: white"
+			ng-click="errorOccurred = undefined"/>
 	</div>
 	
 
@@ -113,6 +122,10 @@
 				.when('/',
 					{
 						templateUrl: 'partials/frontPage.html'
+					})
+				.when('/secure/login', 
+					{
+						templateUrl: 'partials/secure/login.html'
 					})
 				.otherwise({ redirectTo: '#'});
 		});

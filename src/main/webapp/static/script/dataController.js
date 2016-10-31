@@ -117,6 +117,13 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 			'response' : function(response) {
 				$rootScope.$broadcast('finished-thinking');
 				return response;
+			},
+			
+			// optional method
+			'responseError': function(rejection) {
+				$rootScope.$broadcast('finished-thinking');
+			    $rootScope.$broadcast('error-occurred');
+			    return $q.reject(rejection);
 			}
 		};
 	});
