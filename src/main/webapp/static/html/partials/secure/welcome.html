@@ -1,0 +1,15 @@
+Welcome!
+
+<h1>Awaiting confirmation</h1>
+<div  ng-repeat="item in welcomePageItems | filter:item.cardStatus='AWAITING_CONFIRMATION'">
+	<div>
+		{{item.homeTeam}} {{item.awayTeam}} {{item.date}}
+	</div>
+</div>
+
+<h1>Awaiting entry</h1>
+<div  ng-repeat="item in welcomePageItems | filter:item.cardStatus='AWAITING_ENTRY'">
+	<div>
+		{{item.homeTeam}} {{item.awayTeam}} {{item.date}}
+	</div>
+</div>

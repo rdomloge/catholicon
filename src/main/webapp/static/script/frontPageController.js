@@ -4,12 +4,12 @@ myApp.factory('frontPageFactory', function($http, $log) {
 	
 	frontPageFactory.getUpcomingFixtures = function() {
 		$log.info("Loading upcoming fixtures");
-		return $http.get('/catholicon/frontpage/upcoming');
+		return $http.get(Config.BASE_URL+'/frontpage/upcoming');
 	};
 	
 	frontPageFactory.getFixtureDetail = function(fixtureId) {
 		$log.info("Loading fixture detail for "+fixtureId);
-		return $http.get('/catholicon/fixture/'+fixtureId);
+		return $http.get(Config.BASE_URL+'/fixture/'+fixtureId);
 	};
 	
 	return frontPageFactory;

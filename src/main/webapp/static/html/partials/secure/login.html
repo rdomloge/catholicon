@@ -1,32 +1,64 @@
-<form name="form" ng-controller="LoginController" class="w3-container css-form" novalidate>
-	<div class="w3-card-4">
-	
-		<header class="w3-container w3-blue">
-		  <h1>Login</h1>
-		</header>
-		
-		<div class="w3-padding w3-text-blue">
-			<label style="font-size: 60%">Username</label> 
-			<input type="text" class="w3-input" ng-model="user.name" name="uname" required="" />
-			<br />
-			<div ng-show="form.$submitted || form.uName.$touched">
-				<div ng-show="form.uname.$error.required">Tell us your name.</div>
-			</div>
-		
-			<label style="font-size: 60%">Password</label> 
-			<input type="password" class="w3-input" ng-model="user.password" name="pword" required="" />
-			<br />
-			<div ng-show="form.$submitted || form.uName.$touched">
-				<div ng-show="form.uname.$error.required">Tell us your name.</div>
+<div class="w3-container">
+	<!-- The Modal -->
+	<div id="id01" class="w3-modal w3-center">
+		<div class="w3-modal-content">
+			<div class="w3-container">
+				<img src="../img/loggingIn.gif" width="200px"/>
+				<p class="w3-center">Logging in..</p>
 			</div>
 		</div>
-		
-		<footer class="w3-container w3-blue">
-			<h1 class="w3-right">
-				<img src="../img/repeat.png" ng-click="reset(form)" alt="Restart" width="30px"/>
-				<img src="../img/done.png" ng-click="login()" alt="Restart" width="30px"/>
-			</h1>
-		</footer>
-	
 	</div>
-</form>
+	
+	<div id="loginSuccess" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+			<div class="w3-container">
+				<p>Logged in</p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="loginFailed" class="w3-modal">
+		<div class="w3-modal-content w3-animate-left">
+			<div class="w3-container">
+				<p>Login failed</p>
+			</div>
+		</div>
+	</div>
+	
+	<form name="form" ng-controller="LoginController"
+		class="w3-container css-form" novalidate>
+		<div class="w3-card-4">
+	
+			<header class="w3-container w3-blue">
+				<h1>Login</h1>
+			</header>
+	
+			<div class="w3-padding w3-text-blue">
+				<label style="font-size: 60%">Username</label> <input type="text"
+					class="w3-input" ng-model="user.name" name="uname" required="" /> <br />
+				<div ng-show="form.$submitted || form.uName.$touched">
+					<div ng-show="form.uname.$error.required">Tell us your name.</div>
+				</div>
+	
+				<label style="font-size: 60%">Password</label> <input type="password"
+					class="w3-input" ng-model="user.password" name="pword" required="" />
+				<br />
+				<div ng-show="form.$submitted || form.uName.$touched">
+					<div ng-show="form.uname.$error.required">Tell us your name.</div>
+				</div>
+			</div>
+	
+			<footer class="w3-container w3-blue">
+				<p style="font-size: 45%; float: left; color: gold">
+					This feature is in beta testing.
+					<br/> 
+					Best leave it alone.
+				</p>
+				<h1 class="w3-right">
+					<img src="../img/done.png" ng-click="login()" alt="Restart" width="30px" />
+				</h1>
+			</footer>
+	
+		</div>
+	</form>
+</div>

@@ -5,36 +5,37 @@ myApp.factory('dataFactory', function($http, $log) {
 	
 	factory.getLeagues = function(season) {
 		$log.info("Fetching list of leagues");
-		return $http.get('/catholicon/season/'+season+'/league/list');	
+		return $http.get(Config.BASE_URL+'/season/'+season+'/league/list');	
 	}
 	
 	factory.getSeasonList = function() {
-		return $http.get('/catholicon/season/list');
+		$log.info("Loading seasons list");
+		return $http.get(Config.BASE_URL+'/season/list');
 	}
 	
 	factory.getMatches = function(team, season) {
 		$log.info("Loading matches for "+team);
-		return $http.get('/catholicon/season/'+season+'/matches/'+team+'/list');
+		return $http.get(Config.BASE_URL+'/season/'+season+'/matches/'+team+'/list');
 	}
 	
 	factory.getDivisions = function(leagueTypeId, season) {
 		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+'/divisions');	
+		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');	
 	}
 
 	factory.getMatchCard = function(fixtureId) {
 		$log.info("Loading match card for "+fixtureId);
-		return $http.get('/catholicon/matchcard/'+fixtureId);
+		return $http.get(Config.BASE_URL+'/matchcard/'+fixtureId);
 	}
 	
 	factory.getDivision = function(leagueTypeId, divisionId, season) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
-		return $http.get('/catholicon/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
+		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
 	factory.getPlayerReport = function(season, league) {
 		$log.info("Loading player report");
-		return $http.get('/catholicon/season/'+season+'/league/'+league+'/report');
+		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+league+'/report');
 	};
 	
 	return factory;
