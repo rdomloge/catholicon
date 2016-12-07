@@ -15,14 +15,24 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 
 public class MatchCardDao {
 	
-	private static final String urlTemplate = 
-			"http://bdbl.org.uk/Live/MatchCard6.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
+	private static final String initialUrlTemplate = 
+			"http://bdbl.org.uk/Live/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
+	
+	private static final String urlTemplateBase = "http://bdbl.org.uk%1$s";
+	
 	private static final String NAME_WITHHELD = "Name withheld";
 	
 	public MatchCard load(String fixtureId) throws DaoException {
-		String url = String.format(urlTemplate, fixtureId);
+		String initialUrl = String.format(String.format(initialUrlTemplate, fixtureId), fixtureId);
 		
-		String page = ThreadLocalLoaderFilter.getLoader().load(url);
+		Loader loader = ThreadLocalLoaderFilter.getLoader();
+		String newUrl = loader.loadRedirect(initialUrl);
+		
+		if(newUrl.contains("MatchCard4.asp")) {
+			throw new DaoException("Don't know how to handle teams of 4 yet");
+		}
+		
+		String page = loader.load(String.format(urlTemplateBase, newUrl));
 		
 		Document doc = Jsoup.parse(page);
 		Elements scores = doc.select("span.Boxed[id^=Score]");
