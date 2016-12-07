@@ -11,11 +11,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import catholicon.domain.UpcomingFixture;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.ParserUtil;
 
+@Component
 public class FrontPageDao {
 	
 	private static final String url = "http://bdbl.org.uk/Live/BdblHome.asp?Season=0&website=1";
@@ -24,7 +27,7 @@ public class FrontPageDao {
 
 	
 	public List<UpcomingFixture> getUpcomingFixtures() throws DaoException {
-		String page = Loader.load(url);
+		String page = ThreadLocalLoaderFilter.getLoader().load(url);
 		
 		Document doc = Jsoup.parse(page);
 		Elements upcomingFixturesDiv = doc.select("#UpcomingFixturesDiv");
@@ -52,9 +55,4 @@ public class FrontPageDao {
 		}
 	}
 
-	public static void main(String[] args) throws DaoException {
-		FrontPageDao dao = new FrontPageDao();
-		List<UpcomingFixture> frontPage = dao.getUpcomingFixtures();
-		System.out.println(frontPage);
-	}
 }

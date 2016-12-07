@@ -28,9 +28,9 @@ import catholicon.ex.DaoException;
 
 public class Loader {
 	
-	private static HttpContext ctx;
+	private HttpContext ctx;
 	
-	static {
+	public Loader() {
 		CookieStore cookieStore = new BasicCookieStore();
 		BasicClientCookie cookie1 = new BasicClientCookie("BDBLUID", "24");
 		cookie1.setDomain("bdbl.org.uk");
@@ -45,7 +45,7 @@ public class Loader {
 		ctx.setAttribute(HttpClientContext.COOKIE_STORE, cookieStore);
 	}
 	
-	private static String streamToString(InputStream is) throws IOException {
+	private String streamToString(InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		InputStreamReader isr = new InputStreamReader(is);
 		char[] cbuf = new char[128];
@@ -62,7 +62,7 @@ public class Loader {
 		return sb.toString();
 	}
 	
-	public static String load(String url) throws DaoException {
+	public String load(String url) throws DaoException {
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet get = new HttpGet(url);
 		
@@ -99,7 +99,7 @@ public class Loader {
 		BrowserEngine:Web Kit
 		BrowserEngineVersion:537.36
 	 */
-	public static String sendLogin(String url, Login login) throws DaoException {
+	public String sendLogin(String url, Login login) throws DaoException {
 		CloseableHttpClient client = HttpClients.createDefault();
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair("Username", login.getName()));

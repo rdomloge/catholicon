@@ -13,7 +13,8 @@ public class MatchCardController {
 
 	
 	@RequestMapping("/matchcard/{fixtureid}")
-	public MatchCard loadMatchCard(@PathVariable("fixtureid") String fixtureId) throws DaoException {
+	public MatchCard loadMatchCard(
+			@PathVariable("fixtureid") String fixtureId) throws DaoException {
 		
 		return new MatchCardDao().load(fixtureId);
 	}

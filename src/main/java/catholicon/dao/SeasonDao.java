@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
 import catholicon.domain.Season;
 import catholicon.domain.SeasonsDescriptor;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 
+@Component
 public class SeasonDao {
 	
 	private static final String url = "http://bdbl.org.uk/Live/Main.asp";
@@ -16,6 +20,7 @@ public class SeasonDao {
 	private static final Pattern firstSeasonPattern = Pattern.compile("var firstSeason = (.*?);");
 	private static final Pattern latestSeasonPattern = Pattern.compile("var latestSeason = (.*?);");
 	private static final Pattern currentSeasonPattern = Pattern.compile("var currSeason = (.*?);");
+	
 	
 	public SeasonsDescriptor loadSeasonsDescriptor() throws DaoException {
 //		http://bdbl.org.uk/Live/Main.asp?Website=1&Browser=Google%20Chrome&Version=52.0.2743.116&OS=Mac%20OS%20X%2010.10.5&Engine=Web%20Kit&EngineVersion=537.36
@@ -28,7 +33,8 @@ public class SeasonDao {
 //		var latestSeason = 2016;
 //		var nextSeason = 2016;
 		
-		String page = Loader.load(url);
+		
+		String page = ThreadLocalLoaderFilter.getLoader().load(url);
 		int firstSeason = find(page, firstSeasonPattern);
 		int latestSeason = find(page, latestSeasonPattern);
 		int currentSeason = find(page, currentSeasonPattern);
@@ -43,12 +49,7 @@ public class SeasonDao {
 		
 		return new SeasonsDescriptor(seasons, currentSeason);
 	}
-	
-	public static void main(String[] args) throws DaoException {
-		SeasonDao sd = new SeasonDao();
-		sd.loadSeasonsDescriptor();
-	}
-	
+
 	private int find(String page, Pattern p) {
 		Matcher m = p.matcher(page);
 		if(m.find()) {

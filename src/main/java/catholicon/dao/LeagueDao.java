@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import catholicon.domain.League;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.LeagueListParser;
 
 public class LeagueDao {
@@ -17,7 +18,7 @@ public class LeagueDao {
 	
 	//var leagueMenu = [{label:"Ladies 4",leagueTypeID:14,action:changeLeague},{label:"Mixed",leagueTypeID:15,action:changeLeague},{label:"Open",leagueTypeID:13,action:changeLeague}];
 	public List<League> list(int seasonStartYear) throws DaoException {
-		String page = Loader.load(String.format(listUrl, seasonStartYear));
+		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(listUrl, seasonStartYear));
 		Matcher m = allLeagueRegExp.matcher(page);
 		if(m.find()) {
 			String group = m.group(1) + ']';

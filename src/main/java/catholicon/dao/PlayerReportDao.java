@@ -11,15 +11,16 @@ import org.jsoup.select.Elements;
 
 import catholicon.domain.PlayerReport;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 
 public class PlayerReportDao {
-
+	
 	private static final String url = 
 			"http://bdbl.org.uk/Live/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	public PlayerReport[] loadPlayerReport(String season, String league) throws DaoException {
 		String formattedUrl = String.format(url, league, season);
-		String page = Loader.load(formattedUrl);
+		String page = ThreadLocalLoaderFilter.getLoader().load(formattedUrl);
 		Document doc = Jsoup.parse(page);
 		Elements dataRows = doc.select("#DataTable tr");
 		Iterator<Element> dataRowItr = dataRows.iterator();
@@ -43,15 +44,10 @@ public class PlayerReportDao {
 	}
 	
 	private String parsePosition(String s) {
-		if(s.indexOf(')') > 0) {
+		if (s.indexOf(')') > 0) {
 			return s.substring(0, s.indexOf(')'));
 		}
-		
+
 		return s;
-	}
-	
-	public static void main(String[] args) throws DaoException {
-		PlayerReportDao dao = new PlayerReportDao();
-		dao.loadPlayerReport("2012", "4");
 	}
 }

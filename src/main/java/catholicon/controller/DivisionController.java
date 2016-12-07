@@ -15,7 +15,8 @@ import catholicon.ex.DaoException;
 public class DivisionController {
 	
 	@RequestMapping("/season/{seasonStartYear}/league/{leagueTypeId}/division/{divisionId}")
-	public Division getLeague(@PathVariable("leagueTypeId") String leagueTypeId,
+	public Division getLeague(
+			@PathVariable("leagueTypeId") String leagueTypeId,
 			@PathVariable("divisionId") int divisionId,
 			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {
 		

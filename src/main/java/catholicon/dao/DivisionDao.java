@@ -9,9 +9,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import catholicon.domain.Division;
-import catholicon.domain.DivisionDescriptor;
 import catholicon.domain.Division.TeamPosition;
+import catholicon.domain.DivisionDescriptor;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 
 public class DivisionDao {
 	
@@ -23,7 +24,7 @@ public class DivisionDao {
 	
 	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId, int seasonStartYear) throws DaoException {
 		
-		String page = Loader.load(String.format(url, leagueTypeId, seasonStartYear));
+		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(url, leagueTypeId, seasonStartYear));
 		List<DivisionDescriptor> divisions = new LinkedList<>();
 		
 		Document doc = Jsoup.parse(page);
@@ -40,7 +41,7 @@ public class DivisionDao {
 
 	public Division load(String leagueTypeId, int divisionId, int seasonStartYear) throws DaoException {
 		
-		String page = Loader.load(String.format(leagueUrl, leagueTypeId, divisionId, seasonStartYear));
+		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(leagueUrl, leagueTypeId, divisionId, seasonStartYear));
 		
 		Document doc = Jsoup.parse(page);
 		

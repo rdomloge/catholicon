@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import catholicon.domain.MatchCard;
 import catholicon.domain.Rubber;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 
 public class MatchCardDao {
 	
@@ -21,7 +22,7 @@ public class MatchCardDao {
 	public MatchCard load(String fixtureId) throws DaoException {
 		String url = String.format(urlTemplate, fixtureId);
 		
-		String page = Loader.load(url);
+		String page = ThreadLocalLoaderFilter.getLoader().load(url);
 		
 		Document doc = Jsoup.parse(page);
 		Elements scores = doc.select("span.Boxed[id^=Score]");
@@ -88,9 +89,4 @@ public class MatchCardDao {
 		return empty;
 	}
 
-	
-	public static void main(String[] args) throws DaoException {
-		MatchCardDao mcd = new MatchCardDao();
-		mcd.load("1234");
-	}
 }

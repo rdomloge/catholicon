@@ -14,7 +14,8 @@ import catholicon.ex.DaoException;
 public class LeagueController {
 
 	@RequestMapping("/season/{seasonId}/league/list")
-	public List<League> listLeagues(@PathVariable("seasonId") int seasonId) throws DaoException {
+	public List<League> listLeagues(
+			@PathVariable("seasonId") int seasonId) throws DaoException {
 		
 		return new LeagueDao().list(seasonId);
 	}

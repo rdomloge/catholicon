@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import catholicon.domain.Match;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.MatchParser;
 
 public class MatchDao {
@@ -19,7 +20,7 @@ public class MatchDao {
 
 	public Match[] load(int seasonStartYear, String team) throws DaoException {
 		
-		String page = Loader.load(String.format(url, team, seasonStartYear));
+		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(url, team, seasonStartYear));
 		
 		Matcher dataLineMatcher = allMatchesDataLineRegExp.matcher(page);
 		

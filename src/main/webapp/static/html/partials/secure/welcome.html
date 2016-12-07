@@ -1,22 +1,15 @@
-Welcome!
 
-<h1>Awaiting confirmation</h1>
-<div  ng-repeat="item in welcomePageItems | filter:item.cardStatus='AWAITING_CONFIRMATION'">
-	<div>
-		{{item.homeTeam}} {{item.awayTeam}} {{item.date}}
-	</div>
-</div>
-
-<h1>Awaiting entry</h1>
-<div  ng-repeat="item in welcomePageItems | filter:item.cardStatus='AWAITING_ENTRY'">
-	<div>
-		{{item.homeTeam}} {{item.awayTeam}} {{item.date}}
-	</div>
-</div>
-
-<h1>All</h1>
-<div  ng-repeat="item in welcomePageItems">
-	<div>
-		{{item.homeTeam}} {{item.awayTeam}} {{item.date}}
-	</div>
+<div class="w3-container">
+	<ul class="w3-ul w3-card-4">
+	  <li class="w3-padding-16" ng-repeat="item in welcomePageItems">
+	    <span onclick="this.parentElement.style.display='none'" 
+	    	class="w3-closebtn w3-padding">&times;</span>
+	    <img src="../img/scorecard.png" class="w3-left w3-circle" style="width:40px; margin: 0 10px 50px 0">
+	    <div class="w3-medium">{{item.homeTeam}}</div>
+	    <div class="w3-medium">{{item.awayTeam}}</div>
+	    <div class="w3-small" ng-if="item.cardStatus == 'AWAITING_CONFIRMATION'">Awaiting confirmation</div>
+	    <div class="w3-small" ng-if="item.cardStatus != 'AWAITING_CONFIRMATION'">Unknown status {{item.cardStatus}}</div>
+	    <div class="w3-small">{{item.date | date : format : shortDate}}</div>
+	  </li>
+	</ul>
 </div>

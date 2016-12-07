@@ -1,5 +1,6 @@
 package catholicon.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -7,9 +8,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import catholicon.dao.Loader;
+
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "catholicon")
+@ComponentScan(basePackages = {"catholicon", "catholicon.dao"})
 public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
 
 	public static final int CACHE_TIME_ONE_HOUR = 1000*60*60;
@@ -26,4 +29,15 @@ public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+    
+    @Bean
+	public ThreadLocal<Loader> loader() {
+		return new ThreadLocal<Loader>() {
+			@Override
+			protected Loader initialValue() {
+				return new Loader();
+			}
+			
+		};
+	}
 }

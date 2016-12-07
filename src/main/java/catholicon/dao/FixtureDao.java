@@ -10,14 +10,15 @@ import org.jsoup.select.Elements;
 
 import catholicon.domain.FixtureDetails;
 import catholicon.ex.DaoException;
+import catholicon.filter.ThreadLocalLoaderFilter;
 
 public class FixtureDao {
-
+	
 	private static final String url = 
 			"http://bdbl.org.uk/Live/EditFixture.asp?Edit=false&HomeTeamID=228&AwayTeamID=215&FixtureID=%1$s&FixtureIndex=1&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	public FixtureDetails load(int fixtureId) throws DaoException {
-		String page = Loader.load(String.format(url, fixtureId));
+		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(url, fixtureId));
 		
 		Document doc = Jsoup.parse(page);
 		Map<String, String> map = parseRows(doc.select("table tr table tr"));

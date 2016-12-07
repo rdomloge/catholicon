@@ -32,14 +32,14 @@
 			    <span class="w3-xlarge w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small"> (H)</span>
 			    <br/>
 			    <span class="w3-xlarge w3-center">{{fixtureDetails.awayTeam}}</span><span class="w3-small"> (A)</span>
-			</section>
-			<section class="w3-margin w3-center">
-				<p class="w3-small">
+			    <div class="w3-small w3-left w3-display-left" style="width: 85%">
 					{{fixtureDetails.venue}}
+				</div>
+				<div class="w3-left">
 					<a href="http://maps.google.com/?q={{fixtureDetails.venue}}">
 						<img src="../img/pin.png" height="35px"/>
 					</a>
-				</p>
+				</div>
 			</section>
 			<section class="w3-container w3-center w3-light-grey">
 				<span class="w3-xlarge">{{fixtureDetails.matchTime}}</span><span class="w3-large">{{fixtureDetails.matchDate}}</span>
