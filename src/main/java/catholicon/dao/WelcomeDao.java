@@ -63,10 +63,14 @@ public class WelcomeDao {
 		String[] pairs = ParserUtil.splitOnUnquotedCommas(line.substring(line.indexOf('{')+1, line.lastIndexOf('}')));
 
 		Map<String, String> map = ParserUtil.pairsToMap(pairs);
+		
+		String teamToActionId = map.get("teamToAction");
+		String homeTeamId = map.get("homeTeamID");
+		String teamToAction = homeTeamId.equals(teamToActionId) ? map.get("homeTeamName") : map.get("awayTeamName");
 
 		WelcomePageItem item = new WelcomePageItem(ParserUtil.parseDate(map.get("matchDate")), map.get("awayTeamName"),
 				map.get("homeTeamName"), Integer.parseInt(map.get("fixtureStatus")),
-				Integer.parseInt(map.get("cardStatus")));
+				Integer.parseInt(map.get("cardStatus")), teamToAction);
 
 		return item;
 	}

@@ -10,6 +10,7 @@
 	    <div class="w3-small" ng-if="item.cardStatus == 'AWAITING_CONFIRMATION'">Awaiting confirmation</div>
 	    <div class="w3-small" ng-if="item.cardStatus != 'AWAITING_CONFIRMATION'">Unknown status {{item.cardStatus}}</div>
 	    <div class="w3-small">{{item.date | date : format : shortDate}}</div>
+	    <div class="w3-medium w3-pale-green w3-leftbar w3-border-green">Waiting for {{item.teamToAction}}</div>
 	  </li>
 	</ul>
 </div>
