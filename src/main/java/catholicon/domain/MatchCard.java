@@ -13,10 +13,11 @@ public class MatchCard {
 	private int homeScore; 
 	private int awayScore;
 	private boolean[] homeTeamWins;
+	private boolean teamSize6;
 	
 	public MatchCard(Map<Integer, Rubber> scoreMap, String[] homePlayers, String[] awayPlayers, 
 			String homeTeam, String awayTeam, String matchDate, int homeScore, int awayScore, 
-			boolean[] homeTeamWins) {
+			boolean[] homeTeamWins, boolean teamSize6) {
 		
 		for (Integer rubberNum : scoreMap.keySet()) {
 			rubbers[rubberNum-1] = scoreMap.get(rubberNum);
@@ -31,6 +32,7 @@ public class MatchCard {
 		this.awayScore = awayScore;
 		
 		this.homeTeamWins = homeTeamWins;
+		this.teamSize6 = teamSize6;
 	}
 
 	public Rubber[] getRubbers() {
@@ -69,5 +71,7 @@ public class MatchCard {
 		return homeTeamWins;
 	}
 
-	
+	public boolean isTeamSize6() {
+		return teamSize6;
+	}
 }

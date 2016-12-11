@@ -11,11 +11,38 @@ myApp.controller('matchCardController', function ($scope, $log, $http, dataFacto
 	};
 });
 
-myApp.directive('matchCardRow', function($log, $rootScope) {
+myApp.directive('matchCard6Row', function($log, $rootScope) {
 	return {
 		restrict : 'AE',
 		replace : true,
-		templateUrl: 'partials/matchCardRow.html',
+		templateUrl: 'partials/matchcard/matchCard6Row.html',
+		scope: {
+			matchCard: "=",
+			rowNum: "=",
+		},
+		controller: function($scope) {
+			$scope.rubber = function(colNum) {
+				if($scope.matchCard) {
+					return $scope.matchCard.rubbers[($scope.rowNum*3)+colNum];
+				}
+			}
+			
+			$scope.showNames = function(name1, name2) {
+				$rootScope.name1 = name1;
+				$rootScope.name2 = name2;
+			};
+		},
+		link: function($scope) {
+			$log.debug('Rubber', $scope.rubber());
+		}
+	}
+});
+
+myApp.directive('matchCard4Row', function($log, $rootScope) {
+	return {
+		restrict : 'AE',
+		replace : true,
+		templateUrl: 'partials/matchcard/matchCard4Row.html',
 		scope: {
 			matchCard: "=",
 			rowNum: "=",

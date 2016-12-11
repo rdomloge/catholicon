@@ -41,8 +41,15 @@
 			</th>
 		</tr>
 		
+		
 		<tr ng-show="matchCard" ng-repeat="rowNum in [0,1,2]" 
-			match-card="matchCard" row-num="rowNum"
-			match-card-row> </match-card-row>
+			match-card="matchCard" row-num="rowNum" ng-if="matchCard.teamSize6"
+			match-card6-row>
+		</tr>
+		
+		<tr ng-show="matchCard" ng-repeat="rowNum in [0,1,2]" 
+			match-card="matchCard" row-num="rowNum" ng-if="!matchCard.teamSize6"
+			match-card4-row>
+		</tr>
 	</table>
 </div>

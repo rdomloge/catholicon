@@ -27,11 +27,6 @@ public class MatchCardDao {
 		
 		Loader loader = ThreadLocalLoaderFilter.getLoader();
 		String newUrl = loader.loadRedirect(initialUrl);
-		
-		if(newUrl.contains("MatchCard4.asp")) {
-			throw new DaoException("Don't know how to handle teams of 4 yet");
-		}
-		
 		String page = loader.load(String.format(urlTemplateBase, newUrl));
 		
 		Document doc = Jsoup.parse(page);
@@ -76,8 +71,13 @@ public class MatchCardDao {
 		String matchDate = doc.select("#matchDate").first().attr("value");
 		String score = doc.select("#ScoreBoard").first().text();
 		int hyphen = score.indexOf("-");
-		int homeScore = Integer.parseInt(score.substring(0, hyphen).trim());
-		int awayScore = Integer.parseInt(score.substring(hyphen+1).trim());
+		/*
+		 * NB Can't use trim() here because the whitepace characters are not the usual characters
+		 * that trim() is removing and it leaves them in, causing a NumberFormatException.
+		 * NB2 This is only a problem for the Ladies4 pages!
+		 */
+		int homeScore = Integer.parseInt(score.substring(0, hyphen).replaceAll("[^\\d.]", ""));  
+		int awayScore = Integer.parseInt(score.substring(hyphen+1).replaceAll("[^\\d.]", ""));
 		
 		Elements results = doc.select("input[id^=Result]");
 		boolean[] homeTeamWins = new boolean[9];
@@ -89,7 +89,7 @@ public class MatchCardDao {
 		}
 		
 		return new MatchCard(scoreMap, homePlayers, awayPlayers, homeTeam, awayTeam, matchDate, 
-				homeScore, awayScore, homeTeamWins);
+				homeScore, awayScore, homeTeamWins, newUrl.contains("MatchCard6.asp"));
 	}
 	
 	private String[] preFillNamesWithWitheld(String[] empty) {
