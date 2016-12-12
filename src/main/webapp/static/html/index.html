@@ -12,6 +12,7 @@
 	<script src="../script/niceDate.js"></script>
 	<script src="../script/matchCard.js"></script>
 	<script src="../script/frontPageController.js"></script>
+	<script src="../script/matchListController.js"></script>
 	<script src="../script/secure.js"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,8 +95,7 @@
 					})
 				.when('/season/:season/matches/:teamId/list',
 					{
-						templateUrl: 'partials/matches.html',
-						controller: 'matchListController'
+						templateUrl: 'partials/matches.html'
 					})
 				.when('/season/:season/league/:leagueTypeId/divisions',
 					{

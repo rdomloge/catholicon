@@ -1,0 +1,32 @@
+<table id="matchcard" class="" ng-show="matchCard" border="1">
+	<tr>
+		<th style="background-color: #5d9ed2; color: white; border: 1px solid black;">
+			Home<br/>
+			{{matchCard.homePlayers[0]}} <br/>
+			{{matchCard.homePlayers[1]}} <br/>
+			{{matchCard.homePlayers[2]}} <br/>
+			{{matchCard.homePlayers[3]}} <br/>
+		</th>
+		<th style="background-color: #6fc772; color: white; border: 1px solid black;">
+			Away<br/>
+			{{matchCard.awayPlayers[0]}} <br/>
+			{{matchCard.awayPlayers[1]}} <br/>
+			{{matchCard.awayPlayers[2]}} <br/>
+			{{matchCard.awayPlayers[3]}} <br/>
+		</th>
+	</tr>
+	<tr>
+		<td match-card-4-cell rubber="0" match-card="matchCard"/>
+		<td match-card-4-cell rubber="1" match-card="matchCard"/>
+	</tr>
+	
+	<tr>
+		<td match-card-4-cell rubber="2" match-card="matchCard"/>
+		<td match-card-4-cell rubber="3" match-card="matchCard"/>
+	</tr>
+	
+	<tr>
+		<td match-card-4-cell rubber="4" match-card="matchCard"/>
+		<td match-card-4-cell rubber="5" match-card="matchCard"/>
+	</tr>
+</table>

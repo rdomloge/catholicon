@@ -13,11 +13,6 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/season/list');
 	}
 	
-	factory.getMatches = function(team, season) {
-		$log.info("Loading matches for "+team);
-		return $http.get(Config.BASE_URL+'/season/'+season+'/matches/'+team+'/list');
-	}
-	
 	factory.getDivisions = function(leagueTypeId, season) {
 		$log.info("Loading divisions for league " + leagueTypeId);
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');	
@@ -82,13 +77,6 @@ myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '
 			.success(function(data) {
 		$log.debug("Data received for division "+$routeParams.divisionId, data);
 		$scope.division = data;
-	});
-}]);
-
-myApp.controller('matchListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	dataFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
-		$log.debug("Data received for matches", data);
-		$scope.matches = data;
 	});
 }]);
 

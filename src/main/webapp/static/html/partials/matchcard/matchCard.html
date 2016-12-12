@@ -25,31 +25,12 @@
 			</div>
 		</div>
 	</div>
-
-	<table id="matchcard" class="" ng-show="matchCard">
-		<tr>
-			<th></th>
-			<th class="w3-green">{{matchCard.awayPlayers[0]}} <br />
-				{{matchCard.awayPlayers[1]}}
-			</th>
-			<th class="w3-green">{{matchCard.awayPlayers[2]}} <br />
-				{{matchCard.awayPlayers[3]}}
-			</th>
-
-			<th class="table-data w3-green">{{matchCard.awayPlayers[4]}} <br />
-				{{matchCard.awayPlayers[5]}}
-			</th>
-		</tr>
+	
+	<div ng-if="matchCard">
+		<match-card-four ng-if="!matchCard.teamSize6" match-card="matchCard">
+		</match-card-four>
 		
-		
-		<tr ng-show="matchCard" ng-repeat="rowNum in [0,1,2]" 
-			match-card="matchCard" row-num="rowNum" ng-if="matchCard.teamSize6"
-			match-card6-row>
-		</tr>
-		
-		<tr ng-show="matchCard" ng-repeat="rowNum in [0,1,2]" 
-			match-card="matchCard" row-num="rowNum" ng-if="!matchCard.teamSize6"
-			match-card4-row>
-		</tr>
-	</table>
+		<match-card-six ng-if="matchCard.teamSize6" match-card="matchCard">
+		</match-card-six>
+	</div>
 </div>

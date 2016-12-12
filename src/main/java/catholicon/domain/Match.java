@@ -10,9 +10,11 @@ public class Match {
 	private static final String QUOTED_STRING_REGEXP = "\".*\"";
 	
 	private static final String SCORE_REGEXP = "\\>(\\d\\s-\\s\\d)\\<";
-	private static final String FIXTURE_REGEXP = "openMatchCard\\((.*?),";
+	private static final String FIXTURE_REGEXP1 = "openMatchCard\\((.*?),";
+	private static final String FIXTURE_REGEXP2 = "editFixture\\((true|false){1},(.*?),";
 	private static final Pattern scorePattern = Pattern.compile(SCORE_REGEXP);
-	private static final Pattern fixturePattern = Pattern.compile(FIXTURE_REGEXP);
+	private static final Pattern fixturePattern1 = Pattern.compile(FIXTURE_REGEXP1);
+	private static final Pattern fixturePattern2 = Pattern.compile(FIXTURE_REGEXP2);
 	
 	
 	
@@ -76,14 +78,20 @@ public class Match {
 	 * 
 	 * 
 	 * '<td nowrap="nowrap" onclick="openMatchCard(1319,false,false);" class="FakeLink" style="cursor:pointer" id="Card203_202"><img src="BdblImages/ArrowDown.bmp" alt="" />&nbsp;Tue, 1 Dec 2015</td>'
-	 * 
+	 * '<td nowrap="nowrap" onclick="editFixture(false,1517,223,215,1,false,false);" class="FakeLink" style="cursor:pointer" id="Card223_215"><img src="BdblImages/ArrowDown.bmp" alt="" />&nbsp;Thu, 2 Feb 2017</td>'
 	 * 
 	 * @param string
 	 */
 	private void extractFixtureId() {
-		Matcher m = fixturePattern.matcher(fixtureText);
+		Matcher m = fixturePattern1.matcher(fixtureText);
 		if(m.find()) {
 			fixtureId = m.group(1);
+		}
+		else {
+			Matcher m2 = fixturePattern2.matcher(fixtureText);
+			if(m2.find()) {
+				fixtureId = m2.group(2);
+			}
 		}
 	}
 

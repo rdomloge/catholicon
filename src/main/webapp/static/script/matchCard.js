@@ -11,6 +11,77 @@ myApp.controller('matchCardController', function ($scope, $log, $http, dataFacto
 	};
 });
 
+var team4PlayerMap = {
+		0: {
+			home: [0,1],
+			away: [0,1]
+		},
+		1: {
+			home: [2,3],
+			away: [0,1]
+		},
+		2: {
+			home: [2,3],
+			away: [2,3]
+		},
+		3: {
+			home: [0,3],
+			away: [0,3]
+		},
+		4: {
+			home: [0,1],
+			away: [2,3]
+		},
+		5: {
+			home: [1,2],
+			away: [1,2]
+		}
+}
+
+myApp.directive('matchCardSix', function($log) {
+	return {
+		restrict : 'AE',
+		replace : true,
+		templateUrl: 'partials/matchcard/matchCard6.html',
+		scope: {
+			matchCard: "="
+		}
+	}
+});
+
+myApp.directive('matchCardFour', function($log) {
+	return {
+		restrict : 'AE',
+		replace : true,
+		templateUrl: 'partials/matchcard/matchCard4.html',
+		scope: {
+			matchCard: "="
+		}
+	}
+});
+
+myApp.directive('matchCard4Cell', function() {
+	return {
+		restrict : 'AE',
+		replace : true,
+		templateUrl: 'partials/matchcard/matchCard4Cell.html',
+		scope: {
+			matchCard: "=",
+			rubber: "@"
+		},
+		controller: function($scope) {
+			$scope.playerName = function(rubber, home, number) {
+				if(home) {
+					return $scope.matchCard.homePlayers[team4PlayerMap[rubber].home[number]];	
+				}
+				else {
+					return $scope.matchCard.awayPlayers[team4PlayerMap[rubber].home[number]];
+				}
+			}
+		}
+	}
+});
+
 myApp.directive('matchCard6Row', function($log, $rootScope) {
 	return {
 		restrict : 'AE',
