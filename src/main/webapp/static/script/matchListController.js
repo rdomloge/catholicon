@@ -22,10 +22,6 @@ myApp.controller('matchListController', ['$routeParams', 'matchListFactory', '$l
 	});
 	
 	$scope.showFixture = function(fixtureId) {
-		$scope.showFixtureDetailsDialogue = true;
-		matchListFactory.getFixtureDetail(fixtureId).success(function(data) {
-			$log.debug("Data received for fixture", data);
-			$scope.fixtureDetails = data;
-		});
+		$scope.$broadcast('fixture-details', {id: fixtureId});
 	}
 }]);

@@ -32,6 +32,10 @@ myApp.controller('frontPageController',
 		}, 3000);
 	}
 	
+	$scope.showFixture = function(fixtureId) {
+		$scope.$broadcast('fixture-details', {id: fixtureId});
+	}
+	
 	frontPageFactory.getUpcomingFixtures().success(function(data) {
 		$log.debug("Data received for upcoming fixtures", data);
 		$scope.upcomingFixtures = data;
@@ -41,17 +45,5 @@ myApp.controller('frontPageController',
 		$log.debug('frontPageFilter has just changed', $scope.frontPageFilter);
 		$cookies.put('front-page-search', $scope.frontPageFilter);
 	});
-	
-	$scope.showFixture = function(fixtureId) {
-		$scope.showFixtureDetailsDialogue = true;
-		frontPageFactory.getFixtureDetail(fixtureId).success(function(data) {
-			$log.debug("Data received for fixture", data);
-			$scope.fixtureDetails = data;
-		});
-	}
-	
-	$scope.hideFixtureDetails = function() {
-		$scope.showFixtureDetailsDialogue = false;
-	}
 }]);
 
