@@ -9,17 +9,14 @@ public class Match {
 	
 	private static final String QUOTED_STRING_REGEXP = "\".*\"";
 	
-	private static final String SCORE_REGEXP = "\\>(\\d\\s-\\s\\d)\\<";
-	private static final String FIXTURE_REGEXP1 = "openMatchCard\\((.*?),";
-	private static final String FIXTURE_REGEXP2 = "editFixture\\((true|false){1},(.*?),";
-	private static final Pattern scorePattern = Pattern.compile(SCORE_REGEXP);
-	private static final Pattern fixturePattern1 = Pattern.compile(FIXTURE_REGEXP1);
-	private static final Pattern fixturePattern2 = Pattern.compile(FIXTURE_REGEXP2);
+	private static final Pattern scorePattern = Pattern.compile("\\>(\\d\\s-\\s\\d)\\<");
+	private static final Pattern fixturePattern1 = Pattern.compile("openMatchCard\\((.*?),");
+	private static final Pattern fixturePattern2 = Pattern.compile("editFixture\\((true|false){1},(.*?),");
 	
-	
-	
-	private String awayTarget;
-	private String homeTarget;
+	private String awayTeamName;
+	private int awayTeamId;
+	private String homeTeamName;
+	private int homeTeamId;
 	private String date;
 	private int fixtureStatus;
 	private String fixtureText;
@@ -48,10 +45,10 @@ public class Match {
 			String value = stripSurroundingQuotesIfNec(pair[1]);
 			
 			if("awayTarget".equals(pair[0].trim())) {
-				awayTarget = value;
+				awayTeamName = value;
 			}
 			else if("homeTarget".equals(pair[0].trim())) {
-				homeTarget = value;
+				homeTeamName = value;
 			}
 			else if("matchDate".equals(pair[0].trim())) {
 				date = ParserUtil.parseDate(value);
@@ -67,7 +64,11 @@ public class Match {
 				this.scoreText = pair[1];
 				extractScore();
 			}
-			else if("fixtureLink".equals(pair[0].trim())) {
+			else if("awayTeamID".equals(pair[0].trim())) {
+				this.awayTeamId = Integer.parseInt(pair[1]);
+			}
+			else if("homeTeamID".equals(pair[0].trim())) {
+				this.homeTeamId = Integer.parseInt(pair[1]);
 			}
 			else {
 			}
@@ -116,14 +117,6 @@ public class Match {
 		return s;
 	}
 
-	public String getAwayTarget() {
-		return awayTarget;
-	}
-
-	public String getHomeTarget() {
-		return homeTarget;
-	}
-
 	public String getDate() {
 		return date;
 	}
@@ -146,5 +139,28 @@ public class Match {
 	
 	public boolean isUnConfirmed() {
 		return 4 == getFixtureStatus();
+	}
+
+	public String getAwayTeamName() {
+		return awayTeamName;
+	}
+
+	public int getAwayTeamId() {
+		return awayTeamId;
+	}
+
+	public String getHomeTeamName() {
+		return homeTeamName;
+	}
+
+	public int getHomeTeamId() {
+		return homeTeamId;
+	}
+
+	@Override
+	public String toString() {
+		return "Match [awayTeamName=" + awayTeamName + ", awayTeamId=" + awayTeamId + ", homeTeamName=" + homeTeamName
+				+ ", homeTeamId=" + homeTeamId + ", date=" + date + ", fixtureStatus=" + fixtureStatus + ", fixtureId="
+				+ fixtureId + ", scoreExtracted=" + scoreExtracted + "]";
 	}
 }

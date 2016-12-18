@@ -2,6 +2,13 @@
 
 <div class="w3-container" ng-controller="matchListController">
 
+	<h3>
+		{{teamName}}
+	</h3>
+	<h4>
+		{{season == 0 ? 'this' : season}} season
+	</h4>
+
 	<div class="w3-container w3-teal">
 		<h2>
 			Filters
@@ -26,12 +33,11 @@
 		
 		<div class="w3-center">
 			<h1 class="rd-match-declaration">
-				{{match.homeTarget}}  
-				<br/>
-				Vs 
-				<br/>
-				{{match.awayTarget}}
+				{{match.homeTeamId == teamId ? match.awayTeamName : match.homeTeamName}}  
 			</h1>
+			<h5>
+				{{match.scoreExtracted}}
+			</h5>
 		</div>
 		
 		<footer class="w3-container w3-blue">
@@ -40,7 +46,6 @@
 			</h2>
 			<h5>{{match.date | date : 'fullDate'}}</h5>
 			<h5>
-				{{match.scoreExtracted}}
 				<div ng-switch on="match.fixtureStatus">
 					<div ng-switch-when="5">
 						<a href="#/matchcard/{{match.fixtureId}}" 
