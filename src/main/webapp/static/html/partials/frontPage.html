@@ -27,8 +27,9 @@
 	
 	<ul class="w3-ul w3-card-4">
 		<li ng-repeat="fixture in upcomingFixtures | filter: frontPageFilter" class="w3-padding-16">
-			<img src="../img/upcomingFixtureIcon.png" 
-				class="w3-left w3-circle" style="width:60px; margin: 10px; margin-left: 2px">
+			<div class="w3-blue w3-round w3-border-top w3-border-orange w3-topbar frontPageDate">
+				{{fixture.fixtureDate | date: 'dd'}}
+			</div>
 		    <div class="w3-large">{{fixture.homeTeamName}}</div>
 		    <div class="w3-large">{{fixture.awayTeamName}}</div>
 		    <div class="w3-xlarge w3-left">{{fixture.fixtureDate | date: 'EEE, dd MMM'}}</div>
