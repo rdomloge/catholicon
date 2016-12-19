@@ -27,13 +27,14 @@
 	
 	<ul class="w3-ul w3-card-4">
 		<li ng-repeat="fixture in upcomingFixtures | filter: frontPageFilter" class="w3-padding-16">
-			<div class="w3-blue w3-round w3-border-top w3-border-orange w3-topbar frontPageDate">
-				{{fixture.fixtureDate | date: 'dd'}}
+			<div class="calendar">
+				{{fixture.fixtureDate | date: 'dd'}} 
+				<em>{{fixture.fixtureDate | date: 'MMM'}}</em>
 			</div>
-		    <div class="w3-large">{{fixture.homeTeamName}}</div>
-		    <div class="w3-large">{{fixture.awayTeamName}}</div>
-		    <div class="w3-xlarge w3-left">{{fixture.fixtureDate | date: 'EEE, dd MMM'}}</div>
+		    <div class="w3-large rd-80px-leftmargin">{{fixture.homeTeamName}}</div>
 		    <img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)" class="frontPageInfoIcon"/>
+		    <div class="w3-large rd-80px-leftmargin">{{fixture.awayTeamName}}</div>
+		    <div class="w3-small rd-80px-leftmargin w3-left" style="margin-bottom: 10px;">{{fixture.fixtureDate | date: 'EEEE'}}</div>
 		    
 		    <nice-date date="fixture.fixtureDate"/>
 		</li>
