@@ -24,8 +24,14 @@
 	</fixture-details-directive>
 	
 	
-	<div ng-repeat="match in matches | filter: search | orderBy:'date'" 
+	<div ng-repeat="match in matches | filter: search | orderBy:'date'"
 			class="w3-card-24" style="margin-bottom:30px;">
+		
+		<div ng-if="match.firstUnplayed" id="nextMatchAnchor"></div>
+		
+		<div ng-if="match.firstUnplayed" class="rd-nextMatchTag">
+			Next match
+		</div>
 		
 		<header class="w3-container w3-blue">
 			<h1 class="rd-match-declaration">

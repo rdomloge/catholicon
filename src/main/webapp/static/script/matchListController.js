@@ -15,26 +15,44 @@ myApp.factory('matchListFactory', function($http, $log) {
 	return factory;
 });
 
-myApp.factory('matchService', function() {
-	var matchService = {};
-	return matchService;
-});
-
 myApp.controller('matchListController', 
-		['$routeParams', 'matchListFactory', '$log', '$scope', '$timeout', '$rootScope', 'matchService', 
-			function($routeParams, matchListFactory, $log, $scope, $timeout, $rootScope, matchService) {
+		['$routeParams', 'matchListFactory', '$log', '$scope', '$timeout', '$rootScope', '$location', '$anchorScroll', 
+			function($routeParams, matchListFactory, $log, $scope, $timeout, $rootScope, $location, $anchorScroll) {
+			
+	var firstUnplayed;
 			
 	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
 		$log.debug("Data received for matches", data);
+		
+		decorateFirstUnplayed(data);
+		
 		$scope.matches = data;
 		$scope.teamName = 
 			$scope.matches[0].homeTeamId == $routeParams.teamId 
 			? $scope.matches[0].homeTeamName 
 			: $scope.matches[0].awayTeamName;
-			
-		matchService.teamMatchesId = $routeParams.teamId;
-		matchService.teamMatchesSeason = $routeParams.season;
+	    
+	    $timeout(function(){
+	    	$location.hash('nextMatchAnchor');
+	    	$anchorScroll();
+	    }, 100);
 	});
+	
+	function decorateFirstUnplayed(data) {
+		for(key in data) {
+			var match = data[key];
+			if(match.fixtureStatus == 5)
+				continue;
+			if(firstUnplayed) {
+				if(match.date < firstUnplayed.date) 
+					firstUnplayed = match;
+			}
+			else {
+				firstUnplayed = match;
+			}
+		}
+		firstUnplayed.firstUnplayed = true;
+	}
 	
 	$scope.showFixture = function(fixtureId) {
 		$scope.$broadcast('fixture-details', {id: fixtureId});
@@ -42,4 +60,8 @@ myApp.controller('matchListController',
 	
 	$scope.teamId = $routeParams.teamId;
 	$scope.season = $routeParams.season;
+	
+	$scope.scrollTo = function(element) {
+		
+	}
 }]);
