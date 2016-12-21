@@ -43,7 +43,8 @@ myApp.controller('frontPageController',
 	
 	$scope.$watch('frontPageFilter', function() {
 		$log.debug('frontPageFilter has just changed', $scope.frontPageFilter);
-		$cookies.put('front-page-search', $scope.frontPageFilter);
+		var yearFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+		$cookies.put('front-page-search', $scope.frontPageFilter, {expires: yearFromNow});
 	});
 }]);
 

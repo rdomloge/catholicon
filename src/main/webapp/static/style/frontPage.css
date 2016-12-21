@@ -4,23 +4,6 @@
     margin-right: 5px;
 }
 
-.frontPageDate {
-	float: left; 
-	padding: 3px 25px 3px 25px; 
-	margin-right: 10px; 
-	font-size: 200%; 
-	font-family: 'Open Sans Condensed', sans-serif;
-	border-top-width: 15px !important;
-	
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+63,7db9e8+100 */
-	background: #1e5799; /* Old browsers */
-	background: -moz-linear-gradient(45deg,  #1e5799 0%, #2989d8 63%, #7db9e8 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(45deg,  #1e5799 0%,#2989d8 63%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(45deg,  #1e5799 0%,#2989d8 63%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-}
-
 .rd-80px-leftmargin {
 	margin-left: 95px;
 }
@@ -40,7 +23,7 @@
   	text-align:center;
 }
 
-.calendar{
+.calendar {
 	padding-top:5px;
 	width:80px;
 	background:#ededef;
@@ -58,9 +41,9 @@
 	-moz-box-shadow:0 2px 2px #888;
 	-webkit-box-shadow:0 2px 2px #888;
 	box-shadow:0 2px 2px #888;
-	}
+}
 
-.calendar em{
+.calendar em {
 	display:block;
 	font:12px/30px "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
 	color:#fff;
@@ -75,7 +58,7 @@
 	-webkit-border-bottom-left-radius:3px;	
 	border-bottom-left-radius:3px;	
 	border-top:1px solid #00365a;
-	}
+}
 
 .calendar:before, .calendar:after{
 	content:'';
@@ -92,7 +75,7 @@
 	-moz-box-shadow:0 1px 1px #fff;
 	-webkit-box-shadow:0 1px 1px #fff;
 	box-shadow:0 1px 1px #fff;
-	}
+}
 .calendar:before{left:11px;}	
 .calendar:after{right:11px;}
 
@@ -110,6 +93,6 @@
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
 	border-radius:2px;
-	}
+}
 .calendar em:before{left:13px;}	
 .calendar em:after{right:13px;}	
