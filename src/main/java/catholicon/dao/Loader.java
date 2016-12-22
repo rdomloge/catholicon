@@ -72,8 +72,6 @@ public class Loader {
 		ResponseHandler<String> handler = new ResponseHandler<String>() {
 			@Override
 			public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
-//				int statusCode = resp.getStatusLine().getStatusCode();
-//				if(statusCode != 200) throw new DaoException("Server responded with a bad code: "+statusCode);
 				return streamToString(resp.getEntity().getContent());
 			}
 		};
@@ -144,7 +142,6 @@ public class Loader {
 
 		try {
 			client.execute(get, handler, ctx);
-			// GET /Live/MatchCard6.asp?FixtureID=1499&Juniors=false&Schools=false&Season=0&Website=1 HTTP/1.1 [Host: bdbl.org.uk, Connection: Keep-Alive, User-Agent: Apache-HttpClient/4.5 (Java/1.8.0_60), Cookie: ASPSESSIONIDQSSRSRQC=LGLLKMAAKENMGMGBDDPFNEOJ; BDBLUID=24; testcookie=true, Accept-Encoding: gzip,deflate]
 			HttpRequest request = (HttpRequest) ctx.getAttribute(HttpCoreContext.HTTP_REQUEST);
 			return request.getRequestLine().getUri();
 		} 
