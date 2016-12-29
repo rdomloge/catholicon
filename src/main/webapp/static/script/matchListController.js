@@ -33,7 +33,6 @@ myApp.controller('matchListController',
 			: $scope.matches[0].awayTeamName;
 	    
 	    $timeout(function(){
-	    	$location.hash('nextMatchAnchor');
 	    	$anchorScroll();
 	    }, 100);
 	});

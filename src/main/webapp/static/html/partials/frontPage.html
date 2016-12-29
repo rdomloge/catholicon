@@ -23,10 +23,14 @@
 	</div>
 	
 	<fixture-details-directive>
-	</fixture-details-directive>	
+	</fixture-details-directive>
+	
+	<p ng-if="frontPageFilter && filteredixtures.length" class="w3-small w3-margin-left w3-padding-4" ng-cloak>
+		Your filter '{{frontPageFilter}}' matched {{filteredixtures.length}} result{{filteredixtures.length > 1 ? 's' : ''}}
+	</p>	
 	
 	<ul class="w3-ul w3-card-4">
-		<li ng-repeat="fixture in upcomingFixtures | filter: frontPageFilter" class="w3-padding-16">
+		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="w3-padding-16">
 			<div class="calendar">
 				{{fixture.fixtureDate | date: 'dd'}} 
 				<em>{{fixture.fixtureDate | date: 'MMM'}}</em>
@@ -39,4 +43,8 @@
 		    <nice-date date="fixture.fixtureDate"/>
 		</li>
 	</ul>
+	
+	<div ng-hide="filteredixtures.length" class="w3-medium w3-margin-left w3-padding-4" ng-cloak>
+		Your filter '{{frontPageFilter}}' is hiding all {{upcomingFixtures.length}} upcoming fixtures
+	</div>
 </div>

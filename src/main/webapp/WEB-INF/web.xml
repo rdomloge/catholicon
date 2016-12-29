@@ -16,5 +16,64 @@
 		<url-pattern>/matchcard/*</url-pattern>
 		<url-pattern>/fixture/*</url-pattern>
 	</filter-mapping>
-
+	
+ 	<filter>
+		<filter-name>LongCachingFilter</filter-name>
+		<filter-class>catholicon.filter.RegexMatchingCachingFilter</filter-class>
+		<init-param>
+			<param-name>patterns</param-name>
+			<param-value>
+				\/catholicon\/season\/list,
+				\/catholicon\/season\/\d+\/league\/list,
+				\/catholicon\/season\/\d+\/league\/\d+\/divisions,
+				\/catholicon\/matchcard/\d+
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>suppressStackTrace</param-name>
+		 	<param-value>false</param-value>
+		</init-param>
+		<init-param>
+ 			<param-name>cacheName</param-name>
+ 			<param-value>MonthCache</param-value>
+		</init-param>
+ 	</filter>
+ 	
+ 	<filter>
+		<filter-name>MediumCachingFilter</filter-name>
+		<filter-class>catholicon.filter.RegexMatchingCachingFilter</filter-class>
+		<init-param>
+			<param-name>patterns</param-name>
+			<param-value>
+				\/catholicon\/frontpage\/upcoming,
+				\/catholicon\/season/\d+\/league\/\d+\/division\/\d+,
+				\/catholicon\/season/\d+\/matches\/\d+\/list,
+				\/catholicon\/fixture\/\d+
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>suppressStackTrace</param-name>
+		 	<param-value>false</param-value>
+		</init-param>
+		<init-param>
+ 			<param-name>cacheName</param-name>
+ 			<param-value>HourCache</param-value>
+		</init-param>
+ 	</filter>
+ 	
+ 	<filter-mapping>
+		<filter-name>LongCachingFilter</filter-name>
+		<url-pattern>*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+ 	</filter-mapping>
+ 	
+ 	<filter-mapping>
+		<filter-name>MediumCachingFilter</filter-name>
+		<url-pattern>*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+ 	</filter-mapping>
 </web-app>
