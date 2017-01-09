@@ -30,14 +30,14 @@ public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
     
-    @Bean
-	public ThreadLocal<Loader> loader() {
-		return new ThreadLocal<Loader>() {
-			@Override
-			protected Loader initialValue() {
-				return new Loader();
-			}
-			
-		};
-	}
+//    @Bean
+//	public ThreadLocal<Loader> loader() {
+//		return new ThreadLocal<Loader>() {
+//			@Override
+//			protected Loader initialValue() {
+//				return new Loader();
+//			}
+//			
+//		};
+//	}
 }

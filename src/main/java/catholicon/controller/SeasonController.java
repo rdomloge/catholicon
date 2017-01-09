@@ -7,13 +7,11 @@ import catholicon.dao.SeasonDao;
 import catholicon.domain.SeasonsDescriptor;
 import catholicon.ex.DaoException;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 public class SeasonController {
 
 	@RequestMapping("/season/list")
-	public SeasonsDescriptor getSeasonList(HttpServletRequest req) throws DaoException {
+	public SeasonsDescriptor getSeasonList() throws DaoException {
 		
 		return new SeasonDao().loadSeasonsDescriptor();
 	}

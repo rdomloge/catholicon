@@ -25,8 +25,10 @@
 	<fixture-details-directive>
 	</fixture-details-directive>
 	
-	<p ng-if="frontPageFilter && filteredixtures.length" class="w3-small w3-margin-left w3-padding-4" ng-cloak>
-		Your filter '{{frontPageFilter}}' matched {{filteredixtures.length}} result{{filteredixtures.length > 1 ? 's' : ''}}
+	<p ng-if="frontPageFilter && filteredixtures.length" class="w3-small w3-margin-left w3-padding-4" 
+		translate="FILTER_MATCH_COUNT"
+		translate-values="{ term: frontPageFilter, count: filteredixtures.length }"
+		ng-cloak>
 	</p>	
 	
 	<ul class="w3-ul w3-card-4">

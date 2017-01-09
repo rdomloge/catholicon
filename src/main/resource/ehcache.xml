@@ -3,10 +3,10 @@
 	monitoring="autodetect" dynamicConfig="true">
 
 	<!-- By default, Ehcache stored the cached files in temp folder. -->
-	<!-- <diskStore path="java.io.tmpdir" /> -->
+	<diskStore path="java.io.tmpdir" />
 
 	<!-- Ask Ehcache to store cache in this path -->
-	<diskStore path="c:\\cache" />
+	<!-- <diskStore path="c:\\cache" /> -->
 
 	<!-- Sample cache named cache1
     This cache contains a maximum in memory of 10000 elements, and will expire
@@ -23,7 +23,7 @@
 		timeToLiveSeconds="2592000"
 		memoryStoreEvictionPolicy="LFU"
 		transactionalMode="off"
-		maxElementsInMemory="10">
+		maxElementsInMemory="100">
 	</cache>
 	
 	<cache name="HourCache"
@@ -33,7 +33,7 @@
 		timeToLiveSeconds="3600"
 		memoryStoreEvictionPolicy="LFU"
 		transactionalMode="off"
-		maxElementsInMemory="10">
+		maxElementsInMemory="50">
 	</cache>
 	
 	<cache name="FiveMinCache"
@@ -43,7 +43,7 @@
 		timeToLiveSeconds="300"
 		memoryStoreEvictionPolicy="LFU"
 		transactionalMode="off"
-		maxElementsInMemory="10">
+		maxElementsInMemory="50">
 	</cache>
 
 </ehcache>
