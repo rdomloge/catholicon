@@ -11,15 +11,23 @@
 	<name>Catholicon - 'Better BDBL'</name>
 
 	<properties>
-		<springframework.version>4.3.0.RELEASE</springframework.version>
 		<jackson.library>2.7.5</jackson.library>
 	</properties>
+	
+	<parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>1.5.1.RELEASE</version>
+	</parent>
 
 	<dependencies>
 		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${springframework.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -30,79 +38,36 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${springframework.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>${jackson.library}</version>
-		</dependency>
-		<!-- dependency>
-    		<groupId>com.fasterxml.jackson.dataformat</groupId>
-    		<artifactId>jackson-dataformat-xml</artifactId>
-    		<version>${jackson.library}</version>
-		</dependency-->
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.5</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<groupId>commons-logging</groupId>
-		    		<artifactId>commons-logging</artifactId>
-		    	</exclusion>
-		    </exclusions>
-		</dependency>
-
 		<dependency>
 			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.9.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax/javaee-api -->
-		<dependency>
-		    <groupId>javax</groupId>
-		    <artifactId>javaee-api</artifactId>
-		    <version>7.0</version>
-		    <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<!-- LogBack dependencies -->
-	    <dependency>
-	    	<groupId>ch.qos.logback</groupId>
-	    	<artifactId>logback-classic</artifactId>
-	    	<version>1.1.1</version>
-	    </dependency>
-	    <dependency>                                    
-	    	<groupId>org.slf4j</groupId>    	            
-	    	<artifactId>jcl-over-slf4j</artifactId>     
-	    	<version>1.7.6</version>  
-	    </dependency>
 		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-web -->
 		<dependency>
 		    <groupId>net.sf.ehcache</groupId>
 		    <artifactId>ehcache-web</artifactId>
 		    <version>2.0.4</version>
 		</dependency>
-				
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>commons-logging</groupId>
+		    		<artifactId>commons-logging</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>		
 	</dependencies>
 
 	<build>
