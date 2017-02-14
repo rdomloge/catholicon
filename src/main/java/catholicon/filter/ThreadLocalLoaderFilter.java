@@ -41,6 +41,8 @@ public class ThreadLocalLoaderFilter implements Filter {
 	}
 	
 	public static Loader getLoader() {
+		if(null == threadLocal) throw new IllegalStateException("Bork");
+		if(null == threadLocal.get()) throw new IllegalStateException("No loader was set");
 		return threadLocal.get();
 	}
 
