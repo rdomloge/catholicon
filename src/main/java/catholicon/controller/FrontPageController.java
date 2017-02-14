@@ -3,6 +3,7 @@ package catholicon.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ public class FrontPageController {
 
 	
 	@RequestMapping("/frontpage/upcoming")
+	@Cacheable("HourCache")
 	public List<UpcomingFixture> getUpcomingFixtures() throws DaoException {
 		
 		return frontPageDao.getUpcomingFixtures();
