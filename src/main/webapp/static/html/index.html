@@ -7,7 +7,12 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+	
+	<script src="../script/angular-translate.min.js"></script>
+	<script src="../script/angular-translate-loader-url.min.js"></script>
+
 	<script src="../script/catholicon-common.js"></script>
+	<script src="../script/catholicon-configure.js"></script>
 	<script src="../script/dataController.js"></script>
 	<script src="../script/niceDate.js"></script>
 	<script src="../script/matchCard.js"></script>
@@ -38,11 +43,11 @@
 	</a> 
 	<a href="#/" onclick="w3_close()">
 		<img src="../img/home.png" alt="home" width="30px">
-		Home
+		{{'HOME' | translate}}
 	</a>
 	<a href="#/secure/login" onclick="w3_close()" ng-show="true">
 		<img src="../img/secure.png" alt="Secure area" width="30px"/>
-		Login
+		{{'LOGIN' | translate}}
 	</a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"

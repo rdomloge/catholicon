@@ -1,4 +1,3 @@
-var myApp = angular.module('app', ['ngRoute', 'ngCookies']);
 
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
@@ -94,30 +93,6 @@ myApp.controller('playerReportController', function($scope, $log, dataFactory, $
 	});
 	
 });
-
-myApp.config([ "$httpProvider", function($httpProvider) {
-	$httpProvider.interceptors.push(function($q, $log, $rootScope) {
-		return {
-			'request' : function(config) {
-				$rootScope.$broadcast('started-thinking');
-				return config;
-			},
-
-			'response' : function(response) {
-				$rootScope.$broadcast('finished-thinking');
-				return response;
-			},
-			
-			// optional method
-			'responseError': function(rejection) {
-				$rootScope.$broadcast('finished-thinking');
-			    $rootScope.$broadcast('error-occurred');
-			    return $q.reject(rejection);
-			}
-		};
-	});
-} ]);
-
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
 	

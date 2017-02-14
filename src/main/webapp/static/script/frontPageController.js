@@ -19,7 +19,7 @@ myApp.factory('frontPageFactory', function($http, $log) {
 myApp.controller('frontPageController', 
 		['$scope', '$log', 'frontPageFactory', 'errorHandlerFactory', '$cookies', '$timeout',
         function($scope, $log, frontPageFactory, errorHandlerFactory, $cookies, $timeout) {
-
+			
 	$scope.frontPageFilter = $cookies.get('front-page-search');
 	if(null != $scope.frontPageFilter) {
 		$scope.showFilteringMsg = true;
