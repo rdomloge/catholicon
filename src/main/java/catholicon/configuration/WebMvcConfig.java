@@ -9,12 +9,22 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import catholicon.filter.JwtFilter;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
 @Configuration
 @ComponentScan(basePackages = { "catholicon"}) 
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcAutoConfiguration {
+	
+	@Bean
+    public FilterRegistrationBean jwtFilter() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new JwtFilter());
+        registrationBean.addUrlPatterns("/api/*");
+
+        return registrationBean;
+    }
 
 	public FilterRegistrationBean getLoaderRegistration() { 
 		FilterRegistrationBean registration = new FilterRegistrationBean();
