@@ -46,7 +46,21 @@
 		</li>
 	</ul>
 	
-	<div ng-hide="filteredixtures.length" class="w3-medium w3-margin-left w3-padding-4" ng-cloak>
-		Your filter '{{frontPageFilter}}' is hiding all {{upcomingFixtures.length}} upcoming fixtures
+	<div ng-show="upcomingFixtures.length > 0 && filteredixtures.length < 1" class="w3-medium w3-padding-4 w3-center" ng-cloak>
+		<div class="emptyImage">
+			<img src="../img/empty.jpg" />
+		</div>
+		<div class="emptyText">
+			<p>Your filter '{{frontPageFilter}}' is hiding all {{upcomingFixtures.length}} upcoming fixtures</p>
+		</div>
+	</div>
+	
+	<div ng-hide="upcomingFixtures.length" class="w3-medium w3-padding-4 w3-center" ng-cloak>
+		<div class="emptyImage">
+			<img src="../img/empty.jpg"/>
+		</div>
+		<div class="emptyText">
+			<p>There are no upcoming fixtures - looks like we are off season!</p>
+		</div>
 	</div>
 </div>

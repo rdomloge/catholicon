@@ -5,17 +5,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import catholicon.domain.Login;
 import catholicon.domain.WelcomePageItem;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.ParserUtil;
 
+@Component
 public class WelcomeDao {
 	
-	private static final String welcomeUrl = "http://bdbl.org.uk/Live/WelcomePage.asp?Flags=31&Season=0&Juniors=false&Schools=false&Website=1";
+	private static final String welcomeUrl = "/Live/WelcomePage.asp?Flags=31&Season=0&Juniors=false&Schools=false&Website=1";
 
-	private static final String url = "http://bdbl.org.uk/Live/Login.asp?FromHotlink=&AutoLogin=&UserLogID=&Season=0&Juniors=false&Schools=false&Website=1";
+	private static final String url = "/Live/Login.asp?FromHotlink=&AutoLogin=&UserLogID=&Season=0&Juniors=false&Schools=false&Website=1";
 	
 	public List<WelcomePageItem> loadWelcomePage() throws DaoException {
 		String welcomePage = ThreadLocalLoaderFilter.getLoader().load(welcomeUrl);

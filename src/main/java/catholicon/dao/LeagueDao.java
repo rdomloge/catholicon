@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
 import catholicon.domain.League;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.LeagueListParser;
 
+@Component
 public class LeagueDao {
 	
-	private static String listUrl = "http://bdbl.org.uk/Live/Leagues.asp?Season=%1$s&website=1";
+	private static String listUrl = "/Live/Leagues.asp?Season=%1$s&website=1";
 	
 	private static final Pattern allLeagueRegExp = Pattern.compile("var leagueMenu = (.*?)];");
 	

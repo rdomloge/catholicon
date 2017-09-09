@@ -17,12 +17,12 @@ public class TranslationController {
 		Map<String, String> map = new HashMap<>();
 		
 		switch(lang) {
-			case "en":
+			case "en_GB":
 				map.put("FILTER_MATCH_COUNT", "Your filter \'{{term}}\' matched {{count}} result(s)");
 				map.put("HOME", "Home");
 				map.put("LOGIN", "Login");
 				break;
-			case "fr":
+			case "fr_FR":
 				map.put("FILTER_MATCH_COUNT", "Votre filtre \'{{term}}\' a donné {{count}} résultats");
 				map.put("HOME", "Page d'accueil");
 				map.put("LOGIN", "S'identifier");

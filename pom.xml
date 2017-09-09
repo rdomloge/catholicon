@@ -13,6 +13,7 @@
 	<properties>
 		<jackson.library>2.7.5</jackson.library>
 		<jjwt.version>0.6.0</jjwt.version>
+		<!-- <tomcat.version>7.0.59</tomcat.version> -->
 	</properties>
 	
 	<parent>
@@ -35,6 +36,11 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
+	    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -61,13 +67,15 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.9.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-web -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		</dependency>
 		<dependency>
 		    <groupId>net.sf.ehcache</groupId>
 		    <artifactId>ehcache-web</artifactId>
 		    <version>2.0.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
 		    <groupId>org.apache.httpcomponents</groupId>
 		    <artifactId>httpclient</artifactId>

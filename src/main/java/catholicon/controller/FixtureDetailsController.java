@@ -1,5 +1,6 @@
 package catholicon.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class FixtureDetailsController {
 	
+	@Autowired
+	private FixtureDao fixtureDao;
+	
 	@RequestMapping("/fixture/{fixtureId}")
 	public FixtureDetails getFixtureDetails(
 			HttpServletRequest req,
 			@PathVariable("fixtureId") int fixtureId) throws DaoException {
 		
-		return new FixtureDao().load(fixtureId);
+		return fixtureDao.load(fixtureId);
 	}
 }

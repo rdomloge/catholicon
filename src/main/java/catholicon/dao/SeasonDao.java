@@ -15,7 +15,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 @Component
 public class SeasonDao {
 	
-	private static final String url = "http://bdbl.org.uk/Live/Main.asp";
+	private static final String url = "/Live/Main.asp";
 	
 	private static final Pattern firstSeasonPattern = Pattern.compile("var firstSeason = (.*?);");
 	private static final Pattern latestSeasonPattern = Pattern.compile("var latestSeason = (.*?);");

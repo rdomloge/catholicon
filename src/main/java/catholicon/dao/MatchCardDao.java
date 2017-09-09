@@ -7,18 +7,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import catholicon.domain.MatchCard;
 import catholicon.domain.Rubber;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
+@Component
 public class MatchCardDao {
 	
 	private static final String initialUrlTemplate = 
-			"http://bdbl.org.uk/Live/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
-	
-	private static final String urlTemplateBase = "http://bdbl.org.uk%1$s";
+			"/Live/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	private static final String NAME_WITHHELD = "Name withheld";
 	
@@ -27,7 +27,7 @@ public class MatchCardDao {
 		
 		Loader loader = ThreadLocalLoaderFilter.getLoader();
 		String newUrl = loader.loadRedirect(initialUrl);
-		String page = loader.load(String.format(urlTemplateBase, newUrl));
+		String page = loader.load(newUrl);
 		
 		Document doc = Jsoup.parse(page);
 		Elements scores = doc.select("span.Boxed[id^=Score]");

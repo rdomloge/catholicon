@@ -7,15 +7,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import catholicon.domain.FixtureDetails;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
+@Component
 public class FixtureDao {
 	
-	private static final String url = 
-			"http://bdbl.org.uk/Live/EditFixture.asp?Edit=false&HomeTeamID=228&AwayTeamID=215&FixtureID=%1$s&FixtureIndex=1&Juniors=false&Schools=false&Season=0&Website=1";
+	private String url = 
+			"/Live/EditFixture.asp?Edit=false&HomeTeamID=228&AwayTeamID=215&FixtureID=%1$s&FixtureIndex=1&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	public FixtureDetails load(int fixtureId) throws DaoException {
 		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(url, fixtureId));
@@ -27,7 +29,7 @@ public class FixtureDao {
 				map.get("Match Time:"), //matchTime
 				map.get("Home Team:"), //homeTeam
 				map.get("Away Team:"), //awayTeam
-				Integer.parseInt(map.get("No. of Courts")), //numberOfCourts
+				map.get("No. of Courts"), //numberOfCourts - NB weird strings, such as 1½ are passed sometimes! Can't format as an int
 				map.get("Venue"), //venue
 				map.get("League:")); //league
 	}
@@ -42,4 +44,5 @@ public class FixtureDao {
 		}
 		return map;
 	}
+	
 }

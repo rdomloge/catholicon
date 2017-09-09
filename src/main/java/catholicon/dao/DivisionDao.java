@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import catholicon.domain.Division;
 import catholicon.domain.Division.TeamPosition;
@@ -14,13 +15,14 @@ import catholicon.domain.DivisionDescriptor;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
+@Component
 public class DivisionDao {
 	
 	private static final String url = 
-			"http://bdbl.org.uk/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
+			"/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	private static String leagueUrl = 
-			"http://bdbl.org.uk/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
+			"/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
 	
 	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId, int seasonStartYear) throws DaoException {
 		

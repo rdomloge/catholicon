@@ -8,15 +8,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import catholicon.domain.PlayerReport;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
+@Component
 public class PlayerReportDao {
 	
 	private static final String url = 
-			"http://bdbl.org.uk/Live/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
+			"/Live/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	public PlayerReport[] loadPlayerReport(String season, String league) throws DaoException {
 		String formattedUrl = String.format(url, league, season);

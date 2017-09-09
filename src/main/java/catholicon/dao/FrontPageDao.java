@@ -21,7 +21,7 @@ import catholicon.parser.ParserUtil;
 @Component
 public class FrontPageDao {
 	
-	private static final String url = "http://bdbl.org.uk/Live/BdblHome.asp?Season=0&website=1";
+	private static final String url = "/Live/BdblHome.asp?Season=0&website=1";
 	
 	private static final Pattern p = Pattern.compile("\\{(..*)\\};");
 

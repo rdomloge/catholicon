@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import catholicon.dao.Loader;
 
 public class ThreadLocalLoaderFilter implements Filter {
@@ -18,6 +20,9 @@ public class ThreadLocalLoaderFilter implements Filter {
 	private static final String LOADER_KEY = "LOADER";
 	
 	private static ThreadLocal<Loader> threadLocal = new ThreadLocal<>();
+	
+	@Value("${BASE_URL}")
+	private String BASE;
 	
 	
 
@@ -30,7 +35,7 @@ public class ThreadLocalLoaderFilter implements Filter {
 		HttpSession session = req.getSession();
 
         if(null == session.getAttribute(LOADER_KEY)) {
-            session.setAttribute(LOADER_KEY, new Loader());
+            session.setAttribute(LOADER_KEY, new Loader(BASE));
         }
 
         threadLocal.set((Loader) session.getAttribute(LOADER_KEY));

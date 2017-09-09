@@ -31,7 +31,7 @@ myApp.controller('JwtLoginController', ['mainService','$scope','$http',
             }
             
             $scope.makeCallThatNeedsSecurity = function() {
-            	$http.get(Config.BASE_URL+'/api/dummy').then(function(response){
+            	$http.get(Config.BASE_URL+'/api/claims').then(function(response){
                     console.log(response);
                     return response.data;
                 });
@@ -51,8 +51,8 @@ myApp.service('mainService', function($http) {
         },
 
         makeSecureCall : function() {
-            return $http.get(Config.BASE_URL+'/api/dummy').then(function(response){
-                console.log(response);
+            return $http.get(Config.BASE_URL+'/api/claims').then(function(response){
+                console.log(response.data);
                 return response.data;
             });
         }

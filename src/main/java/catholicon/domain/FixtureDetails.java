@@ -17,12 +17,12 @@ public class FixtureDetails {
 	private String matchTime;
 	private String homeTeam;
 	private String awayTeam;
-	private int numberOfCourts;
+	private String numberOfCourts;
 	private String venue;
 	private String league;
 
 
-	public FixtureDetails(String matchDate, String matchTime, String homeTeam, String awayTeam, int numberOfCourts,
+	public FixtureDetails(String matchDate, String matchTime, String homeTeam, String awayTeam, String numberOfCourts,
 			String venue, String league) {
 		super();
 		this.matchDate = matchDate;
@@ -50,7 +50,7 @@ public class FixtureDetails {
 		return awayTeam;
 	}
 
-	public int getNumberOfCourts() {
+	public String getNumberOfCourts() {
 		return numberOfCourts;
 	}
 

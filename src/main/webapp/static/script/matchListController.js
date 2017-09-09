@@ -50,7 +50,10 @@ myApp.controller('matchListController',
 				firstUnplayed = match;
 			}
 		}
-		firstUnplayed.firstUnplayed = true;
+		
+		if(firstUnplayed) {
+			firstUnplayed.firstUnplayed = true;
+		}
 	}
 	
 	$scope.showFixture = function(fixtureId) {

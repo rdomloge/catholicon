@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -24,15 +25,24 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpCoreContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import catholicon.domain.Login;
 import catholicon.ex.DaoException;
 
 public class Loader {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Loader.class);
+	
+	private String BASE;
+	
 	private HttpContext ctx;
 	
-	public Loader() {
+	public Loader(String baseUrl) {
+		this.BASE = baseUrl;
+		
 		CookieStore cookieStore = new BasicCookieStore();
 		BasicClientCookie cookie1 = new BasicClientCookie("BDBLUID", "24");
 		cookie1.setDomain("bdbl.org.uk");
@@ -65,28 +75,43 @@ public class Loader {
 	}
 	
 	public String load(String url) throws DaoException {
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet get = new HttpGet(url);
+		StopWatch stopWatch = new StopWatch("Loader");
+		stopWatch.start();
 		
-		ResponseHandler<String> handler = new ResponseHandler<String>() {
-			@Override
-			public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
-				return streamToString(resp.getEntity().getContent());
-			}
-		};
-
 		try {
-			return client.execute(get, handler, ctx);
-		} 
-		catch (IOException e) {
-			throw new DaoException(e);
-		} 
-		finally {
-			get.releaseConnection();
+			String fullUrl = BASE+url;
+			LOGGER.info(fullUrl);
+			CloseableHttpClient client = HttpClients.createDefault();
+			HttpGet get = new HttpGet(fullUrl);
+			
+			ResponseHandler<String> handler = new ResponseHandler<String>() {
+				@Override
+				public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
+					Header cacheHeader = resp.getFirstHeader("X-Cached");
+					if(null != cacheHeader) {
+						LOGGER.debug("Response was "+cacheHeader.getValue());
+					}
+					return streamToString(resp.getEntity().getContent());
+				}
+			};
+	
 			try {
-				client.close();
-			} catch (IOException e) {
+				return client.execute(get, handler, ctx);
+			} 
+			catch (IOException e) {
+				throw new DaoException(e);
+			} 
+			finally {
+				get.releaseConnection();
+				try {
+					client.close();
+				} catch (IOException e) {
+				}
 			}
+		}
+		finally {
+			stopWatch.stop();
+			LOGGER.debug("Load took "+stopWatch.getTotalTimeMillis()+"ms: "+url);
 		}
 	}
 
@@ -100,12 +125,14 @@ public class Loader {
 		BrowserEngineVersion:537.36
 	 */
 	public String sendLogin(String url, Login login) throws DaoException {
+		String fullUrl = BASE+url;
+		LOGGER.info(fullUrl);
 		CloseableHttpClient client = HttpClients.createDefault();
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair("Username", login.getName()));
 		formparams.add(new BasicNameValuePair("Password", login.getPassword()));
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
-		HttpPost post = new HttpPost(url);
+		HttpPost post = new HttpPost(fullUrl);
 		post.setEntity(entity);
 		
 		ResponseHandler<String> handler = new ResponseHandler<String>() {
@@ -130,29 +157,44 @@ public class Loader {
 	}
 
 	public String loadRedirect(String url) throws DaoException {
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet get = new HttpGet(url);
+		StopWatch stopWatch = new StopWatch("Loader");
+		stopWatch.start();
 		
-		ResponseHandler<String> handler = new ResponseHandler<String>() {
-			@Override
-			public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
-				return null;
-			}};
-
 		try {
-			client.execute(get, handler, ctx);
-			HttpRequest request = (HttpRequest) ctx.getAttribute(HttpCoreContext.HTTP_REQUEST);
-			return request.getRequestLine().getUri();
-		} 
-		catch (IOException e) {
-			throw new DaoException(e);
-		} 
-		finally {
-			get.releaseConnection();
+			String fullUrl = BASE+url;
+			LOGGER.info(fullUrl);
+			CloseableHttpClient client = HttpClients.createDefault();
+			HttpGet get = new HttpGet(fullUrl);
+			
+			ResponseHandler<String> handler = new ResponseHandler<String>() {
+				@Override
+				public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
+					Header cacheHeader = resp.getFirstHeader("X-Cached");
+					if(null != cacheHeader) {
+						LOGGER.debug("Response was "+cacheHeader.getValue());
+					}
+					return null;
+				}};
+	
 			try {
-				client.close();
-			} catch (IOException e) {
+				client.execute(get, handler, ctx);
+				HttpRequest request = (HttpRequest) ctx.getAttribute(HttpCoreContext.HTTP_REQUEST);
+				return request.getRequestLine().getUri();
+			} 
+			catch (IOException e) {
+				throw new DaoException(e);
+			} 
+			finally {
+				get.releaseConnection();
+				try {
+					client.close();
+				} catch (IOException e) {
+				}
 			}
+		}
+		finally {
+			stopWatch.stop();
+			LOGGER.debug("Loading the redirect took "+stopWatch.getTotalTimeMillis()+"ms: "+url);
 		}
 	}
 }

@@ -50,10 +50,6 @@
 		<img src="../img/secure.png" alt="Secure area" width="30px"/>
 		{{'LOGIN' | translate}}
 	</a>
-	<a href="#/secure/jwtlogin" onclick="w3_close()" ng-show="true">
-		<img src="../img/secure.png" alt="Secure area" width="30px"/>
-		{{'JWTLOGIN' | translate}}
-	</a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
 			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
