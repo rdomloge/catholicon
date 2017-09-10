@@ -2,6 +2,7 @@ package catholicon.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.MatchCardDao;
@@ -12,7 +13,7 @@ import catholicon.ex.DaoException;
 public class MatchCardController {
 
 	
-	@RequestMapping("/matchcard/{fixtureid}")
+	@RequestMapping(method=RequestMethod.GET, value="/matchcard/{fixtureid}")
 	public MatchCard loadMatchCard(
 			@PathVariable("fixtureid") String fixtureId) throws DaoException {
 		

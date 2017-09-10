@@ -3,6 +3,7 @@ package catholicon.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Claims;
@@ -24,7 +25,7 @@ public class DummyController {
 		}
 	}
 
-	@RequestMapping("/claims")
+	@RequestMapping(method=RequestMethod.GET, value="/claims")
 	public Claims getClaims(HttpServletRequest hsr) {
 		
 		Claims claims = (Claims) hsr.getAttribute("claims");

@@ -2,8 +2,10 @@ package catholicon.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.DivisionDao;
@@ -14,7 +16,7 @@ import catholicon.ex.DaoException;
 @RestController
 public class DivisionController {
 	
-	@RequestMapping("/season/{seasonStartYear}/league/{leagueTypeId}/division/{divisionId}")
+	@RequestMapping(method=RequestMethod.GET, value="/season/{seasonStartYear}/league/{leagueTypeId}/division/{divisionId}")
 	public Division getLeague(
 			@PathVariable("leagueTypeId") String leagueTypeId,
 			@PathVariable("divisionId") int divisionId,
@@ -23,7 +25,7 @@ public class DivisionController {
 		return new DivisionDao().load(leagueTypeId, divisionId, seasonStartYear);
 	}
 	
-	@RequestMapping("/season/{seasonStartYear}/league/{leagueTypeId}/divisions")
+	@RequestMapping(method=RequestMethod.GET, value="/season/{seasonStartYear}/league/{leagueTypeId}/divisions")
 	public List<DivisionDescriptor> getDivisionsForLeague(
 			@PathVariable("leagueTypeId") int leagueTypeId,
 			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {

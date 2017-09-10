@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TranslationController {
 
 
-	@RequestMapping("/i18n")
+	@RequestMapping(method=RequestMethod.GET, value="/i18n")
 	public Map<String, String> fetchTranslations(@RequestParam("lang") String lang) {
 		
 		Map<String, String> map = new HashMap<>();

@@ -30,7 +30,7 @@ public class UserController {
         userDb.put("sally", Arrays.asList("user", "admin"));
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value="login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponse> login(@RequestBody final UserLogin login)
         throws ServletException {
         if (login.name == null || !userDb.containsKey(login.name)) {

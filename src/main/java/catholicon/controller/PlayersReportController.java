@@ -2,6 +2,7 @@ package catholicon.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.PlayerReportDao;
@@ -12,7 +13,7 @@ import catholicon.ex.DaoException;
 public class PlayersReportController {
 
 	
-	@RequestMapping("/season/{season}/league/{league}/report")
+	@RequestMapping(method=RequestMethod.GET, value="/season/{season}/league/{league}/report")
 	public PlayerReport[] getBestPlayerReport(
 			@PathVariable("season") int season,
 			@PathVariable("league") int league) throws DaoException {
