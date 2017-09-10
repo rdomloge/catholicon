@@ -29,7 +29,12 @@ public class WebMvcConfig extends WebMvcAutoConfiguration {
 	public FilterRegistrationBean getLoaderRegistration() { 
 		FilterRegistrationBean registration = new FilterRegistrationBean();
 	    registration.setFilter(getLoaderFilter());
-	    registration.addUrlPatterns("/season/*","/secure/*", "/frontpage/upcoming", "/matchcard/*", "/fixture/*");    
+	    registration.addUrlPatterns(
+	    		"/season/*",
+	    		"/secure/*", 
+	    		"/frontpage/upcoming", 
+	    		"/matchcard/*", 
+	    		"/fixture/*");    
 	    registration.setName("someFilter");
 	    registration.setOrder(1);
 	    return registration;
