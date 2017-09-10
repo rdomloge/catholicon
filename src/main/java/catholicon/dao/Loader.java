@@ -40,6 +40,8 @@ public class Loader {
 	
 	private HttpContext ctx;
 	
+	private static final CloseableHttpClient client = HttpClients.createDefault();
+	
 	public Loader(String baseUrl) {
 		this.BASE = baseUrl;
 		
@@ -81,7 +83,6 @@ public class Loader {
 		try {
 			String fullUrl = BASE+url;
 			LOGGER.info(fullUrl);
-			CloseableHttpClient client = HttpClients.createDefault();
 			HttpGet get = new HttpGet(fullUrl);
 			
 			ResponseHandler<String> handler = new ResponseHandler<String>() {
@@ -103,10 +104,6 @@ public class Loader {
 			} 
 			finally {
 				get.releaseConnection();
-				try {
-					client.close();
-				} catch (IOException e) {
-				}
 			}
 		}
 		finally {
@@ -127,7 +124,6 @@ public class Loader {
 	public String sendLogin(String url, Login login) throws DaoException {
 		String fullUrl = BASE+url;
 		LOGGER.info(fullUrl);
-		CloseableHttpClient client = HttpClients.createDefault();
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair("Username", login.getName()));
 		formparams.add(new BasicNameValuePair("Password", login.getPassword()));
@@ -149,10 +145,6 @@ public class Loader {
 		} 
 		finally {
 			post.releaseConnection();
-			try {
-				client.close();
-			} catch (IOException e) {
-			}
 		}
 	}
 
@@ -163,7 +155,6 @@ public class Loader {
 		try {
 			String fullUrl = BASE+url;
 			LOGGER.info(fullUrl);
-			CloseableHttpClient client = HttpClients.createDefault();
 			HttpGet get = new HttpGet(fullUrl);
 			
 			ResponseHandler<String> handler = new ResponseHandler<String>() {
@@ -186,10 +177,6 @@ public class Loader {
 			} 
 			finally {
 				get.releaseConnection();
-				try {
-					client.close();
-				} catch (IOException e) {
-				}
 			}
 		}
 		finally {
