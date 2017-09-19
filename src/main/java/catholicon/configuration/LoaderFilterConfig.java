@@ -15,7 +15,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 @Configuration
 @ComponentScan(basePackages = { "catholicon"}) 
 @EnableWebMvc
-public class WebMvcConfig extends WebMvcAutoConfiguration {
+public class LoaderFilterConfig extends WebMvcAutoConfiguration {
 	
 	@Bean
     public FilterRegistrationBean jwtFilter() {
@@ -35,8 +35,8 @@ public class WebMvcConfig extends WebMvcAutoConfiguration {
 	    		"/frontpage/upcoming", 
 	    		"/matchcard/*", 
 	    		"/fixture/*");    
-	    registration.setName("someFilter");
-	    registration.setOrder(1);
+	    registration.setName("loaderFilter");
+	    registration.setOrder(2);
 	    return registration;
 	}
 	

@@ -85,7 +85,20 @@
 		    		<artifactId>commons-logging</artifactId>
 		    	</exclusion>
 		    </exclusions>
-		</dependency>	
+		</dependency>
+		
+		<!-- SPRING DATA/ R E D I S -->
+	    <dependency>
+	        <groupId>org.springframework.data</groupId>
+	        <artifactId>spring-data-redis</artifactId>
+	        <!-- <version>1.8.7.RELEASE</version> -->
+	    </dependency>
+	    <dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		</dependency>
+		
+		<!-- SWAGGER -->
 		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger2</artifactId>

@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 import catholicon.domain.Season;
-import catholicon.domain.SeasonsDescriptor;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
@@ -22,7 +21,7 @@ public class SeasonDao {
 	private static final Pattern currentSeasonPattern = Pattern.compile("var currSeason = (.*?);");
 	
 	
-	public SeasonsDescriptor loadSeasonsDescriptor() throws DaoException {
+	public Season[] loadSeasons() throws DaoException {
 //		http://bdbl.org.uk/Live/Main.asp?Website=1&Browser=Google%20Chrome&Version=52.0.2743.116&OS=Mac%20OS%20X%2010.10.5&Engine=Web%20Kit&EngineVersion=537.36
 
 //		var firstSeason = 2012;
@@ -47,15 +46,15 @@ public class SeasonDao {
 			seasons.add(s);
 		}
 		
-		return new SeasonsDescriptor(seasons, currentSeason);
+		return seasons.toArray(new Season[seasons.size()]);
 	}
 
-	private int find(String page, Pattern p) {
+	private int find(String page, Pattern p) throws DaoException {
 		Matcher m = p.matcher(page);
 		if(m.find()) {
 			String season = m.group(1);
 			return Integer.parseInt(season);	
 		}
-		throw new RuntimeException("Could not find season for "+p.pattern());
+		throw new DaoException("Could not find season for "+p.pattern());
 	}
 }

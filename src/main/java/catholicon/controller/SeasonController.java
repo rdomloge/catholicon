@@ -5,15 +5,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.SeasonDao;
-import catholicon.domain.SeasonsDescriptor;
+import catholicon.domain.Season;
 import catholicon.ex.DaoException;
 
 @RestController
 public class SeasonController {
 
-	@RequestMapping(method=RequestMethod.GET, value="/season/list")
-	public SeasonsDescriptor getSeasonList() throws DaoException {
+	@RequestMapping(method=RequestMethod.GET, value="/seasons")
+	public Season[] getSeasonList() throws DaoException {
 		
-		return new SeasonDao().loadSeasonsDescriptor();
+		return new SeasonDao().loadSeasons();
 	}
 }

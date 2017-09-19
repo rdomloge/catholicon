@@ -16,17 +16,19 @@ a, u {
 	    background-color: #f5f5f4;
 	    left: 0;
 	    right: 0;
+	    top: 0;
 	    border-bottom: black;
 	    border-style: none none solid;
 	    border-bottom-width: thin;
+	    z-index: 11;
 	}
 	
-	div.burger {
+	span.burger {
 		padding-left: 10px;
 	}
 	
 	div.padToBelowHeader {
-		padding-top: 50px;
+		margin-top: 43px;
 	}
 	
 	table th.rd-mobile-div-hidden-cols, table td.rd-mobile-div-hidden-cols {
@@ -68,6 +70,7 @@ a, u {
 	
 	.siteTitle {
 		font-size: 60%;
+		margin-left: 10px
 	}
 	
 	.rd-nav-close {
@@ -77,5 +80,6 @@ a, u {
 	.rd-division-card-footer {
 		line-height: 1em;
 		padding: 6px 0 2px 0;
+	}
 }
 

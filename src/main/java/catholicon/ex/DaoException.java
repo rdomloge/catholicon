@@ -1,6 +1,6 @@
 package catholicon.ex;
 
-public class DaoException extends Exception {
+public class DaoException extends RuntimeException {
 
 	/**
 	 * 

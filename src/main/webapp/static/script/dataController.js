@@ -9,7 +9,7 @@ myApp.factory('dataFactory', function($http, $log) {
 	
 	factory.getSeasonList = function() {
 		$log.info("Loading seasons list");
-		return $http.get(Config.BASE_URL+'/season/list');
+		return $http.get(Config.BASE_URL+'/seasons');
 	}
 	
 	factory.getDivisions = function(leagueTypeId, season) {

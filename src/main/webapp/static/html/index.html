@@ -3,10 +3,10 @@
 <head>
 	<title>Catholicon - better BDBL</title>
 	
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+	<script src="../script/angular/1.5.8/angular.js"></script>
+	<script src="../script/angular/1.5.8/angular-route.min.js"></script>
+	<script src="../script/angular/1.5.8/angular-resource.js"></script>
+	<script src="../script/angular/1.5.8/angular-cookies.js"></script>
 	
 	<script src="../libs/angular-translate.min.js"></script>
 	<script src="../libs/angular-translate-loader-url.min.js"></script>
@@ -24,7 +24,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="//fonts.googleapis.com/css?family=Titillium+Web|Open+Sans+Condensed:300|Open+Sans+Condensed:300" rel="stylesheet">
+	<link href="../font/titillium.css" rel="stylesheet">
 	
 	<link rel="stylesheet" href="../style/w3.css">
 	<link rel="stylesheet" type="text/css" href="../style/common.css">
@@ -51,7 +51,7 @@
 		{{'LOGIN' | translate}}
 	</a>
 	<div ng-controller="seasonListController">
-		<a ng-repeat="season in seasons.seasons" onclick="w3_close()"
+		<a ng-repeat="season in seasons" onclick="w3_close()"
 			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
 			<img src="../img/seasonIcon.png" alt="Season" width="30px"/>
 			{{season.seasonStartYear}}
@@ -74,7 +74,8 @@
 	</div>
 	
 	<div id="thinking" ng-class="contentLoading ? 'slide-in-from-left' : 'slide-out-from-left'" 
-			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-orange" ng-controller="thinkingController">
+			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-orange" 
+			ng-controller="thinkingController">
 		<img alt="Loading..."
 			height="50px" 
 			src="../img/loading.gif">

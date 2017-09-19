@@ -15,6 +15,9 @@ public class Season {
 		this.seasonEndYear = seasonEndYear;
 	}
 
+	public Season() {
+	}
+
 	public int getId() {
 		return id;
 	}
