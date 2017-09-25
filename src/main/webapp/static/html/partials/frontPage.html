@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	
-	<div id="offSeason" ng-hide="upcomingFixtures.length" class="w3-medium w3-padding-4 w3-center">
+	<div id="offSeason" ng-hide="upcomingFixtures.length" ng-class="upcomingFixtures.length ? 'w3-medium w3-padding-4 w3-center' : 'w3-hide'">
 		<div class="emptyImage">
 			<img src="../img/empty.jpg"/>
 		</div>
