@@ -31,6 +31,9 @@ public class MatchCardDao {
 		
 		Document doc = Jsoup.parse(page);
 		Elements scores = doc.select("span.Boxed[id^=Score]");
+		if(scores.size() == 0) {
+			throw new DaoException("Could not load matchcard for fixture "+fixtureId);
+		}
 		Map<Integer, Rubber> scoreMap = new HashMap<>();
 		
 		for(int i=0; i < scores.size(); i++) {

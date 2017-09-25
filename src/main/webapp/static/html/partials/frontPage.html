@@ -1,5 +1,5 @@
 <div ng-controller="frontPageController" class="padToBelowHeader">
-	<div class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
+	<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
 	  <img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="padding: 3px; width: 30px">
 	  
 	  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	
-	<div ng-hide="upcomingFixtures.length" class="w3-medium w3-padding-4 w3-center" ng-cloak>
+	<div id="offSeason" ng-hide="upcomingFixtures.length" class="w3-medium w3-padding-4 w3-center">
 		<div class="emptyImage">
 			<img src="../img/empty.jpg"/>
 		</div>

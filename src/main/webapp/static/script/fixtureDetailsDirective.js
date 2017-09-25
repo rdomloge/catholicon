@@ -37,5 +37,6 @@ myApp.controller('fixtureDetailsController', ['$scope', '$log', 'fixtureDetailFa
 	
 	$scope.hideFixtureDetails = function() {
 		$scope.showFixtureDetailsDialogue = false;
+		$scope.fixtureDetails = null;
 	}
 }]);

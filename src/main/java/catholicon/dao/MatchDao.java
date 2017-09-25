@@ -14,7 +14,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 @Component
 public class MatchDao {
 	
-	private static final String url = 
+	public static final String url = 
 			"/Live/TeamFixtureList.asp?ID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	private static final Pattern allMatchesDataLineRegExp = Pattern.compile("var data = (.*?)];");

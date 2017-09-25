@@ -14,7 +14,7 @@ import catholicon.parser.LeagueListParser;
 @Component
 public class LeagueDao {
 	
-	private static String listUrl = "/Live/Leagues.asp?Season=%1$s&website=1";
+	public static String listUrl = "/Live/Leagues.asp?Season=%1$s&website=1";
 	
 	private static final Pattern allLeagueRegExp = Pattern.compile("var leagueMenu = (.*?)];");
 	
@@ -29,6 +29,6 @@ public class LeagueDao {
 			return parser.getLeagues();
 		}
 		
-		throw new RuntimeException("Could not find league names data");
+		throw new DaoException("Could not find league names data for "+seasonStartYear);
 	}
 }

@@ -1,4 +1,4 @@
-package catholicon.filter;
+package catholicon.filter.archive.stream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;

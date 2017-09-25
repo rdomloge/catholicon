@@ -22,6 +22,10 @@ public class UpcomingFixture {
 		this.fixtureDate = fixtureDate;
 		this.fixtureId = fixtureId;
 	}
+	
+	public UpcomingFixture() {
+		super();
+	}
 
 	public String getHomeTeamName() {
 		return homeTeamName;

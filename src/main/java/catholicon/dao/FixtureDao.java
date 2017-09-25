@@ -24,6 +24,9 @@ public class FixtureDao {
 		
 		Document doc = Jsoup.parse(page);
 		Map<String, String> map = parseRows(doc.select("table tr table tr"));
+		if(map.size() == 0) {
+			throw new DaoException("Could not parse fixture details from page for fixture "+fixtureId);
+		}
 		return new FixtureDetails(
 				map.get("Match Date:"), //matchDate
 				map.get("Match Time:"), //matchTime

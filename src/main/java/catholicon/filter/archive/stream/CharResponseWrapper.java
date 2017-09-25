@@ -1,4 +1,4 @@
-package catholicon.filter;
+package catholicon.filter.archive.stream;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,7 +7,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-class CharResponseWrapper extends HttpServletResponseWrapper
+public class CharResponseWrapper extends HttpServletResponseWrapper
 {
     private ByteArrayPrintWriter output;
     private boolean usingWriter;

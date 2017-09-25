@@ -4,6 +4,10 @@
     margin-right: 5px;
 }
 
+#filterForm {
+	z-index: 1;
+}
+
 .rd-80px-leftmargin {
 	margin-left: 95px;
 }

@@ -18,10 +18,10 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 @Component
 public class DivisionDao {
 	
-	private static final String url = 
+	public static final String url = 
 			"/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
-	private static String leagueUrl = 
+	public static String leagueUrl = 
 			"/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
 	
 	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId, int seasonStartYear) throws DaoException {
@@ -31,6 +31,9 @@ public class DivisionDao {
 		
 		Document doc = Jsoup.parse(page);
 		Elements divs = doc.select("#Divs option");
+		if(divs.size() == 0) {
+			throw new DaoException("No divisions found for "+leagueTypeId+ " in season "+seasonStartYear);
+		}
 		for (Element option : divs) {
 			String label = option.text();
 			int id = Integer.parseInt(option.attr("value"));

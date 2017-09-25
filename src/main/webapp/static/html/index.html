@@ -52,7 +52,7 @@
 	</a>
 	<div ng-controller="seasonListController">
 		<a ng-repeat="season in seasons" onclick="w3_close()"
-			href="#/season/{{season.seasonStartYear == seasons.currentSeason ? 0 : season.seasonStartYear}}/">
+			href="#/season/{{season.seasonStartYear == seasons[0].seasonStartYear ? 0 : season.seasonStartYear}}/">
 			<img src="../img/seasonIcon.png" alt="Season" width="30px"/>
 			{{season.seasonStartYear}}
 		</a>
