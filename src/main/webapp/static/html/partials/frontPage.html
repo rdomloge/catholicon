@@ -1,6 +1,6 @@
 <div ng-controller="frontPageController" class="padToBelowHeader">
 	<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
-	  <img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="padding: 3px; width: 30px">
+	  <img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="padding: 3px; width: 30px; margin-bottom: 0px;">
 	  
 	  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
 	  		style="width:300px; right:0">
@@ -29,7 +29,25 @@
 		translate="FILTER_MATCH_COUNT"
 		translate-values="{ term: frontPageFilter, count: filteredixtures.length }"
 		ng-cloak>
-	</p>	
+	</p>
+	
+	<span ng-class="recentMatches.length ? 'w3-medium w3-right' : 'w3-hide'" style="padding-top: 3px"
+		ng-click="recentMatchesToggle = !recentMatchesToggle">
+		Match results <span class="w3-badge w3-red">{{recentMatches.length}}</span>
+	</span>
+	
+	<div class="w3-panel w3-card-3" style="margin-top: 30px">
+		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
+		  <div ng-repeat="match in recentMatches" class="w3-row">
+		  	<a href="#/matchcard/{{match.fixtureId}}">
+			    <div class="w3-col m8 w3-small">{{match.homeTeamName}} v {{match.awayTeamName}}</div>
+			    <div class="w3-col m4 w3-medium">{{match.scoreExtracted}}</div>
+		    </a>
+		  </div>
+		</div>
+	</div>
+	
+	
 	
 	<ul class="w3-ul w3-card-4">
 		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="w3-padding-16">

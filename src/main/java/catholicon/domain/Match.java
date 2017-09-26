@@ -163,4 +163,74 @@ public class Match {
 				+ ", homeTeamId=" + homeTeamId + ", date=" + date + ", fixtureStatus=" + fixtureStatus + ", fixtureId="
 				+ fixtureId + ", scoreExtracted=" + scoreExtracted + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + awayTeamId;
+		result = prime * result + ((awayTeamName == null) ? 0 : awayTeamName.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((fixtureId == null) ? 0 : fixtureId.hashCode());
+		result = prime * result + fixtureStatus;
+		result = prime * result + ((fixtureText == null) ? 0 : fixtureText.hashCode());
+		result = prime * result + homeTeamId;
+		result = prime * result + ((homeTeamName == null) ? 0 : homeTeamName.hashCode());
+		result = prime * result + ((scoreExtracted == null) ? 0 : scoreExtracted.hashCode());
+		result = prime * result + ((scoreText == null) ? 0 : scoreText.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Match other = (Match) obj;
+		if (awayTeamId != other.awayTeamId)
+			return false;
+		if (awayTeamName == null) {
+			if (other.awayTeamName != null)
+				return false;
+		} else if (!awayTeamName.equals(other.awayTeamName))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (fixtureId == null) {
+			if (other.fixtureId != null)
+				return false;
+		} else if (!fixtureId.equals(other.fixtureId))
+			return false;
+		if (fixtureStatus != other.fixtureStatus)
+			return false;
+		if (fixtureText == null) {
+			if (other.fixtureText != null)
+				return false;
+		} else if (!fixtureText.equals(other.fixtureText))
+			return false;
+		if (homeTeamId != other.homeTeamId)
+			return false;
+		if (homeTeamName == null) {
+			if (other.homeTeamName != null)
+				return false;
+		} else if (!homeTeamName.equals(other.homeTeamName))
+			return false;
+		if (scoreExtracted == null) {
+			if (other.scoreExtracted != null)
+				return false;
+		} else if (!scoreExtracted.equals(other.scoreExtracted))
+			return false;
+		if (scoreText == null) {
+			if (other.scoreText != null)
+				return false;
+		} else if (!scoreText.equals(other.scoreText))
+			return false;
+		return true;
+	}
 }

@@ -1,0 +1,166 @@
+package catholicon;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import catholicon.dao.DivisionDao;
+import catholicon.dao.LeagueDao;
+import catholicon.dao.Loader;
+import catholicon.dao.MatchDao;
+import catholicon.domain.Division;
+import catholicon.domain.Division.TeamPosition;
+import catholicon.domain.DivisionDescriptor;
+import catholicon.domain.League;
+import catholicon.domain.Match;
+import catholicon.filter.ThreadLocalLoaderFilter;
+
+@Component
+public class RecentMatchResultsSpider {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RecentMatchResultsSpider.class);
+	
+	private static final long HOURLY = 1000 * 60 * 60;
+	
+	private static final DateFormat matchDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
+	
+	@Value("${BASE_URL:http://192.168.0.14}")
+	private String BASE;
+	
+	private Loader loader;
+	private MatchDao matchDao = new MatchDao();
+	private DivisionDao divisionDao = new DivisionDao();
+	private LeagueDao leagueDao = new LeagueDao();
+	
+	private Set<Match> recentMatches = new HashSet<>();
+	private List<Match> sortedRecentMatches = new LinkedList<>();
+	
+	private Date cutOff;
+	
+
+	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
+	public void spiderLatestResults() {
+		LOGGER.info("Updating latest fixtures");
+		loader = new Loader(BASE);
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.add(Calendar.MONTH, -1);
+		cutOff = gc.getTime();
+		recentMatches.clear();
+		sortedRecentMatches.clear();
+		new LeagueSpider().run();
+		sortedRecentMatches.addAll(recentMatches);
+		Collections.sort(sortedRecentMatches, new Comparator<Match>(){
+			@Override
+			public int compare(Match m1, Match m2) {
+				return m2.getDate().compareTo(m1.getDate());
+			}});
+		
+		for (Match match : recentMatches) {
+			LOGGER.debug("[RECENT] "+match.getHomeTeamName()+" v "+match.getAwayTeamName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+		}
+	}
+	
+	public List<Match> getRecentMatches() {
+		return sortedRecentMatches;
+	}
+
+	class LeagueSpider extends Wrapper {
+		
+		@Override
+		public void _run() {
+			
+			List<League> leagues = leagueDao.list(0);
+			for (League league : leagues) {
+				new DivisionSpider(league.getLeagueTypeId()).run();
+			}
+		}
+	}
+	
+	class DivisionSpider extends Wrapper {
+		
+		private int leagueTypeId;
+
+		public DivisionSpider(int leagueTypeId) {
+			this.leagueTypeId = leagueTypeId;
+		}
+
+		@Override
+		protected void _run() {
+			List<DivisionDescriptor> divisionsForLeague = divisionDao.getDivisionsForLeague(leagueTypeId, 0);
+			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
+				Division division = divisionDao.load(""+leagueTypeId, divisionDescriptor.getDivisionId(), 0);
+				TeamPosition[] teamPositions = division.getPositions();
+				for (TeamPosition teamPosition : teamPositions) {
+					MatchSpider matchSpider = new MatchSpider(teamPosition.getTeamId());
+					matchSpider.run();
+				}
+			}
+		}
+	}
+	
+	class MatchSpider extends Wrapper {
+
+		private int team;
+
+		public MatchSpider(int team) {
+			this.team = team;
+		}
+
+		@Override
+		protected void _run() {
+			
+			Match[] matchs = matchDao.load(0, ""+team);
+			for (Match match : matchs) {
+				if(match.isPlayed() || match.isUnConfirmed()) {
+					String dateStr = match.getDate();
+					try {
+						Date date = matchDateFormat.parse(dateStr);
+						if(date.after(cutOff)) {
+							LOGGER.debug("Match on "+dateStr+" is recent");
+							recentMatches.add(match);
+						}
+						else {
+							LOGGER.debug("Match on "+dateStr+" is too old");
+						}
+					} 
+					catch (ParseException e) {
+						LOGGER.error("Could not parse "+dateStr, e);
+						continue;
+					}
+				}
+			}
+		}
+	}
+	
+	abstract class Wrapper implements Runnable {
+
+		@Override
+		public final void run() {
+			try {
+				ThreadLocalLoaderFilter.set(loader);
+				_run();
+			}
+			catch(RuntimeException rex) {
+				LOGGER.error("Spider error", rex);
+			}
+		}
+		
+		protected abstract void _run();
+		
+	}
+}

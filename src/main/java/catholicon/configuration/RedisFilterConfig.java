@@ -29,7 +29,8 @@ public class RedisFilterConfig {
 	    		"/secure/*", 
 	    		"/frontpage/upcoming", 
 	    		"/matchcard/*", 
-	    		"/fixture/*"); 
+	    		"/fixture/*",
+	    		"/recent"); 
         registrationBean.setName("restArchiveFilter");
         registrationBean.setOrder(1);
         return registrationBean;

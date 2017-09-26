@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import catholicon.RecentMatchResultsSpider;
 import catholicon.domain.Match;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
@@ -19,6 +21,8 @@ public class MatchDao {
 	
 	private static final Pattern allMatchesDataLineRegExp = Pattern.compile("var data = (.*?)];");
 	
+	@Autowired
+	private RecentMatchResultsSpider recentMatchResultSpider;
 	
 
 	public Match[] load(int seasonStartYear, String team) throws DaoException {
@@ -41,5 +45,9 @@ public class MatchDao {
 		}
 		
 		return matches.toArray(new Match[matches.size()]);
+	}
+	
+	public List<Match> getRecentMatches() {
+		return recentMatchResultSpider.getRecentMatches();
 	}
 }

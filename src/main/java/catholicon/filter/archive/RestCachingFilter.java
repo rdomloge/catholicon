@@ -57,7 +57,7 @@ public class RestCachingFilter extends GenericFilterBean {
 	    	
 	    	if(((HttpServletResponse) resp).getStatus() == HttpServletResponse.SC_OK) {
 	    		byte[] bytes = wrappedResponse.getByteArray();
-	    		cache(key, bytes);	// TODO Do this in another thread
+	    		cache(key, bytes);
 	    		resp.getOutputStream().write(bytes);
 		    	return;
 		    }

@@ -12,6 +12,11 @@ myApp.factory('frontPageFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/fixture/'+fixtureId);
 	};
 	
+	frontPageFactory.getRecentMatches = function() {
+		$log.info("Loading recent");
+		return $http.get(Config.BASE_URL+'/recent');
+	};
+	
 	return frontPageFactory;
 });
 
@@ -20,6 +25,8 @@ myApp.controller('frontPageController',
 		['$scope', '$log', 'frontPageFactory', 'errorHandlerFactory', '$cookies', '$timeout',
         function($scope, $log, frontPageFactory, errorHandlerFactory, $cookies, $timeout) {
 			
+	$scope.recentMatchesToggle = false;
+	
 	$scope.frontPageFilter = $cookies.get('front-page-search');
 	if(null != $scope.frontPageFilter) {
 		$scope.showFilteringMsg = true;
@@ -39,6 +46,11 @@ myApp.controller('frontPageController',
 	frontPageFactory.getUpcomingFixtures().success(function(data) {
 		$log.debug("Data received for upcoming fixtures", data);
 		$scope.upcomingFixtures = data;
+	}).error(errorHandlerFactory.getHandler());
+	
+	frontPageFactory.getRecentMatches().success(function(data) {
+		$log.debug("Data received for recent matches", data);
+		$scope.recentMatches = data;
 	}).error(errorHandlerFactory.getHandler());
 	
 	$scope.$watch('frontPageFilter', function() {
