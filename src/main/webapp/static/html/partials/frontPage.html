@@ -1,16 +1,4 @@
 <div ng-controller="frontPageController" class="padToBelowHeader">
-	<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
-	  <img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="padding: 3px; width: 30px; margin-bottom: 0px;">
-	  
-	  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
-	  		style="width:300px; right:0">
-	    
-	    <form class="w3-container w3-margin-bottom">
-			<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
-			<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
-		</form>
-	  </div>
-	</div>
 	
 	<div id="filterInfo" ng-show="frontPageFilter"
 			ng-class="showFilteringMsg ? 'slide-in-from-right' : 'slide-out-from-right'"
@@ -25,23 +13,44 @@
 	<fixture-details-directive>
 	</fixture-details-directive>
 	
-	<p ng-if="frontPageFilter && filteredixtures.length" class="w3-small w3-margin-left w3-padding-4" 
+	<div ng-if="frontPageFilter && filteredixtures.length" class="w3-left w3-small w3-margin" 
 		translate="FILTER_MATCH_COUNT"
 		translate-values="{ term: frontPageFilter, count: filteredixtures.length }"
 		ng-cloak>
-	</p>
+	</div>
 	
-	<span ng-class="recentMatches.length ? 'w3-medium w3-right' : 'w3-hide'" style="padding-top: 3px"
+	<div class="w3-right">
+		<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="width: 30px; margin-top:10px; padding:3px" class=" w3-dropdown-hover">
+		<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
+		  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
+		  		style="width:300px; right:0">
+		    <form class="w3-container w3-margin-bottom">
+				<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
+				<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
+			</form>
+		  </div>
+		</div>
+	</div>
+	
+	<div ng-class="recentMatches.length ? 'w3-right w3-small w3-margin' : 'w3-hide'" style="padding-top: 3px"
 		ng-click="recentMatchesToggle = !recentMatchesToggle">
-		Match results <span class="w3-badge w3-red">{{recentMatches.length}}</span>
-	</span>
+		<span class="w3-badge w3-red">{{recentMatches.length}}</span>
+	</div>
 	
-	<div class="w3-panel w3-card-3" style="margin-top: 30px">
-		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
-		  <div ng-repeat="match in recentMatches" class="w3-row">
+	
+	
+	
+	
+	
+	
+	<div class="w3-panel w3-card-3">
+		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" style="margin-top: 55px" ngcloak>
+		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
 		  	<a href="#/matchcard/{{match.fixtureId}}">
-			    <div class="w3-col m8 w3-small">{{match.homeTeamName}} v {{match.awayTeamName}}</div>
-			    <div class="w3-col m4 w3-medium">{{match.scoreExtracted}}</div>
+			    <div class="w3-col s4 w3-small">{{match.homeTeamName}}</div> 
+			    <div class="w3-col s2 w3-small w3-center">v </div>
+			    <div class="w3-col s4 w3-small">{{match.awayTeamName}}</div>
+			    <div class="w3-col s2 w3-small w3-center">{{match.scoreExtracted}}</div>
 		    </a>
 		  </div>
 		</div>
