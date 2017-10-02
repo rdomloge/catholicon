@@ -19,8 +19,11 @@
 	<script src="../script/frontPageController.js"></script>
 	<script src="../script/matchListController.js"></script>
 	<script src="../script/fixtureDetailsDirective.js"></script>
+	<script src="../script/leagueMenuItemDirective.js"></script>
+	<script src="../script/divisionMenuItemDirective.js"></script>
 	<script src="../script/secure.js"></script>
 	<script src="../script/jwtLogin.js"></script>
+	
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -38,32 +41,30 @@
 </head>
 <body>
 
-<nav class="w3-sidenav w3-collapse w3-card-8" style="width:200px; background-color:#f5f4f4; color:#a55b5b; z-index: 3" id="mySidenav">
-	<a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-hide-large rd-nav-close">
-		<img src="../img/close.png" alt="close" width="30px">
-	</a> 
-	<a href="#/" onclick="w3_close()">
-		<img src="../img/home.png" alt="home" width="30px">
-		{{'HOME' | translate}}
-	</a>
-	<a href="#/secure/login" onclick="w3_close()" ng-show="false">
-		<img src="../img/secure.png" alt="Secure area" width="30px"/>
-		{{'LOGIN' | translate}}
-	</a>
-	<div ng-controller="seasonListController">
-		<a ng-repeat="season in seasons" onclick="w3_close()"
-			href="#/season/{{season.seasonStartYear == seasons[0].seasonStartYear ? 0 : season.seasonStartYear}}/">
-			<img src="../img/seasonIcon.png" alt="Season" width="30px"/>
-			{{season.seasonStartYear}}
-		</a>
-	</div> 
-</nav>
-<script>
+	<div class="w3-sidebar w3-light-grey w3-card-4 w3-animate-left w3-collapse"
+		style="width: 200px; z-index: 4" id="mySidebar">
+		<div class="w3-bar w3-dark-grey">
+			<span class="w3-bar-item w3-padding-16">Seasons</span>
+			<button onclick="w3_close()"
+				class="w3-bar-item w3-button w3-right w3-padding-16"
+				title="close Sidebar">x</button>
+		</div>
+		<div class="w3-bar-block">
+			<a class="w3-bar-item w3-button w3-green" href="#/">Home</a>
+			<div ng-controller="seasonListController">
+				<div ng-repeat="season in seasons" class="w3-dropdown-hover">
+					<league-menu-item-directive season="season" 
+						current="season.seasonStartYear == seasons[0].seasonStartYear"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
 	function w3_open() {
-	  document.getElementById("mySidenav").style.display = "block";
+	  document.getElementById("mySidebar").style.display = "block";
 	}
 	function w3_close() {
-	  document.getElementById("mySidenav").style.display = "none";
+	  document.getElementById("mySidebar").style.display = "none";
 	}
 </script>
 

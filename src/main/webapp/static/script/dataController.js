@@ -2,11 +2,6 @@
 myApp.factory('dataFactory', function($http, $log) {
 	var factory = {};
 	
-	factory.getLeagues = function(season) {
-		$log.info("Fetching list of leagues");
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/list');	
-	}
-	
 	factory.getSeasonList = function() {
 		$log.info("Loading seasons list");
 		return $http.get(Config.BASE_URL+'/seasons');
@@ -61,13 +56,6 @@ myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$s
 	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).success(function (data){
 		$log.debug("Data received for league", data);
 		$scope.league = data;
-	});
-}]);
-
-myApp.controller('leagueListController', ['$scope', '$log', 'dataFactory', '$routeParams', '$timeout', '$rootScope', '$location', function($scope, $log, dataFactory, $routeParams, $timeout, $rootScope, $location) {
-	dataFactory.getLeagues($routeParams.season).success(function(data) {
-		$log.debug("Data received for leagues", data);
-		$scope.leagues = data;
 	});
 }]);
 
