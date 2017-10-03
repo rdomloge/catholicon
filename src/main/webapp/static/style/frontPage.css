@@ -4,6 +4,10 @@
     margin-right: 5px;
 }
 
+li.frontPageItem {
+	padding: 0 0 5px 15px
+}
+
 #filterForm {
 	z-index: 1;
 }

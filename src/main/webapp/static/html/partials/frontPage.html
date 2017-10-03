@@ -20,7 +20,8 @@
 	</div>
 	
 	<div class="w3-right">
-		<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" style="width: 30px; margin-top:10px; padding:3px" class=" w3-dropdown-hover">
+		<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" 
+			style="width: 30px; margin-top:10px; padding:3px" class="w3-dropdown-hover w3-white">
 		<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;">
 		  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-8" 
 		  		style="width:300px; right:0">
@@ -32,19 +33,14 @@
 		</div>
 	</div>
 	
-	<div ng-class="recentMatches.length ? 'w3-right w3-small w3-margin' : 'w3-hide'" style="padding-top: 3px"
+	<div ng-class="recentMatches.length ? 'w3-right w3-medium w3-margin' : 'w3-hide'" style="padding-top: 3px"
 		ng-click="recentMatchesToggle = !recentMatchesToggle">
 		<span class="w3-badge w3-red">{{recentMatches.length}}</span>
 	</div>
 	
 	
-	
-	
-	
-	
-	
-	<div class="w3-panel w3-card-3">
-		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" style="margin-top: 55px" ngcloak>
+	<div class="w3-panel w3-card-3" style="padding: 0">
+		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
 		  	<a href="#/matchcard/{{match.fixtureId}}">
 			    <div class="w3-col s4 w3-small">{{match.homeTeamName}}</div> 
@@ -62,7 +58,7 @@
 	
 	
 	<ul class="w3-ul w3-card-4">
-		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="w3-padding-16">
+		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
 			<div class="calendar">
 				{{fixture.fixtureDate | date: 'dd'}} 
 				<em>{{fixture.fixtureDate | date: 'MMM'}}</em>

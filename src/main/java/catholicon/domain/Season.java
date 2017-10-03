@@ -8,11 +8,14 @@ public class Season {
 	
 	private int seasonEndYear;
 	
+	private int apiIdentifier;
+	
 
-	public Season(int id, int seasonStartYear, int seasonEndYear) {
+	public Season(int id, int seasonStartYear, int seasonEndYear, boolean current) {
 		this.id = id;
 		this.seasonStartYear = seasonStartYear;
 		this.seasonEndYear = seasonEndYear;
+		this.apiIdentifier = current ? 0 : seasonStartYear;
 	}
 
 	public Season() {
@@ -30,10 +33,13 @@ public class Season {
 		return seasonEndYear;
 	}
 
-	@Override
-	public String toString() {
-		return "Season [id=" + id + ", seasonStartYear=" + seasonStartYear + ", seasonEndYear=" + seasonEndYear + "]";
+	public int getApiIdentifier() {
+		return apiIdentifier;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Season [id=" + id + ", seasonStartYear=" + seasonStartYear + ", seasonEndYear=" + seasonEndYear
+				+ ", apiIdentifier=" + apiIdentifier + "]";
+	}
 }

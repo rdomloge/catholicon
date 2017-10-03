@@ -107,7 +107,6 @@ public class Spider {
 				spiderLoader.load("/catholicon/seasons");
 			}
 			Season[] seasons = seasonDao.loadSeasons();
-			seasons[0] = new Season(seasons[0].getId(), 0, seasons[0].getSeasonEndYear());
 			for (int i = 0; i < Math.min(seasons.length, maxSeasonsToSpider); i++) {
 				exec.execute(new Wrapper(new LeagueSpider(seasons[i])));
 			}
@@ -123,14 +122,13 @@ public class Spider {
 
 		@Override
 		public void run() {
-			int seasonStartYear = season.getSeasonStartYear();
-			LOGGER.debug("Spider loading leagues for "+seasonStartYear);
-			String url = String.format("/catholicon/season/%d/league/list", seasonStartYear);
+			LOGGER.debug("Spider loading leagues for "+season.getSeasonStartYear());
+			String url = String.format("/catholicon/season/%d/league/list", season.getApiIdentifier());
 			if( ! restArchive.exists(url)) {
 				spiderLoader.load(url);
 			}
 			
-			List<League> leagues = leagueDao.list(seasonStartYear);
+			List<League> leagues = leagueDao.list(season.getApiIdentifier());
 			for (League league : leagues) {
 				exec.execute(new Wrapper(new DivisionsSpider(league)));
 			}

@@ -10,16 +10,21 @@
 			</p>
 		</section>
 		<section ng-class="fixtureDetails ? 'w3-container w3-center' : 'w3-hide'">
-		    <span class="w3-xlarge w3-center">{{fixtureDetails.homeTeam}}</span><span class="w3-small"> (H)</span>
-		    <br/>
-		    <span class="w3-xlarge w3-center">{{fixtureDetails.awayTeam}}</span><span class="w3-small"> (A)</span>
-		    <div class="w3-small w3-left w3-display-left" style="width: 85%">
-				{{fixtureDetails.venue}}
-			</div>
-			<div class="w3-left">
+			<div class="w3-right">
 				<a href="http://maps.google.com/?q={{fixtureDetails.venue}}">
 					<img src="../img/pin.png" height="35px"/>
 				</a>
+			</div>
+			<div class="w3-center">
+		    	<span class="w3-xlarge">{{fixtureDetails.homeTeam}}</span>
+		    	<span class="w3-small"> (H)</span>
+		    </div>
+		    <div class="w3-center">
+		    	<span class="w3-xlarge">{{fixtureDetails.awayTeam}}</span>
+		    	<span class="w3-small"> (A)</span>
+		    </div>
+		    <div class="w3-small">
+				{{fixtureDetails.venue}}
 			</div>
 		</section>
 		<section ng-class="fixtureDetails ? 'w3-container w3-center w3-light-grey' : 'w3-hide'">

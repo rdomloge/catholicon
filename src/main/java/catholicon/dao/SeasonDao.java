@@ -42,7 +42,7 @@ public class SeasonDao {
 		for(int i=0; i <= latestSeason-firstSeason; i++) {
 			int seasonStartYear = latestSeason - i;
 			int seasonEndYear = seasonStartYear + 1;
-			Season s = new Season(i, seasonStartYear, seasonEndYear);
+			Season s = new Season(i, seasonStartYear, seasonEndYear, latestSeason == seasonStartYear);
 			seasons.add(s);
 		}
 		

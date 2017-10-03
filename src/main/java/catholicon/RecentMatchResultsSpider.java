@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 import catholicon.dao.DivisionDao;
 import catholicon.dao.LeagueDao;
@@ -56,6 +57,9 @@ public class RecentMatchResultsSpider {
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
 	public void spiderLatestResults() {
 		LOGGER.info("Updating latest fixtures");
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
 		loader = new Loader(BASE);
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.add(Calendar.MONTH, -1);
@@ -70,6 +74,8 @@ public class RecentMatchResultsSpider {
 				return m2.getDate().compareTo(m1.getDate());
 			}});
 		
+		stopWatch.stop();
+		LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
 		for (Match match : recentMatches) {
 			LOGGER.debug("[RECENT] "+match.getHomeTeamName()+" v "+match.getAwayTeamName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
 		}

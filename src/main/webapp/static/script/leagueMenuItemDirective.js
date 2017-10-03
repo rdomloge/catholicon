@@ -3,7 +3,7 @@ myApp.factory('leagueFactory', function($http, $log) {
 	
 	factory.getLeagues = function(season) {
 		$log.info("Fetching list of leagues");
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/list');	
+		return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/list');	
 	};
 	
 	return factory;
@@ -14,8 +14,7 @@ myApp.directive('leagueMenuItemDirective', function($log) {
 		restrict : 'AE',
 		replace : true,
 		scope: {
-			season: '=',
-			current: '='
+			season: '='
 		},
 		templateUrl : 'leagueTemplate.html',
 		controller : 'leagueMenuItemController'
@@ -23,11 +22,13 @@ myApp.directive('leagueMenuItemDirective', function($log) {
 });
 
 myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log', function($scope, leagueFactory, $log) {
-	leagueFactory.getLeagues($scope.current ? 0 : $scope.season.seasonStartYear).success(
-		function(data) {
-			$log.debug("Data received for leagues", data);
-			$scope.leagues = data;
-		}
-	);
+	$scope.load = function() {
+		leagueFactory.getLeagues($scope.season).success(
+			function(data) {
+				$log.debug("Data received for leagues", data);
+				$scope.leagues = data;
+			}
+		);		
+	}
 }]);
 

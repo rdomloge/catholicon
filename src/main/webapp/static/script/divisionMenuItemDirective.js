@@ -3,7 +3,7 @@ myApp.factory('divisionFactory', function($http, $log) {
 	
 	factory.getDivisions = function(season, leagueTypeId) {
 		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');		
+		return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/'+leagueTypeId+'/divisions');		
 	};
 	
 	return factory;
@@ -23,11 +23,15 @@ myApp.directive('divisionMenuItemDirective', function($log) {
 });
 
 myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$log', function($scope, divisionFactory, $log) {
-	divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).success(
-		function(data) {
+	$scope.load = function() {
+		divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).success(function(data) {
 			$log.debug("Data received for divisions", data);
 			$scope.divisions = data;
-		}
-	);
+		});
+	}
+	
+	$scope.closeSideBar = function() {
+		w3_close();
+	}
 }]);
 

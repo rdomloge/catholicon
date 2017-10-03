@@ -2,6 +2,11 @@ html,body {
 	font-size: 16px;
 }
 
+table {
+	border-spacing: 0px;
+	width: 100%;
+}
+
 a, u {
 	text-decoration: none;
 }

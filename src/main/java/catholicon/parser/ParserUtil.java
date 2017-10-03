@@ -14,10 +14,10 @@ public class ParserUtil {
 	
 	private static final String QUOTED_DATE_REGEXP = "new Date\\((.*?)\\)";
 	private static final Pattern datePattern = Pattern.compile(QUOTED_DATE_REGEXP);
-	private static final SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
 	
 	public static String parseDate(String s) {
 		Matcher m = datePattern.matcher(s);
+		SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
 		if(m.find()) {
 			Date dateObj;
 			String dateString = m.group(1);

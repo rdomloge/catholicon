@@ -3,6 +3,35 @@
 <head>
 	<title>Catholicon - better BDBL</title>
 	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-11281482-2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments)};
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-11281482-2');
+	</script>
+	
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-11281482-2', 'auto');
+		
+		// Replace the following lines with the plugins you want to use.
+		ga('require', 'eventTracker');
+		ga('require', 'mediaQueryTracker');
+		ga('require', 'maxScrollTracker');
+		ga('require', 'outboundLinkTracker');
+		ga('require', 'urlChangeTracker');
+		
+		ga('send', 'pageview');
+	</script>
+	<!-- <script async src="https://www.google-analytics.com/analytics_debug.js"></script> -->
+	<script async src="https://www.google-analytics.com/analytics.js"></script>
+	<script async src="../script/autotrack.js"></script>
+		
+	
 	<script src="../script/angular/1.5.8/angular.js"></script>
 	<script src="../script/angular/1.5.8/angular-route.min.js"></script>
 	<script src="../script/angular/1.5.8/angular-resource.js"></script>
@@ -50,11 +79,12 @@
 				title="close Sidebar">x</button>
 		</div>
 		<div class="w3-bar-block">
-			<a class="w3-bar-item w3-button w3-green" href="#/">Home</a>
+			<a class="w3-bar-item w3-button w3-green" href="#/" onclick="w3_close()">
+				Home
+			</a>
 			<div ng-controller="seasonListController">
 				<div ng-repeat="season in seasons" class="w3-dropdown-hover">
-					<league-menu-item-directive season="season" 
-						current="season.seasonStartYear == seasons[0].seasonStartYear"/>
+					<league-menu-item-directive season="season"/>
 				</div>
 			</div>
 		</div>
