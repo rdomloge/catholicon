@@ -13,7 +13,8 @@
 	  gtag('config', 'UA-11281482-2');
 	</script>
 	
-	
+	<!-- <script async src="https://www.google-analytics.com/analytics.js"></script> -->
+	<script async src="../script/autotrack.js"></script>	
 	<script>
 		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 		ga('create', 'UA-11281482-2', 'auto');
@@ -27,9 +28,7 @@
 		
 		ga('send', 'pageview');
 	</script>
-	<!-- <script async src="https://www.google-analytics.com/analytics_debug.js"></script> -->
-	<script async src="https://www.google-analytics.com/analytics.js"></script>
-	<script async src="../script/autotrack.js"></script>
+	<script async src="https://www.google-analytics.com/analytics_debug.js"></script>
 		
 	
 	<script src="../script/angular/1.5.8/angular.js"></script>
@@ -65,21 +64,25 @@
 	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
 	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
 	<link rel="stylesheet" type="text/css" href="../style/niceDate.css">
-	<link rel="stylesheet" type="text/css" href="../style/filter-animation.css">
 	<link rel="stylesheet" type="text/css" href="../style/frontPage.css">
 </head>
 <body>
-
-	<div class="w3-sidebar w3-light-grey w3-card-4 w3-animate-left w3-collapse"
-		style="width: 200px; z-index: 4" id="mySidebar">
-		<div class="w3-bar w3-dark-grey">
-			<span class="w3-bar-item w3-padding-16">Seasons</span>
-			<button onclick="w3_close()"
-				class="w3-bar-item w3-button w3-right w3-padding-16"
-				title="close Sidebar">x</button>
+	<!-- Sidebar -->
+	<div class="w3-sidebar w3-bar-block w3-collapse w3-border-right w3-grey w3-animate-left" 
+		style="display:none; z-index: 4;" id="mySidebar">
+		
+		<div class="w3-bar w3-dark-grey" style="padding: 20px 0 20px 0">
+			<span class="w3-bar-item w3-padding-16" style="width: auto; float: left">Seasons</span>
+			<button onclick="w3_close()" ga-on="click" ga-event-category="sidebar" ga-event-action="close"
+				class="w3-bar-item w3-button w3-right w3-padding-16 w3-hide-large" style="width: auto"
+				title="close Sidebar">
+				 x
+			</button>
 		</div>
+		
 		<div class="w3-bar-block">
-			<a class="w3-bar-item w3-button w3-green" href="#/" onclick="w3_close()">
+			<a class="w3-bar-item w3-button w3-green" href="#/" onclick="w3_close()" 
+					ga-on="click" ga-event-category="home" ga-event-action="click">
 				Home
 			</a>
 			<div ng-controller="seasonListController">
@@ -89,19 +92,30 @@
 			</div>
 		</div>
 	</div>
+	<!-- Overlay -->
+	<div id="myOverlay" class="w3-overlay" onclick="w3_close()" style="cursor:pointer"></div>
+	
+	<!-- JS to open and close sidebar with overlay effect -->
 	<script>
 	function w3_open() {
 	  document.getElementById("mySidebar").style.display = "block";
+	  document.getElementById("myOverlay").style.display = "block";
 	}
+	
 	function w3_close() {
 	  document.getElementById("mySidebar").style.display = "none";
+	  document.getElementById("myOverlay").style.display = "none";
 	}
-</script>
+	</script>
 
 <div class="w3-main" style="margin-left:200px">
-	<div id="header">
-		<span class="w3-opennav w3-hide-large burger" onclick="w3_open()">&#9776;</span>
-		<span class="siteTitle">Catholicon - <i>Better BDBL</i></span>
+	<!-- Page Content -->
+	<div class="w3-teal">
+	  <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+	  <div class="w3-container">
+	    <h1>Catholicon</h1>
+	    <p><i>Better BDBL</i></p>
+	  </div>
 	</div>
 	
 	<div id="thinking" ng-class="contentLoading ? 'slide-in-from-left' : 'slide-out-from-left'" 

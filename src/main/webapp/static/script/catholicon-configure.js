@@ -11,7 +11,7 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 		return {
 			'request' : function(config) {
 				$rootScope.$broadcast('started-thinking');
-				ga('send', 'pageview', config.url); // tell Google Analytics about what URL we are fetching
+				//ga('send', 'pageview', config.url); // tell Google Analytics about what URL we are fetching
 				return config;
 			},
 
