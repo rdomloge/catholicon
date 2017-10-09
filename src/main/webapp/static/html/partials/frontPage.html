@@ -1,4 +1,4 @@
-<div ng-controller="frontPageController" class="padToBelowHeader">
+<div ng-controller="frontPageController" class="">
 	
 	<fixture-details-directive>
 	</fixture-details-directive>
@@ -33,12 +33,18 @@
 		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
 		  	<a href="#/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
-			    <div class="w3-col s4 w3-small">{{match.homeTeamName}}</div> 
-			    <div class="w3-col s2 w3-small w3-center">v </div>
-			    <div class="w3-col s4 w3-small">{{match.awayTeamName}}</div>
-			    <div class="w3-col s2 w3-small w3-center" 
-			    	ng-class="match.unConfirmed ? 'w3-red' : 'w3-blue'">
-			    	{{match.scoreExtracted}}
+			    <div class="w3-col s5 w3-small">
+					<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
+					{{match.homeTeamScore}}</div>
+					<div class="w3-center">{{match.homeTeamName}}</div>			    	
+			    </div>
+			    <div class="w3-col s2 w3-medium w3-center w3-padding">
+			    	{{match.date | date: 'dd MMM'}}
+			    </div>
+			    <div class="w3-col s5 w3-small">
+			    	<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
+			    	{{match.awayTeamScore}}</div>
+			    	<div class="w3-center">{{match.awayTeamName}}</div>
 			    </div>
 		    </a>
 		  </div>
