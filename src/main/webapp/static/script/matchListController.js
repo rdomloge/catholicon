@@ -40,7 +40,7 @@ myApp.controller('matchListController',
 	function decorateFirstUnplayed(data) {
 		for(key in data) {
 			var match = data[key];
-			if(match.fixtureStatus == 5)
+			if(match.fixtureStatus == 5 || Date.parse(match.date) - new Date() < 0)
 				continue;
 			if(firstUnplayed) {
 				if(match.date < firstUnplayed.date) 
