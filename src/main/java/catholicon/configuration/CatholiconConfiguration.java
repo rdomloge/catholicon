@@ -14,13 +14,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan(basePackages = {"catholicon", "catholicon.dao"})
 public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
 
-	public static final int CACHE_TIME_ONE_HOUR = 1000*60*60;
+	public static final int CACHE_TIME_ONE_HOUR = 60*60;
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/html/**").addResourceLocations("/static/html/").setCachePeriod(CACHE_TIME_ONE_HOUR);
 		registry.addResourceHandler("/static/script/**").addResourceLocations("/static/script/").setCachePeriod(CACHE_TIME_ONE_HOUR);
 		registry.addResourceHandler("/static/style/**").addResourceLocations("/static/style/").setCachePeriod(CACHE_TIME_ONE_HOUR);
+		registry.addResourceHandler("/static/img/**").addResourceLocations("/static/img/").setCachePeriod(CACHE_TIME_ONE_HOUR);
+		registry.addResourceHandler("/static/font/**").addResourceLocations("/static/font/").setCachePeriod(CACHE_TIME_ONE_HOUR);
 	}
 	
 	// equivalent for <mvc:default-servlet-handler/> tag
