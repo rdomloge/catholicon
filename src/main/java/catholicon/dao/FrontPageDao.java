@@ -1,5 +1,6 @@
 package catholicon.dao;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,13 @@ public class FrontPageDao {
 		
 		Document doc = Jsoup.parse(page);
 		Elements upcomingFixturesDiv = doc.select("#UpcomingFixturesDiv");
+		if(null == upcomingFixturesDiv) {
+			throw new DaoException("Page does not have #UpcomingFixturesDiv");
+		}
 		Element javaScriptEl = upcomingFixturesDiv.select("center script").first();
+		if(null == javaScriptEl) {
+			throw new DaoException("Page missing 'center script'");
+		}
 		String javaScript = javaScriptEl.html();
 		try(Scanner s = new Scanner(javaScript)) {
 			List<UpcomingFixture> fixtures = new LinkedList<>();

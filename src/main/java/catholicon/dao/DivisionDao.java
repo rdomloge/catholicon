@@ -53,6 +53,7 @@ public class DivisionDao {
 		List<TeamPosition> teamPositions = new LinkedList<>();
 		
 		Elements mainTable = doc.select("table[id$=MainTable]");
+		if(mainTable.isEmpty()) throw new DaoException("Could not find division data for "+String.format(leagueUrl, leagueTypeId, divisionId, seasonStartYear));
 		Elements rows = mainTable.select("tr:has(td[class$=LeagueCell])");
 		for(int i=0; i < rows.size(); i++) {
 			Element teamPosition = rows.get(i);
