@@ -1,0 +1,16 @@
+<div class="w3-col s12 m6 l3" style="margin: 20px">
+	<div class="calendar">
+		{{fixture.fixtureDate | date: 'dd'}} <em>{{fixture.fixtureDate |
+			date: 'MMM'}}</em>
+	</div>
+	<div class="w3-large rd-80px-leftmargin">{{fixture.homeTeamName}}</div>
+	<img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)"
+		class="frontPageInfoIcon" ga-on="click"
+		ga-event-category="fixtureDetails" ga-event-action="show" />
+	<div class="w3-large rd-80px-leftmargin">{{fixture.awayTeamName}}</div>
+	<div class="w3-small rd-80px-leftmargin w3-left"
+		style="margin-bottom: 10px;">{{fixture.fixtureDate | date:
+		'EEEE'}}</div>
+	
+	<nice-date date="fixture.fixtureDate" />
+</div>
