@@ -75,9 +75,13 @@ public class ParserUtil {
 		Map<String, String> map = new HashMap<>();
 		for (String pair : pairs) {
 			String[] kvp = ParserUtil.splitOnUnquotedColons(pair);
-			map.put(kvp[0].trim(), kvp[1].trim());
+			map.put(kvp[0].trim(), kvp.length < 2 ? null : kvp[1].trim());
 		}
 		return map;
+	}
+	
+	public static Map convertJsonToMap(String json) {
+		return pairsToMap(splitOnUnquotedCommas(json.substring(1, json.length()-1)));
 	}
 	
 	public static String[] splitOnUnquotedColons(String s) {
@@ -113,6 +117,19 @@ public class ParserUtil {
 		}
 		
 		if(buf.length() > 0) parts.add(buf.toString());
+		
+		return parts.toArray(new String[parts.size()]);
+	}
+	
+	private static Pattern arrayPattern = Pattern.compile("\\{(.*)\\}");
+
+	public static String[] splitArray(String jsonArray) {
+		Matcher m = arrayPattern.matcher(jsonArray);
+		List<String> parts = new LinkedList<>();
+		
+		while(m.find()) {
+			parts.add(m.group());
+		}
 		
 		return parts.toArray(new String[parts.size()]);
 	}

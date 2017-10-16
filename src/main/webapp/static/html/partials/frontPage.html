@@ -3,15 +3,9 @@
 	<fixture-details-directive>
 	</fixture-details-directive>
 	
-	<div ng-if="frontPageFilter && filteredixtures.length" class="w3-left w3-small w3-margin" 
-		translate="FILTER_MATCH_COUNT"
-		translate-values="{ term: frontPageFilter, count: filteredixtures.length }"
-		ng-cloak>
-	</div>
-	
-	<div class="w3-right">
+	<div class="w3-right w3-margin">
 		<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" 
-			style="width: 30px; margin-top:10px; padding:3px" class="w3-dropdown-hover w3-white">
+			style="width: 40px; padding:3px" class="w3-dropdown-hover w3-light-grey">
 		<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;" style="z-index: 4">
 		  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-4" 
 		  		style="width:300px; right:0">
@@ -23,17 +17,24 @@
 		</div>
 	</div>
 	
-	<div ng-class="recentMatches.length ? 'w3-right w3-medium w3-margin' : 'w3-hide'" style="padding-top: 3px"
-		ng-click="recentMatchesToggle = !recentMatchesToggle" ga-on="click" ga-event-category="recent_matches_toggle" ga-event-action="click">
-		<span class="w3-badge w3-red">{{recentMatches.length}}</span>
+	<div ng-class="recentMatches.length ? 'w3-right w3-medium w3-margin' : 'w3-hide'" style="padding-top: 3px">
+		<p class="w3-center w3-left" style="margin: 5px; line-height: 1.5em">
+			{{recentMatches.length}} new results
+		</p>
+		<!-- Rounded switch -->
+		<label class="switch">
+		  <input type="checkbox" ng-click="recentMatchesToggle = !recentMatchesToggle" 
+		  	ga-on="click" ga-event-category="recent_matches_toggle" ga-event-action="click">
+		  <span class="slider round"></span>
+		</label>
 	</div>
 	
 	
-	<div class="w3-panel w3-card-3" style="padding: 0">
+	<div class="w3-container w3-light-grey" style="padding: 0">
 		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
 		  	<a href="#/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
-			    <div class="w3-col s5 w3-small">
+			    <div class="w3-col s5 w3-small recentMatchTeam">
 					<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
 					{{match.homeTeamScore}}</div>
 					<div class="w3-center">{{match.homeTeamName}}</div>			    	
@@ -41,7 +42,7 @@
 			    <div class="w3-col s2 w3-medium w3-center w3-padding">
 			    	{{match.date | date: 'dd MMM'}}
 			    </div>
-			    <div class="w3-col s5 w3-small">
+			    <div class="w3-col s5 w3-small recentMatchTeam">
 			    	<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
 			    	{{match.awayTeamScore}}</div>
 			    	<div class="w3-center">{{match.awayTeamName}}</div>
@@ -51,7 +52,13 @@
 		</div>
 	</div>
 	
-	
+	<!-- Your filter 'blah' matched X results -->
+	<div ng-if="frontPageFilter && filteredixtures.length" class="w3-medium w3-text-red w3-light-grey" 
+		style="padding: 0 5px 0 5px"
+		translate="FILTER_MATCH_COUNT"
+		translate-values="{ term: frontPageFilter, count: filteredixtures.length }"
+		ng-cloak>
+	</div>	
 	
 	<ul class="w3-ul w3-card-4">
 		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
