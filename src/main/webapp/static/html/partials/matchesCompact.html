@@ -1,0 +1,46 @@
+
+
+<div class="w3-container" ng-controller="matchListController">
+	<a ng-href="#/season/{{getSeason()}}/matches/{{getTeamId()}}/list#nextMatchAnchor" 
+		class="w3-button w3-circle w3-ripple w3-red w3-right w3-medium w3-padding-4"
+		style="margin-top: 10px;">
+		+
+	</a>
+	
+	<h3>
+		{{teamName}}
+	</h3>
+	<h4>
+		{{season == 0 ? 'this' : season}} season
+	</h4>
+	
+	<div ng-repeat="match in matches | orderBy:'date'" 
+			ng-init="win = (teamName == match.homeTeamName && match.homeWin) || (teamName == match.awayTeamName && !match.homeWin)"
+			class="" >
+		<div style="padding: 10px 0 10px 0"
+				ng-class="$index % 2 == 0 ? 'w3-row-padding w3-large matchesCompactRow' : 'w3-row-padding w3-large matchesCompactRow w3-light-grey'">
+	  		<div class="w3-col m6 s10">
+	  			{{match.homeTeamId == teamId ? match.awayTeamName : match.homeTeamName}}
+	  		</div>
+	  		<div class="w3-col m1 s1">
+	  			{{match.homeTeamId == teamId ? 'H' : 'A'}}
+	  		</div>
+	  		<div class="w3-col m1 s1">
+	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" width="30px"/>
+	  		</div>
+	  		<div class="w3-col m2 s10">
+	  			{{match.date | date: 'dd MMM'}}
+	  		</div>
+	  		<div class="w3-col m2 s2 w3-block" ng-if="match.fixtureStatus == 5">
+				<a ng-href="#/matchcard/{{match.fixtureId}}" style="width: 100%" 
+						ng-class="win ? 'w3-text-green w3-right' : 'w3-text-red w3-right'">
+					{{match.scoreExtracted}}
+				</a>
+			</div>
+	  	</div>
+	</div>
+	
+	<fixture-details-directive>
+	</fixture-details-directive>
+	
+</div>
