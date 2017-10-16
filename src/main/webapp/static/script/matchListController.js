@@ -24,6 +24,7 @@ myApp.controller('matchListController',
 	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
 		$log.debug("Data received for matches", data);
 		
+		decorateWinningTeam(data);
 		decorateFirstUnplayed(data);
 		
 		$scope.matches = data;
@@ -36,6 +37,23 @@ myApp.controller('matchListController',
 	    	$anchorScroll();
 	    }, 100);
 	});
+	
+	$scope.getTeamId = function() {
+		return $routeParams.teamId;
+	}
+	
+	$scope.getSeason = function() {
+		return $routeParams.season;
+	}
+	
+	function decorateWinningTeam(data) {
+		for(key in data) {
+			var match = data[key];
+			if(match.fixtureStatus == 5) {
+				match.homeWin = match.homeTeamScore > match.awayTeamScore;
+			}
+		}
+	}
 	
 	function decorateFirstUnplayed(data) {
 		for(key in data) {

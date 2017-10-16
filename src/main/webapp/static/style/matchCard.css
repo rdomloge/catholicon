@@ -6,6 +6,10 @@
 	float: left;
 }
 
+#matchCardUberContainer header {
+	line-height: 2em;
+}
+
 #matchcard th {
 	text-align: center;
 	vertical-align: middle;

@@ -23,6 +23,8 @@ public class Match {
 	private String fixtureId;
 	private String scoreText;
 	private String scoreExtracted;
+	private int homeTeamScore;
+	private int awayTeamScore;
 	
 
 	/**
@@ -103,6 +105,10 @@ public class Match {
 		Matcher matcher = scorePattern.matcher(scoreText);
 		if(matcher.find())  {
 			this.scoreExtracted = matcher.group(1);
+			
+			int separator = scoreExtracted.indexOf('-');
+			this.homeTeamScore = Integer.parseInt(scoreExtracted.substring(0, separator).trim());
+			this.awayTeamScore = Integer.parseInt(scoreExtracted.substring(separator+1).trim());
 		}
 	}
 	
@@ -155,6 +161,14 @@ public class Match {
 
 	public int getHomeTeamId() {
 		return homeTeamId;
+	}
+
+	public int getHomeTeamScore() {
+		return homeTeamScore;
+	}
+
+	public int getAwayTeamScore() {
+		return awayTeamScore;
 	}
 
 	@Override

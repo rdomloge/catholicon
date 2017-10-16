@@ -31,6 +31,8 @@ myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$l
 	}
 	
 	$scope.closeSideBar = function() {
+		$scope.show = false;
+		$scope.$parent.show = false;
 		w3_close();
 	}
 }]);

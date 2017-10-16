@@ -1,7 +1,10 @@
 
 
 <div class="w3-container" ng-controller="matchListController">
-
+	<a ng-href="#/season/{{getSeason()}}/matches/{{getTeamId()}}/listcompact" 
+		class="w3-btn w3-blue w3-border w3-border-blue w3-round w3-xlarge">
+		Compact
+	</a>
 	<h3>
 		{{teamName}}
 	</h3>

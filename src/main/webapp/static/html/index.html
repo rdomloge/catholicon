@@ -49,6 +49,7 @@
 	<script src="../script/fixtureDetailsDirective.js"></script>
 	<script src="../script/leagueMenuItemDirective.js"></script>
 	<script src="../script/divisionMenuItemDirective.js"></script>
+	<script src="../script/upcomingFixtureDirective.js"></script>
 	<script src="../script/secure.js"></script>
 	<script src="../script/jwtLogin.js"></script>
 	
@@ -86,7 +87,7 @@
 				Home
 			</a>
 			<div ng-controller="seasonListController">
-				<div ng-repeat="season in seasons" class="w3-dropdown-hover">
+				<div ng-repeat="season in seasons" class="w3-dropdown-hover" style="padding: 5px 0 5px 0">
 					<league-menu-item-directive season="season"/>
 				</div>
 			</div>
@@ -110,11 +111,11 @@
 
 <div class="w3-main" style="margin-left:200px">
 	<!-- Page Content -->
-	<div class="w3-teal">
-	  <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+	<div id="header" class="w3-black largeScreenBanner">
+	  <button class="w3-button w3-xlarge w3-hide-large" style="background-color: initial" onclick="w3_open()">&#9776;</button>
 	  <div class="w3-container">
 	    <h1>Catholicon</h1>
-	    <p><i>Better BDBL</i></p>
+	    <p class="w3-small"><i>Better BDBL</i></p>
 	  </div>
 	</div>
 	
@@ -150,6 +151,10 @@
 				.when('/season/:season/matches/:teamId/list',
 					{
 						templateUrl: 'partials/matches.html'
+					})
+				.when('/season/:season/matches/:teamId/listcompact',
+					{
+						templateUrl: 'partials/matchesCompact.html'
 					})
 				.when('/season/:season/league/:leagueTypeId/divisions',
 					{
