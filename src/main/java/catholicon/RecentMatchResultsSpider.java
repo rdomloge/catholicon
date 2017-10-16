@@ -20,15 +20,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import catholicon.dao.ChangeDao;
 import catholicon.dao.DivisionDao;
 import catholicon.dao.LeagueDao;
 import catholicon.dao.Loader;
 import catholicon.dao.MatchDao;
+import catholicon.domain.Change;
+import catholicon.domain.Change.ActionCode;
 import catholicon.domain.Division;
 import catholicon.domain.Division.TeamPosition;
 import catholicon.domain.DivisionDescriptor;
 import catholicon.domain.League;
 import catholicon.domain.Match;
+import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
 @Component
@@ -53,6 +57,8 @@ public class RecentMatchResultsSpider {
 	
 	private Date cutOff;
 	
+	private boolean lastSpiderFailed;
+	
 
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
 	public void spiderLatestResults() {
@@ -62,33 +68,42 @@ public class RecentMatchResultsSpider {
 		
 		loader = new Loader(BASE);
 		GregorianCalendar gc = new GregorianCalendar();
-		gc.add(Calendar.MONTH, -1);
+		gc.add(Calendar.DAY_OF_YEAR, -7);
 		cutOff = gc.getTime();
 		recentMatches.clear();
 		sortedRecentMatches.clear();
-		new LeagueSpider().run();
-		sortedRecentMatches.addAll(recentMatches);
-		Collections.sort(sortedRecentMatches, new Comparator<Match>(){
-			@Override
-			public int compare(Match m1, Match m2) {
-				return m2.getDate().compareTo(m1.getDate());
-			}});
-		
-		stopWatch.stop();
-		LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
-		for (Match match : recentMatches) {
-			LOGGER.debug("[RECENT] "+match.getHomeTeamName()+" v "+match.getAwayTeamName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+		ThreadLocalLoaderFilter.set(loader);
+		try {
+			new LeagueSpider().run();
+			lastSpiderFailed = false;
+			sortedRecentMatches.addAll(recentMatches);
+			Collections.sort(sortedRecentMatches, new Comparator<Match>(){
+				@Override
+				public int compare(Match m1, Match m2) {
+					return m2.getDate().compareTo(m1.getDate());
+				}});
+			
+			stopWatch.stop();
+			LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
+			for (Match match : sortedRecentMatches) {
+				LOGGER.debug("[RECENT] "+match.getHomeTeamName()+" v "+match.getAwayTeamName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+			}
+		}
+		catch(DaoException dex) {
+			LOGGER.error("Spider failed (previous state was "+lastSpiderFailed+")", dex);
+			lastSpiderFailed = true;
 		}
 	}
 	
 	public List<Match> getRecentMatches() {
+		if(lastSpiderFailed) throw new DaoException("Spider failed");
 		return sortedRecentMatches;
 	}
 
-	class LeagueSpider extends Wrapper {
+	class LeagueSpider implements Runnable {
 		
 		@Override
-		public void _run() {
+		public void run() {
 			
 			List<League> leagues = leagueDao.list(0);
 			for (League league : leagues) {
@@ -133,11 +148,21 @@ public class RecentMatchResultsSpider {
 			Match[] matchs = matchDao.load(0, ""+team);
 			for (Match match : matchs) {
 				if(match.isPlayed() || match.isUnConfirmed()) {
-					String dateStr = match.getDate();
+					String dateStr = null;
+					List<Change> changeHistory = new ChangeDao().getChanges(Integer.parseInt(match.getFixtureId()), 0);
+					for (Change change : changeHistory) {
+						if(change.getActionCode().equals(ActionCode.ENTERED)) {
+							dateStr = change.getChangeDate();
+						}
+					}
+					if(null == dateStr) {
+						dateStr = match.getDate();
+						LOGGER.warn("No changes for match "+match.getFixtureId()+" - using match date");
+					}
 					try {
 						Date date = matchDateFormat.parse(dateStr);
 						if(date.after(cutOff)) {
-							LOGGER.debug("Match on "+dateStr+" is recent");
+							LOGGER.debug("Match on "+match.getDate()+" is recent: "+dateStr);
 							recentMatches.add(match);
 						}
 						else {
