@@ -1,6 +1,7 @@
 package catholicon.filter.archive;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -74,7 +75,7 @@ public class RestCachingFilter extends GenericFilterBean {
 		Runnable r = new Runnable(){
 			@Override
 			public void run() {
-				restArchive.save(url, new String(data));
+				restArchive.save(url, new String(data, Charset.forName("ISO8859_1")));
 				LOGGER.debug("Updated cache for "+url);
 			}};
 		exec.execute(r);

@@ -54,6 +54,9 @@ public class Spider {
 	@Value("${SPIDER_ENABLED:true}")
 	private boolean runSpider;
 	
+	@Value("${SPIDER_FORCE_REFRESH:false}")
+	private boolean forceSpiderRefresh;
+	
 	private Loader loader;
 	
 	private Loader spiderLoader;
@@ -124,7 +127,7 @@ public class Spider {
 		public void run() {
 			LOGGER.debug("Spider loading leagues for "+season.getSeasonStartYear());
 			String url = String.format("/catholicon/season/%d/league/list", season.getApiIdentifier());
-			if( ! restArchive.exists(url)) {
+			if( ! forceSpiderRefresh && ! restArchive.exists(url)) {
 				spiderLoader.load(url);
 			}
 			
@@ -149,7 +152,7 @@ public class Spider {
 			int leagueTypeId = league.getLeagueTypeId();
 			int seasonStartYear = league.getSeason();
 			String url = String.format("/season/%s/league/%s/divisions", seasonStartYear, leagueTypeId);
-			if( ! restArchive.exists(url)) {
+			if( ! forceSpiderRefresh && ! restArchive.exists(url)) {
 				spiderLoader.load(url);
 			}
 			List<DivisionDescriptor> divisionsForLeague = divisionDao.getDivisionsForLeague(leagueTypeId, seasonStartYear);
@@ -174,9 +177,7 @@ public class Spider {
 			int seasonStartYear = divisionDescriptor.getSeason();
 			LOGGER.debug("Spider loading division "+divisionId+" for league "+leagueTypeId+" in "+seasonStartYear);
 			String url = String.format("/season/%s/league/%s/division/%s", seasonStartYear, leagueTypeId, divisionId);
-			if( ! restArchive.exists(url)) {
-				spiderLoader.load(url);
-			}
+			spiderLoader.load(url); // always load, since this changes often
 			Division division = divisionDao.load(
 					leagueTypeId, 
 					divisionId, 
@@ -204,9 +205,7 @@ public class Spider {
 		public void run() {
 			LOGGER.debug("Spider loading matches for team "+teamPosition.getTeamId()+" in "+seasonStartYear);
 			String url = String.format("/season/%s/matches/%s/list", seasonStartYear, teamPosition.getTeamId());
-			if( ! restArchive.exists(url)) {
-				spiderLoader.load(url);	
-			}
+			spiderLoader.load(url); // always load, since this changes often
 			Match[] matches = matchDao.load(seasonStartYear, ""+teamPosition.getTeamId());
 			for (Match match : matches) {
 				if(null != match.getFixtureId()) {
@@ -231,7 +230,7 @@ public class Spider {
 		public void run() {
 			LOGGER.debug("Spider fixture details "+match.getFixtureId());
 			String url = String.format("/fixture/%s", match.getFixtureId());
-			if( ! restArchive.exists(url)) {
+			if( ! forceSpiderRefresh && ! restArchive.exists(url)) {
 				spiderLoader.load(url);	
 			}
 		}
@@ -250,7 +249,7 @@ public class Spider {
 		public void run() {
 			LOGGER.debug("Spider loading match "+match.getFixtureId());
 			String url = String.format("/matchcard/%s", match.getFixtureId());
-			if( ! restArchive.exists(url)) {
+			if( ! forceSpiderRefresh && ! restArchive.exists(url)) {
 				spiderLoader.load(url);	
 			}
 //			matchCardDao.load(match.getFixtureId()); // not really beneficial...
