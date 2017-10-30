@@ -86,7 +86,7 @@ public class RecentMatchResultsSpider {
 			stopWatch.stop();
 			LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
 			for (Match match : sortedRecentMatches) {
-				LOGGER.debug("[RECENT] "+match.getHomeTeamName()+" v "+match.getAwayTeamName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+				LOGGER.debug("[RECENT] "+match.getHomeTeam().getName()+" v "+match.getAwayTeam().getName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
 			}
 		}
 		catch(DaoException dex) {

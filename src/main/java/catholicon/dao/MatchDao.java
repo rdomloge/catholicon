@@ -32,8 +32,10 @@ public class MatchDao {
 		Matcher dataLineMatcher = allMatchesDataLineRegExp.matcher(page);
 		
 		List<Match> matches = new LinkedList<>();
+		boolean found = false;
 		
 		while(dataLineMatcher.find()) {
+			found = true;
 			String dataLine = dataLineMatcher.group(1) + ']';
 			String[] parts = dataLine.split("\\},\\{");
 			for (String part : parts) {
@@ -42,6 +44,10 @@ public class MatchDao {
 				Match m = new Match(part);
 				matches.add(m);
 			}
+		}
+		
+		if( ! found) {
+			throw new DaoException("Could not find match section ("+allMatchesDataLineRegExp.pattern()+")");
 		}
 		
 		return matches.toArray(new Match[matches.size()]);

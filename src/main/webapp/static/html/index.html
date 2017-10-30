@@ -28,7 +28,8 @@
 		
 		ga('send', 'pageview');
 	</script>
-	<script async src="https://www.google-analytics.com/analytics_debug.js"></script>
+	<!-- <script async src="https://www.google-analytics.com/analytics_debug.js"></script> -->
+	<script async src="https://www.google-analytics.com/analytics.js"></script>
 		
 	
 	<script src="../script/angular/1.5.8/angular.js"></script>
@@ -86,6 +87,10 @@
 					ga-on="click" ga-event-category="home" ga-event-action="click">
 				Home
 			</a>
+			<a class="w3-bar-item w3-button w3-green" href="#/clubs" onclick="w3_close()" 
+					ga-on="click" ga-event-category="home" ga-event-action="click">
+				Clubs
+			</a>
 			<div ng-controller="seasonListController">
 				<div ng-repeat="season in seasons" class="w3-dropdown-hover" style="padding: 5px 0 5px 0">
 					<league-menu-item-directive season="season"/>
@@ -111,16 +116,16 @@
 
 <div class="w3-main" style="margin-left:200px">
 	<!-- Page Content -->
-	<div id="header" class="w3-black largeScreenBanner">
+	<div id="header" class="largeScreenBanner">
 	  <button class="w3-button w3-xlarge w3-hide-large" style="background-color: initial" onclick="w3_open()">&#9776;</button>
 	  <div class="w3-container">
 	    <h1>Catholicon</h1>
-	    <p class="w3-small"><i>Better BDBL</i></p>
+	    <p class="w3-small"><i>Mobile BDBL</i></p>
 	  </div>
 	</div>
 	
 	<div id="thinking" ng-class="contentLoading ? 'slide-in-from-left' : 'slide-out-from-left'" 
-			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-orange" 
+			class="thinking w3-round-large w3-leftbar w3-rightbar w3-border-blue" 
 			ng-controller="thinkingController">
 		<img alt="Loading..."
 			height="50px" 
@@ -174,6 +179,11 @@
 				.when('/matchcard/:fixtureId',
 					{
 						templateUrl: 'partials/matchcard/matchCard.html'
+					})
+				.when('/clubs',
+					{
+						templateUrl: 'partials/clubs.html',
+						controller: 'clubController'
 					})
 				.when('/',
 					{

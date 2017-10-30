@@ -29,9 +29,9 @@ myApp.controller('matchListController',
 		
 		$scope.matches = data;
 		$scope.teamName = 
-			$scope.matches[0].homeTeamId == $routeParams.teamId 
-			? $scope.matches[0].homeTeamName 
-			: $scope.matches[0].awayTeamName;
+			$scope.matches[0].homeTeam.id == $routeParams.teamId 
+			? $scope.matches[0].homeTeam.name 
+			: $scope.matches[0].awayTeam.name;
 	    
 	    $timeout(function(){
 	    	$anchorScroll();
@@ -44,6 +44,18 @@ myApp.controller('matchListController',
 	
 	$scope.getSeason = function() {
 		return $routeParams.season;
+	}
+	
+	$scope.getOpposition = function(match) {
+		return match.homeTeam.id == $routeParams.teamId ? match.awayTeam : match.homeTeam;
+	}
+	
+	$scope.isWin = function(match) {
+		var isHome = match.homeTeam.id == $routeParams.teamId;
+		if(isHome)
+			return match.homeTeam.score > match.awayTeam.score;
+		else
+			return match.awayTeam.score > match.homeTeam.score;
 	}
 	
 	function decorateWinningTeam(data) {

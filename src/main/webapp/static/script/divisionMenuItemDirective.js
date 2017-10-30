@@ -22,7 +22,7 @@ myApp.directive('divisionMenuItemDirective', function($log) {
 	}
 });
 
-myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$log', function($scope, divisionFactory, $log) {
+myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$log', '$rootScope', function($scope, divisionFactory, $log, $rootScope) {
 	$scope.load = function() {
 		divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).success(function(data) {
 			$log.debug("Data received for divisions", data);
@@ -30,9 +30,13 @@ myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$l
 		});
 	}
 	
-	$scope.closeSideBar = function() {
+	$scope.$on('menu_item_selected', function() {
 		$scope.show = false;
-		$scope.$parent.show = false;
+	});
+	
+	$scope.menuItemSelected = function() {
+		
+		$rootScope.$broadcast('menu_item_selected');
 		w3_close();
 	}
 }]);

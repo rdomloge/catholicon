@@ -13,19 +13,15 @@ public class Match {
 	private static final Pattern fixturePattern1 = Pattern.compile("openMatchCard\\((.*?),");
 	private static final Pattern fixturePattern2 = Pattern.compile("editFixture\\((true|false){1},(.*?),");
 	
-	private String awayTeamName;
-	private int awayTeamId;
-	private String homeTeamName;
-	private int homeTeamId;
 	private String date;
 	private int fixtureStatus;
 	private String fixtureText;
 	private String fixtureId;
 	private String scoreText;
 	private String scoreExtracted;
-	private int homeTeamScore;
-	private int awayTeamScore;
-	
+	private Team homeTeam = new Team();
+	private Team awayTeam = new Team();
+
 
 	/**
 	 * matchDate:new Date("04 Feb 2016"), fixtureID:1220, leagueTypeID:13, fixtureStatus:5, 
@@ -47,10 +43,10 @@ public class Match {
 			String value = stripSurroundingQuotesIfNec(pair[1]);
 			
 			if("awayTarget".equals(pair[0].trim())) {
-				awayTeamName = value;
+				awayTeam.setName(value);
 			}
 			else if("homeTarget".equals(pair[0].trim())) {
-				homeTeamName = value;
+				homeTeam.setName(value);
 			}
 			else if("matchDate".equals(pair[0].trim())) {
 				date = ParserUtil.parseDate(value);
@@ -67,10 +63,10 @@ public class Match {
 				extractScore();
 			}
 			else if("awayTeamID".equals(pair[0].trim())) {
-				this.awayTeamId = Integer.parseInt(pair[1]);
+				awayTeam.setId(Integer.parseInt(pair[1]));
 			}
 			else if("homeTeamID".equals(pair[0].trim())) {
-				this.homeTeamId = Integer.parseInt(pair[1]);
+				homeTeam.setId(Integer.parseInt(pair[1]));
 			}
 			else {
 			}
@@ -107,8 +103,8 @@ public class Match {
 			this.scoreExtracted = matcher.group(1);
 			
 			int separator = scoreExtracted.indexOf('-');
-			this.homeTeamScore = Integer.parseInt(scoreExtracted.substring(0, separator).trim());
-			this.awayTeamScore = Integer.parseInt(scoreExtracted.substring(separator+1).trim());
+			homeTeam.setScore(Integer.parseInt(scoreExtracted.substring(0, separator).trim()));
+			awayTeam.setScore(Integer.parseInt(scoreExtracted.substring(separator+1).trim()));
 		}
 	}
 	
@@ -147,28 +143,14 @@ public class Match {
 		return 4 == getFixtureStatus();
 	}
 
-	public String getAwayTeamName() {
-		return awayTeamName;
+	
+
+	public Team getHomeTeam() {
+		return homeTeam;
 	}
 
-	public int getAwayTeamId() {
-		return awayTeamId;
-	}
-
-	public String getHomeTeamName() {
-		return homeTeamName;
-	}
-
-	public int getHomeTeamId() {
-		return homeTeamId;
-	}
-
-	public int getHomeTeamScore() {
-		return homeTeamScore;
-	}
-
-	public int getAwayTeamScore() {
-		return awayTeamScore;
+	public Team getAwayTeam() {
+		return awayTeam;
 	}
 
 	@Override
@@ -198,11 +180,8 @@ public class Match {
 
 	@Override
 	public String toString() {
-		return "Match [awayTeamName=" + awayTeamName + ", awayTeamId=" + awayTeamId + ", homeTeamName=" + homeTeamName
-				+ ", homeTeamId=" + homeTeamId + ", date=" + date + ", fixtureStatus=" + fixtureStatus
-				+ ", fixtureText=" + fixtureText + ", fixtureId=" + fixtureId + ", scoreText=" + scoreText
-				+ ", scoreExtracted=" + scoreExtracted + "]";
+		return "Match [date=" + date + ", fixtureStatus=" + fixtureStatus + ", fixtureText=" + fixtureText
+				+ ", fixtureId=" + fixtureId + ", scoreText=" + scoreText + ", scoreExtracted=" + scoreExtracted
+				+ ", homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + "]";
 	}
-
-	
 }

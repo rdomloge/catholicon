@@ -72,6 +72,14 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 		$log.debug("Data received for seasons", data);
 		$scope.seasons = data;
 	});
+	
+//	$scope.registerMenuItem = function() {
+//		$scope.$broadcast('menu_item_selected');
+//	}
+	
+//	$scope.$on('menu_item_selected', function(event) {
+//		$scope.show = false;
+//	});
 });
 
 myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {

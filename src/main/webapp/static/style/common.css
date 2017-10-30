@@ -25,6 +25,7 @@ a, u {
 	background-image: url(../img/bannerImage.jpg);
     background-position: -50px -100px;	
     background-repeat:no-repeat;
+    background-color: #000724;
 }
 
 @media screen and (max-width:600px) {
