@@ -1,6 +1,7 @@
 package catholicon.configuration;
 
 import org.jsoup.SerializationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -17,11 +18,14 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class RedisConfig {
+	
+	@Value("${NOSQL_HOST:192.168.0.14}")
+	private String hostname;
 
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
 		JedisConnectionFactory jedisConFactory = new JedisConnectionFactory(new JedisPoolConfig());
-	    jedisConFactory.setHostName("192.168.0.14");
+	    jedisConFactory.setHostName(hostname);
 	    jedisConFactory.setPort(6379);
 	    return jedisConFactory;
 	}
