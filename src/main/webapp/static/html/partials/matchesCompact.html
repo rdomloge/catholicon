@@ -20,7 +20,7 @@
 	  			</a>
 	  		</div>
 	  		<div class="w3-col m1 s1">
-	  			{{match.homeTeamId == teamId ? 'H' : 'A'}}
+	  			{{isHome(match) ? 'H' : 'A'}}
 	  		</div>
 	  		<div class="w3-col m1 s1">
 	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" width="30px"/>

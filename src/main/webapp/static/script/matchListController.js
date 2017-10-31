@@ -32,10 +32,6 @@ myApp.controller('matchListController',
 			$scope.matches[0].homeTeam.id == $routeParams.teamId 
 			? $scope.matches[0].homeTeam.name 
 			: $scope.matches[0].awayTeam.name;
-	    
-	    $timeout(function(){
-	    	$anchorScroll();
-	    }, 100);
 	});
 	
 	$scope.getTeamId = function() {
@@ -48,6 +44,10 @@ myApp.controller('matchListController',
 	
 	$scope.getOpposition = function(match) {
 		return match.homeTeam.id == $routeParams.teamId ? match.awayTeam : match.homeTeam;
+	}
+	
+	$scope.isHome = function(match) {
+		return match.homeTeam.id == $routeParams.teamId;
 	}
 	
 	$scope.isWin = function(match) {
