@@ -18,7 +18,6 @@ public class ClubDao {
 	private static String seedUrl = "/Live/ClubInfo.asp?Season=0&website=1";
 
 	private static String clubUrl = "/Live/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
-//	<td colspan="2"><select onchange='changeClub(this);' id="ClubList"><option value="1">Aldermaston Badminton Club</option><option value="2" selected>Alresford Badminton Club</option><option value="3">Andover Badminton Club</option><option value="4">Andover Sports Badminton Club</option><option value="6">Beechdown Badminton Club</option><option value="7">BH Pegasus Badminton Club</option><option value="16">Challengers Badminton Club</option><option value="9">Hurst Badminton Club</option><option value="11">Phoenix Badminton Club</option><option value="12">St Marys Badminton Club</option><option value="13">Viking Badminton Club</option><option value="14">Waverley Badminton Club</option><option value="15">Whitchurch Badminton Club</option></select></td>
 	
 	public List<Club> getClubs(int seasonId) {
 		String seedPage = ThreadLocalLoaderFilter.getLoader().load(seedUrl);
@@ -38,6 +37,29 @@ public class ClubDao {
 		}
 		
 		return clubList;
+	}
+	
+	public List<Club> getClubIds(int seasonId) {
+		String seedPage = ThreadLocalLoaderFilter.getLoader().load(seedUrl);
+		Document doc = Jsoup.parse(seedPage);
+		List<Club> clubList = new LinkedList<>();
+		
+		Elements clubs = doc.select("select[id$=ClubList] option");
+		
+		for(int i=0; i < clubs.size(); i++) {
+			Element clubEl = clubs.get(i);
+			int clubId = Integer.parseInt(clubEl.attr("value"));
+			String clubName = clubEl.ownText();
+			Club club = new Club(clubId, clubName, seasonId);
+			clubList.add(club);
+		}
+		return clubList;
+	}
+	
+	public Club getClub(int seasonId, int clubId) {
+		Club club = new Club(clubId, null, seasonId);
+		fillOutClub(club);
+		return club;
 	}
 	
 	private void fillOutClub(Club club, Document doc) {
