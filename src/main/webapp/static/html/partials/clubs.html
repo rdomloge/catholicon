@@ -4,17 +4,26 @@
   <div class="w3-dropdown-click">
     <button ng-click="showClubs = ! showClubs" class="w3-button w3-black">{{selectedClub.clubName}}</button>
     <div id="Demo" ng-class="showClubs ? 'w3-show' : ''" class="w3-dropdown-content w3-bar-block w3-border">
-      <a ng-repeat="club in clubs" class="w3-bar-item w3-button" ng-click="selectedClub = club">
+      <button ng-repeat="club in clubs" class="w3-bar-item w3-button" ng-click="hideDropDownAndShow(club)">
       	{{club.clubName}}
-      </a>
+      </button>
     </div>
   </div>
   
-  <div>
-  	<h1>{{selectedClub.clubName}}</h1>
-  	<h3 ng-show="selectedClub.chairMan">{{selectedClub.chairMan}}</h3>
-  	<h3 ng-show="selectedClub.secretary">{{selectedClub.secretary}}</h3>
-  	<h3 ng-show="selectedClub.matchSec">{{selectedClub.matchSec}}</h3>
-  	<h3 ng-show="selectedClub.treasurer">{{selectedClub.treasurer}}</h3>
+  <div class="w3-container w3-blue">
+  	<h1 class="w3-padding-24">{{selectedClub.clubName}}</h1>
+  </div>
+  <div class="w3-container">
+  	<h3 class="w3-padding-16" ng-show="selectedClub.chairMan">{{selectedClub.chairMan}}</h3>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.chairManPhone">{{selectedClub.chairManPhone}}</h2>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.secretary">{{selectedClub.secretary}}</h3>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.secretaryPhone" class="w3-padding-16">{{selectedClub.secretaryPhone}}</h2>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.matchSec">{{selectedClub.matchSec}}</h3>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.matchSecPhone">{{selectedClub.matchSecPhone}}</h2>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.treasurer">{{selectedClub.treasurer}}</h3>
+  	<h3 class="w3-padding-16" ng-show="selectedClub.treasurerPhone">{{selectedClub.treasurerPhone}}</h2>
+  </div>
+  <div class="w3-container w3-blue">
+  	things
   </div>
 </div>

@@ -22,6 +22,11 @@ myApp.controller('clubsController',
 					$scope.selectedClub = data[0];
 				}
 			}).error(errorHandlerFactory.getHandler());
+			
+			$scope.hideDropDownAndShow = function(club) {
+				$scope.showClubs = false;
+				$scope.selectedClub= club;
+			};
 	
 }]);
 
