@@ -21,7 +21,7 @@ public class ThreadLocalLoaderFilter implements Filter {
 	
 	private static ThreadLocal<Loader> threadLocal = new ThreadLocal<>();
 	
-	@Value("${BASE_URL}")
+	@Value("${BASE_URL:http://bdbl.org.uk}")
 	private String BASE;
 	
 	
