@@ -62,10 +62,10 @@ public class ClubDao {
 	private void fillOutPhoneNumbers(Document doc, Club club) {
 		Elements phoneNumbers = 
 				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(2).select("td");
-		String chairmanPhone = phoneNumbers.get(0).ownText();
-		String secretaryPhone = phoneNumbers.get(1).ownText();
-		String matchSecPhone = phoneNumbers.get(2).ownText();
-		String treasurerPhone = phoneNumbers.get(3).ownText();
+		String chairmanPhone = phoneNumbers.get(0).ownText().trim();
+		String secretaryPhone = phoneNumbers.get(1).ownText().trim();
+		String matchSecPhone = phoneNumbers.get(2).ownText().trim();
+		String treasurerPhone = phoneNumbers.get(3).ownText().trim();
 		club.fillOutPhoneNumbers(chairmanPhone, secretaryPhone, matchSecPhone, treasurerPhone);
 	}
 	
