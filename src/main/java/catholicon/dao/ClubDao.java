@@ -50,6 +50,7 @@ public class ClubDao {
 		fillOutPhoneNumbers(doc, club);
 		fillOutEmailAddrs(doc, club);
 		fillOutClubSessions(doc, club);
+		fillOutMatchSessions(doc, club);
 	}
 	
 	private static String parseRole(Document doc, String selector) {
@@ -81,35 +82,61 @@ public class ClubDao {
 //		club.fillOutEmailAddresses(chairmanEmail, secretaryEmail, matchSecEmail, treasurerEmail);
 	}
 	
-	private void fillOutClubSessions(Document doc, Club club) {
-		Elements clubSessionsTable = 
-				doc.select("h4:contains(CLUB SESSIONS) + table");
-		Elements rows = clubSessionsTable.select("tr td.TableColHeading[colspan=4]");
+	private void fillOutMatchSessions(Document doc, Club club) {
+		Elements rows = 
+				doc.select("h4:contains(MATCH SESSIONS) + table tr");
 		
-		LinkedList<Session> clubSessions = new LinkedList<>();
+		club.setMatchSessions(parseSessions(rows));
+	}
+	
+	private List<Session> parseSessions(Elements rows) {
+		LinkedList<Session> sessions = new LinkedList<>();
+		
+		String locationName = null;
+		String locationAddr = null;
+		String days = null;
+		String numCourts = null;
+		String start = null;
+		String end = null;
 		
 		for(int i=0; i < rows.size(); i++) {
-			Element location = rows.get(i).parent().nextElementSibling().child(0); //<td rowspan="2"><b>Aldermaston Recreational Society</b><br>Aldermaston<br>Berkshire RG7 4PR</td>
-			String locationName;
-			String locationAddr;
-			if("As Above".equalsIgnoreCase(location.ownText())) {
-				if(clubSessions.size() < 1) throw new DaoException("'As above' but no previous");
-				Session above = clubSessions.getLast();
-				locationName = above.getLocationName();
-				locationAddr = above.getLocationAddr();
+			Element row = rows.get(i);
+			if(row.select("tr td.TableColHeading").size() > 0) continue; // heading row
+			
+			if(row.select("td[rowspan]").size() > 0) {				// venue row
+				locationName = row.select("td[rowspan] b").text();
+				locationAddr = row.select("td[rowspan]").text();				
 			}
-			else {
-				locationName = location.child(0).ownText();
-				locationAddr = location.ownText();
+			
+			if(row.select("td[align]").size() > 0) {				// session details row
+				if(row.select("td:containsOwn(As Above)").size() > 0) {
+					locationName = sessions.getLast().getLocationName();
+					locationAddr = sessions.getLast().getLocationAddr();
+				}
+				Elements sessionCells = row.select("td[align] + td");
+				days = sessionCells.get(0).childNode(0).toString();
+				numCourts = sessionCells.get(0).childNode(2).toString();
+				start = sessionCells.get(1).childNode(0).toString();
+				end = sessionCells.get(1).childNode(2).toString();
+				
+				sessions.add(new Session(locationName, locationAddr, days, numCourts, start, end));
+				locationName = null;
+				locationAddr = null;
+				days = null;
+				numCourts = null;
+				start = null;
+				end = null;
 			}
-			Element sessionSpecifics = location.parent().nextElementSibling().child(1); //<td>Tuesdays<br>1</td>
-			String days = sessionSpecifics.childNode(0).toString();
-			String numCourts = sessionSpecifics.childNode(2).toString();
-			Element timing = location.parent().nextElementSibling().child(3); //<td>20:00<br>23:00</td>
-			String start = timing.childNode(0).toString();
-			String end = timing.childNode(2).toString();
-			clubSessions.add(new Session(locationName, locationAddr, days, numCourts, start, end));
 		}
+		
+		return sessions;
+	}
+	
+	private void fillOutClubSessions(Document doc, Club club) {
+		Elements rows = 
+				doc.select("h4:contains(CLUB SESSIONS) + table tr");
+		
+		club.setClubSessions(parseSessions(rows));
 	}
 	
 	private void fillOutClub(Club club) {

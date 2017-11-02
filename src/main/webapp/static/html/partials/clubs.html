@@ -1,1 +1,20 @@
-<h1>Clubs</h1>
+
+<div class="w3-container" ng-init="showClubs = false">
+  <h1>Clubs</h1>
+  <div class="w3-dropdown-click">
+    <button ng-click="showClubs = ! showClubs" class="w3-button w3-black">{{selectedClub.clubName}}</button>
+    <div id="Demo" ng-class="showClubs ? 'w3-show' : ''" class="w3-dropdown-content w3-bar-block w3-border">
+      <a ng-repeat="club in clubs" class="w3-bar-item w3-button" ng-click="selectedClub = club">
+      	{{club.clubName}}
+      </a>
+    </div>
+  </div>
+  
+  <div>
+  	<h1>{{selectedClub.clubName}}</h1>
+  	<h3 ng-show="selectedClub.chairMan">{{selectedClub.chairMan}}</h3>
+  	<h3 ng-show="selectedClub.secretary">{{selectedClub.secretary}}</h3>
+  	<h3 ng-show="selectedClub.matchSec">{{selectedClub.matchSec}}</h3>
+  	<h3 ng-show="selectedClub.treasurer">{{selectedClub.treasurer}}</h3>
+  </div>
+</div>
