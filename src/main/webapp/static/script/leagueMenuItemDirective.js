@@ -36,7 +36,9 @@ myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log',
 	}
 	
 	$scope.$on('menu_item_selected', function() {
-		$scope.show = false;
+		if($scope.season.apiIdentifier != 0) {
+			$scope.show = false;
+		}
 	});
 }]);
 
