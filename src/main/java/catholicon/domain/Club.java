@@ -2,6 +2,14 @@ package catholicon.domain;
 
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import catholicon.parser.ParserUtil;
+
+@JsonInclude(Include.NON_NULL)
 public class Club {
 	
 	private int clubId;
@@ -40,10 +48,18 @@ public class Club {
 		this.matchSessions = matchSessions;
 	}
 
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
 	public Club(int clubId, String clubName, int seasonId) {
-		super();
 		this.clubId = clubId;
 		this.clubName = clubName;
+		this.seasonId = seasonId;
+	}
+	
+	public Club(int clubId, int seasonId) {
+		this.clubId = clubId;
 		this.seasonId = seasonId;
 	}
 	
@@ -60,26 +76,31 @@ public class Club {
 	}
 
 	public void fillOutRoles(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairMan = chairMan;
-		this.secretary = secretary;
-		this.matchSec = matchSec;
-		this.treasurer = treasurer;
+		this.chairMan = nullIfEmpty(chairMan);
+		this.secretary = nullIfEmpty(secretary);
+		this.matchSec = nullIfEmpty(matchSec);
+		this.treasurer = nullIfEmpty(treasurer);
 	}
 	
-	public void fillOutPhoneNumbers(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairManPhone = chairMan;
-		this.secretaryPhone = secretary;
-		this.matchSecPhone = matchSec;
-		this.treasurerPhone = treasurer;
+	public void fillOutPhoneNumbers(String chairManPhone, String secretaryPhone, String matchSecPhone, String treasurerPhone) {
+		this.chairManPhone = nullIfEmpty(chairManPhone);
+		this.secretaryPhone = nullIfEmpty(secretaryPhone);
+		this.matchSecPhone = nullIfEmpty(matchSecPhone);
+		this.treasurerPhone = nullIfEmpty(treasurerPhone);
 	}
 	
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
 			String treasurerEmail) {
 		
-		this.chairmanEmail = chairmanEmail;
-		this.secretaryEmail = secretaryEmail;
-		this.matchSecEmail = matchSecEmail;
-		this.treasurerEmail = treasurerEmail;
+		this.chairmanEmail = nullIfEmpty(chairmanEmail);
+		this.secretaryEmail = nullIfEmpty(secretaryEmail);
+		this.matchSecEmail = nullIfEmpty(matchSecEmail);
+		this.treasurerEmail = nullIfEmpty(treasurerEmail);
+	}
+	
+	private static String nullIfEmpty(String s) {
+		if(null == s || StringUtils.isEmpty(ParserUtil.trim(s))) return null;
+		return s;
 	}
 
 	public String getChairmanEmail() {
