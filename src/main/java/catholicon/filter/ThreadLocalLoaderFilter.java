@@ -8,16 +8,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
 
 import catholicon.dao.Loader;
 
 public class ThreadLocalLoaderFilter implements Filter {
-	
-	private static final String LOADER_KEY = "LOADER";
 	
 	private static ThreadLocal<Loader> threadLocal = new ThreadLocal<>();
 	
@@ -30,15 +26,8 @@ public class ThreadLocalLoaderFilter implements Filter {
 	public void doFilter(ServletRequest sreq, ServletResponse sresp, FilterChain chain)
 			throws IOException, ServletException {
 		
-		HttpServletRequest req = (HttpServletRequest) sreq;
-		
-		HttpSession session = req.getSession();
 
-        if(null == session.getAttribute(LOADER_KEY)) {
-            session.setAttribute(LOADER_KEY, new Loader(BASE));
-        }
-
-        threadLocal.set((Loader) session.getAttribute(LOADER_KEY));
+        threadLocal.set(new Loader(BASE));
         
         chain.doFilter(sreq, sresp);
         
