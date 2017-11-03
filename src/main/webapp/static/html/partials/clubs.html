@@ -14,14 +14,25 @@
 		<h1 class="w3-padding-24 w3-text-blue">{{selectedClub.clubName}}</h1>
 
 		<div class="w3-row">
-			<h3 class="w3-col s12 m3 l3" ng-show="selectedClub.chairMan">{{selectedClub.chairMan}}</h3>
-			<h4 class="w3-col s12 m9 l9" ng-show="selectedClub.chairManPhone">{{selectedClub.chairManPhone}}</h4>
+			
+			<h3 class="w3-col s12 m4 l4" ng-show="selectedClub.chairMan">{{selectedClub.chairMan}}</h3>
+			<h6 class="w3-col s12 m4 l4 w3-text-grey" ng-show="selectedClub.chairMan">Chairman</h6>
+			<h4 class="w3-col s12 m4 l4" ng-show="selectedClub.chairManPhone">{{selectedClub.chairManPhone}}</h4>
+			
+			
 			<h3 class="w3-col s12 m4 l4" ng-show="selectedClub.secretary">{{selectedClub.secretary}}</h3>
-			<h4 class="w3-col s12 m8 l8" ng-show="selectedClub.secretaryPhone">{{selectedClub.secretaryPhone}}</h4>
+			<h6 class="w3-col s12 m4 l4 w3-text-grey" ng-show="selectedClub.secretary">Secretary</h6>
+			<h4 class="w3-col s12 m4 l4" ng-show="selectedClub.secretaryPhone">{{selectedClub.secretaryPhone}}</h4>
+			
+			
 			<h3 class="w3-col s12 m4 l4" ng-show="selectedClub.matchSec">{{selectedClub.matchSec}}</h3>
-			<h4 class="w3-col s12 m8 l8" ng-show="selectedClub.matchSecPhone">{{selectedClub.matchSecPhone}}</h4>
+			<h6 class="w3-col s12 m4 l4 w3-text-grey" ng-show="selectedClub.matchSec">Match secretary</h6>
+			<h4 class="w3-col s12 m4 l4" ng-show="selectedClub.matchSecPhone">{{selectedClub.matchSecPhone}}</h4>
+			
+			
 			<h3 class="w3-col s12 m4 l4" ng-show="selectedClub.treasurer">{{selectedClub.treasurer}}</h3>
-			<h4 class="w3-col s12 m8 l8" ng-show="selectedClub.treasurerPhone">{{selectedClub.treasurerPhone}}</h4>
+			<h6 class="w3-col s12 m4 l4 w3-text-grey" ng-show="selectedClub.treasurer">Treasurer</h6>
+			<h4 class="w3-col s12 m4 l4" ng-show="selectedClub.treasurerPhone">{{selectedClub.treasurerPhone}}</h4>
 		</div>
 	</div>
 	

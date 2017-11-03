@@ -35,7 +35,9 @@ myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$l
 	}
 	
 	$scope.$on('menu_item_selected', function() {
-		$scope.show = false;
+		if($scope.season.apiIdentifier != 0) {
+			$scope.show = false;
+		}
 	});
 	
 	$scope.menuItemSelected = function() {
