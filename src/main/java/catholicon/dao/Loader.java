@@ -114,7 +114,7 @@ public class Loader {
 
 	/*
 		Username:RDomloge
-		Password:Badmuthafucka05
+		Password:Bad*********a05
 		BrowserName:Google Chrome
 		BrowserVersion:46.0.2490.76
 		OperatingSystem:Linux 
