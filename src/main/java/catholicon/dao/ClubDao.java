@@ -19,25 +19,6 @@ public class ClubDao {
 
 	private static String clubUrl = "/Live/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
-	public List<Club> getClubs(int seasonId) {
-		String seedPage = ThreadLocalLoaderFilter.getLoader().load(seedUrl);
-		List<Club> clubList = new LinkedList<>();
-		
-		Document doc = Jsoup.parse(seedPage);
-		Elements clubs = doc.select("select[id$=ClubList] option");
-		if(clubs.size() < 1) throw new DaoException("Could not find the club list select");
-		for(int i=0; i < clubs.size(); i++) {
-			Element clubEl = clubs.get(i);
-			int clubId = Integer.parseInt(clubEl.attr("value"));
-			String clubName = clubEl.ownText();
-			Club club = new Club(clubId, clubName, seasonId);
-			clubList.add(club);
-			if(i == 0) fillOutClub(club, doc);
-			else fillOutClub(club);
-		}
-		
-		return clubList;
-	}
 	
 	public List<Club> getClubIds(int seasonId) {
 		String seedPage = ThreadLocalLoaderFilter.getLoader().load(seedUrl);
@@ -49,7 +30,7 @@ public class ClubDao {
 		for(int i=0; i < clubs.size(); i++) {
 			Element clubEl = clubs.get(i);
 			int clubId = Integer.parseInt(clubEl.attr("value"));
-			String clubName = clubEl.ownText();
+			String clubName = clubEl.ownText().replaceAll("Badminton Club", "");
 			Club club = new Club(clubId, clubName, seasonId);
 			clubList.add(club);
 		}
@@ -57,12 +38,20 @@ public class ClubDao {
 	}
 	
 	public Club getClub(int seasonId, int clubId) {
-		Club club = new Club(clubId, null, seasonId);
+		Club club = new Club(clubId, seasonId);
 		fillOutClub(club);
 		return club;
 	}
 	
+	private static String getClubName(Document doc) {
+		// var clubName = "Aldermaston Badminton Club";
+		String script = doc.getElementsByTag("script").get(6).html();
+		int firstQuote = script.indexOf('"')+1;
+		return script.substring(firstQuote, script.indexOf('"', firstQuote)).replaceAll("Badminton Club", "");		
+	}
+	
 	private void fillOutClub(Club club, Document doc) {
+		club.setClubName(getClubName(doc));
 		String chairMan = parseRole(doc, "#ChairmanID + span");
 		String secretary = parseRole(doc, "#SecretaryID + span");
 		String matchSec = parseRole(doc, "#MatchSecID + span");

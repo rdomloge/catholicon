@@ -48,10 +48,18 @@ public class Club {
 		this.matchSessions = matchSessions;
 	}
 
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
 	public Club(int clubId, String clubName, int seasonId) {
-		super();
 		this.clubId = clubId;
 		this.clubName = clubName;
+		this.seasonId = seasonId;
+	}
+	
+	public Club(int clubId, int seasonId) {
+		this.clubId = clubId;
 		this.seasonId = seasonId;
 	}
 	
