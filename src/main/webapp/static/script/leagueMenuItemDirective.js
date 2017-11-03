@@ -31,6 +31,10 @@ myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log',
 		);		
 	}
 	
+	if($scope.season.apiIdentifier == 0) {
+		$scope.load();
+	}
+	
 	$scope.$on('menu_item_selected', function() {
 		$scope.show = false;
 	});
