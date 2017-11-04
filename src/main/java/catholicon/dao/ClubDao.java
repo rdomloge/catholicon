@@ -2,6 +2,8 @@ package catholicon.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,6 +11,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import catholicon.domain.Club;
+import catholicon.domain.PhoneNumber;
+import catholicon.domain.PhoneNumber.Type;
 import catholicon.domain.Session;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
@@ -73,11 +77,27 @@ public class ClubDao {
 	private void fillOutPhoneNumbers(Document doc, Club club) {
 		Elements phoneNumbers = 
 				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(2).select("td");
-		String chairmanPhone = phoneNumbers.get(0).ownText().trim();
-		String secretaryPhone = phoneNumbers.get(1).ownText().trim();
-		String matchSecPhone = phoneNumbers.get(2).ownText().trim();
-		String treasurerPhone = phoneNumbers.get(3).ownText().trim();
-		club.fillOutPhoneNumbers(chairmanPhone, secretaryPhone, matchSecPhone, treasurerPhone);
+		PhoneNumber[] chairmanPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(0).ownText().trim());
+		PhoneNumber[] secretaryPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(1).ownText().trim());
+		PhoneNumber[] matchSecPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(2).ownText().trim());
+		PhoneNumber[] treasurerPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(3).ownText().trim());
+		club.fillOutPhoneNumbers(chairmanPhoneNumbers, secretaryPhoneNumbers, matchSecPhoneNumbers, treasurerPhoneNumbers);
+	}
+	
+	private PhoneNumber[] parsePhoneNumbers(String s) {
+		List<PhoneNumber> numbers = new LinkedList<>();
+		String regex = "[ 0-9]+\\([HM]\\)";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(s);
+		if(m.find()) {
+			String entry = m.group();
+			int bracket = entry.indexOf('(');
+			String number = entry.substring(0, bracket-1);
+			String type = entry.substring(bracket+1, entry.indexOf(')'));
+			numbers.add(new PhoneNumber(Type.forIdentifier(type), number));
+		}
+		
+		return numbers.toArray(new PhoneNumber[numbers.size()]);
 	}
 	
 	private void fillOutEmailAddrs(Document doc, Club club) {

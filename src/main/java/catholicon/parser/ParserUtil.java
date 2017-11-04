@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.util.StringUtils;
+
 public class ParserUtil {
 	
 	private static final String QUOTED_DATE_REGEXP = "new Date\\((.*?)\\)";
@@ -81,6 +83,11 @@ public class ParserUtil {
         }
         return ((st > 0) || (len < value.length)) ? new String(value, st, len - st) : s;
     }
+    
+    public static String nullIfEmpty(String s) {
+		if(null == s || StringUtils.isEmpty(trim(s))) return null;
+		return s;
+	}
 
 	public static String[] splitOnUnquotedCommas(String s) {
 		List<String> parts = new LinkedList<>();
