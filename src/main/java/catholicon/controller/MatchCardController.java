@@ -1,5 +1,6 @@
 package catholicon.controller;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ public class MatchCardController {
 
 	
 	@RequestMapping(method=RequestMethod.GET, value="/matchcard/{fixtureid}")
+	@Cacheable(cacheNames="MatchCards")
 	public MatchCard loadMatchCard(
 			@PathVariable("fixtureid") String fixtureId) throws DaoException {
 		

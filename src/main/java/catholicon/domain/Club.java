@@ -2,8 +2,6 @@ package catholicon.domain;
 
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

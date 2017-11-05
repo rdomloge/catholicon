@@ -3,6 +3,7 @@ package catholicon.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ public class TranslationController {
 
 
 	@RequestMapping(method=RequestMethod.GET, value="/i18n")
+	@Cacheable(cacheNames="Translations")
 	public Map<String, String> fetchTranslations(@RequestParam("lang") String lang) {
 		
 		Map<String, String> map = new HashMap<>();

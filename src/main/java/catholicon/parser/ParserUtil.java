@@ -133,7 +133,7 @@ public class ParserUtil {
 		return map;
 	}
 	
-	public static Map convertJsonToMap(String json) {
+	public static Map<String,String> convertJsonToMap(String json) {
 		return pairsToMap(splitOnUnquotedCommas(json.substring(1, json.length()-1)));
 	}
 	
