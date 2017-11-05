@@ -83,10 +83,10 @@ public class Club {
 	}
 	
 	public void fillOutPhoneNumbers(PhoneNumber[] chairManPhone, PhoneNumber[] secretaryPhone, PhoneNumber[] matchSecPhone, PhoneNumber[] treasurerPhone) {
-		this.chairManPhone = chairManPhone;
-		this.secretaryPhone = secretaryPhone;
-		this.matchSecPhone = matchSecPhone;
-		this.treasurerPhone = treasurerPhone;
+		if(chairManPhone.length > 0) this.chairManPhone = chairManPhone;
+		if(secretaryPhone.length > 0) this.secretaryPhone = secretaryPhone;
+		if(matchSecPhone.length > 0) this.matchSecPhone = matchSecPhone;
+		if(treasurerPhone.length > 0) this.treasurerPhone = treasurerPhone;
 	}
 	
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
