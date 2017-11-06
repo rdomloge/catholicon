@@ -30,8 +30,14 @@ myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$l
 		});
 	}
 	
+	if($scope.season.apiIdentifier == 0) {
+		$scope.load();
+	}
+	
 	$scope.$on('menu_item_selected', function() {
-		$scope.show = false;
+		if($scope.season.apiIdentifier != 0) {
+			$scope.show = false;
+		}
 	});
 	
 	$scope.menuItemSelected = function() {

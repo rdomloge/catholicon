@@ -18,25 +18,12 @@ public class SeasonDao {
 	
 	private static final Pattern firstSeasonPattern = Pattern.compile("var firstSeason = (.*?);");
 	private static final Pattern latestSeasonPattern = Pattern.compile("var latestSeason = (.*?);");
-	private static final Pattern currentSeasonPattern = Pattern.compile("var currSeason = (.*?);");
 	
 	
 	public Season[] loadSeasons() throws DaoException {
-//		http://bdbl.org.uk/Live/Main.asp?Website=1&Browser=Google%20Chrome&Version=52.0.2743.116&OS=Mac%20OS%20X%2010.10.5&Engine=Web%20Kit&EngineVersion=537.36
-
-//		var firstSeason = 2012;
-		
-//		var season = 0;
-//		var currSeason = 2016;
-//		var currSeasonEnd = 2017;
-//		var latestSeason = 2016;
-//		var nextSeason = 2016;
-		
-		
 		String page = ThreadLocalLoaderFilter.getLoader().load(url);
 		int firstSeason = find(page, firstSeasonPattern);
 		int latestSeason = find(page, latestSeasonPattern);
-		int currentSeason = find(page, currentSeasonPattern);
 		List<Season> seasons = new LinkedList<>();
 		
 		for(int i=0; i <= latestSeason-firstSeason; i++) {

@@ -51,6 +51,7 @@
 	<script src="../script/leagueMenuItemDirective.js"></script>
 	<script src="../script/divisionMenuItemDirective.js"></script>
 	<script src="../script/upcomingFixtureDirective.js"></script>
+	<script src="../script/clubsController.js"></script>
 	<script src="../script/secure.js"></script>
 	<script src="../script/jwtLogin.js"></script>
 	
@@ -87,7 +88,7 @@
 					ga-on="click" ga-event-category="home" ga-event-action="click">
 				Home
 			</a>
-			<a class="w3-bar-item w3-button w3-green" href="#/clubs" onclick="w3_close()" 
+			<a class="w3-bar-item w3-button w3-orange" href="#/clubs" onclick="w3_close()" 
 					ga-on="click" ga-event-category="home" ga-event-action="click">
 				Clubs
 			</a>
@@ -183,7 +184,7 @@
 				.when('/clubs',
 					{
 						templateUrl: 'partials/clubs.html',
-						controller: 'clubController'
+						controller: 'clubsController'
 					})
 				.when('/',
 					{

@@ -1,5 +1,5 @@
 <div>
-	<button class="w3-button w3-block w3-left-align" ng-init="show" ng-click="show = !show; load()" 
+	<button class="w3-button w3-block w3-left-align" ng-init="show = (season.apiIdentifier == 0)" ng-click="show = !show; load()" 
 			ga-on="click" ga-event-category="menu_league" ga-event-action="click">
 		{{league.label}}</button>
 	<div id="divisionDropDown" ng-class="show ? 'w3-bar-block w3-white w3-card-4' : 'w3-hide'">

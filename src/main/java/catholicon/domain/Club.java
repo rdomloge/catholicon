@@ -2,19 +2,25 @@ package catholicon.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import catholicon.parser.ParserUtil;
+
+@JsonInclude(Include.NON_NULL)
 public class Club {
 	
 	private int clubId;
 	private String clubName;
 	private int seasonId;
 	private String chairMan;
-	private String chairManPhone;
+	private PhoneNumber[] chairManPhone;
 	private String secretary;
-	private String secretaryPhone;
+	private PhoneNumber[] secretaryPhone;
 	private String matchSec;
-	private String matchSecPhone;
+	private PhoneNumber[] matchSecPhone;
 	private String treasurer;
-	private String treasurerPhone;
+	private PhoneNumber[] treasurerPhone;
 	private String chairmanEmail;
 	private String secretaryEmail;
 	private String matchSecEmail;
@@ -40,10 +46,18 @@ public class Club {
 		this.matchSessions = matchSessions;
 	}
 
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
 	public Club(int clubId, String clubName, int seasonId) {
-		super();
 		this.clubId = clubId;
 		this.clubName = clubName;
+		this.seasonId = seasonId;
+	}
+	
+	public Club(int clubId, int seasonId) {
+		this.clubId = clubId;
 		this.seasonId = seasonId;
 	}
 	
@@ -60,28 +74,28 @@ public class Club {
 	}
 
 	public void fillOutRoles(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairMan = chairMan;
-		this.secretary = secretary;
-		this.matchSec = matchSec;
-		this.treasurer = treasurer;
+		this.chairMan = ParserUtil.nullIfEmpty(chairMan);
+		this.secretary = ParserUtil.nullIfEmpty(secretary);
+		this.matchSec = ParserUtil.nullIfEmpty(matchSec);
+		this.treasurer = ParserUtil.nullIfEmpty(treasurer);
 	}
 	
-	public void fillOutPhoneNumbers(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairManPhone = chairMan;
-		this.secretaryPhone = secretary;
-		this.matchSecPhone = matchSec;
-		this.treasurerPhone = treasurer;
+	public void fillOutPhoneNumbers(PhoneNumber[] chairManPhone, PhoneNumber[] secretaryPhone, PhoneNumber[] matchSecPhone, PhoneNumber[] treasurerPhone) {
+		if(chairManPhone.length > 0) this.chairManPhone = chairManPhone;
+		if(secretaryPhone.length > 0) this.secretaryPhone = secretaryPhone;
+		if(matchSecPhone.length > 0) this.matchSecPhone = matchSecPhone;
+		if(treasurerPhone.length > 0) this.treasurerPhone = treasurerPhone;
 	}
 	
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
 			String treasurerEmail) {
 		
-		this.chairmanEmail = chairmanEmail;
-		this.secretaryEmail = secretaryEmail;
-		this.matchSecEmail = matchSecEmail;
-		this.treasurerEmail = treasurerEmail;
+		this.chairmanEmail = ParserUtil.nullIfEmpty(chairmanEmail);
+		this.secretaryEmail = ParserUtil.nullIfEmpty(secretaryEmail);
+		this.matchSecEmail = ParserUtil.nullIfEmpty(matchSecEmail);
+		this.treasurerEmail = ParserUtil.nullIfEmpty(treasurerEmail);
 	}
-
+	
 	public String getChairmanEmail() {
 		return chairmanEmail;
 	}
@@ -114,19 +128,19 @@ public class Club {
 		return treasurer;
 	}
 
-	public String getChairManPhone() {
+	public PhoneNumber[] getChairManPhone() {
 		return chairManPhone;
 	}
 
-	public String getSecretaryPhone() {
+	public PhoneNumber[] getSecretaryPhone() {
 		return secretaryPhone;
 	}
 
-	public String getMatchSecPhone() {
+	public PhoneNumber[] getMatchSecPhone() {
 		return matchSecPhone;
 	}
 
-	public String getTreasurerPhone() {
+	public PhoneNumber[] getTreasurerPhone() {
 		return treasurerPhone;
 	}
 }

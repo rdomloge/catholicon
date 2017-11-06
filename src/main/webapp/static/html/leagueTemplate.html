@@ -1,5 +1,5 @@
 <div>
-	<button class="w3-button w3-block w3-left-align" ng-init="show" ng-click="show = !show; load()" 
+	<button class="w3-button w3-block w3-left-align" ng-init="show = (season.apiIdentifier == 0)" ng-click="show = !show; load()" 
 			ga-on="click" ga-event-category="menu_season" ga-event-action="click">
 		{{season.seasonStartYear}}
 	</button>
