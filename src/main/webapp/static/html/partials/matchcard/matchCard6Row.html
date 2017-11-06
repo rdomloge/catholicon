@@ -7,11 +7,14 @@
 		</div>
 	</th>
 	<td ng-repeat="colNum in [0,1,2]" class="table-data"
-		ng-class="{'w3-blue':matchCard.homeTeamWins[(rowNum*3)+colNum], 'w3-sand':!matchCard.homeTeamWins[(rowNum*3)+colNum]}">
+		ng-class="{'w3-pale-green':matchCard.homeTeamWins[(rowNum*3)+colNum], 'w3-pale-yellow':!matchCard.homeTeamWins[(rowNum*3)+colNum]}">
 		<p>{{rubber(colNum).firstGame.homeScore}} - {{rubber(colNum).firstGame.awayScore}}</p>
 		<p>{{rubber(colNum).secondGame.homeScore}} - {{rubber(colNum).secondGame.awayScore}}</p>
 		<p ng-show="rubber(colNum).finalGame.homeScore > 0 && rubber(colNum).finalGame.awayScore > 0">
 			{{rubber(colNum).finalGame.homeScore}} - {{rubber(colNum).finalGame.awayScore}}
+		</p>
+		<p ng-show="!(rubber(colNum).finalGame.homeScore > 0 && rubber(colNum).finalGame.awayScore > 0)">
+			&nbsp;
 		</p>
 		<p ng-show="matchCard.homeTeamWins[(rowNum*3)+colNum]">
 			<img src="../img/home_shirt.png" alt="H" style="width:25px" />

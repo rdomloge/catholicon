@@ -1,4 +1,4 @@
-<td ng-class="{'w3-display-container w3-small w3-center':true, 'w3-blue':matchCard.homeTeamWins[rubber], 'w3-sand':!matchCard.homeTeamWins[rubber]}">
+<td ng-class="{'w3-display-container w3-small w3-center':true, 'w3-pale-green':matchCard.homeTeamWins[rubber], 'w3-pale-yellow':!matchCard.homeTeamWins[rubber]}">
 	<p ng-class="w3-left">
 	{{playerName(rubber, true, 0)}} <br/>
 	{{playerName(rubber, true, 1)}}
@@ -7,19 +7,19 @@
 	{{playerName(rubber, false, 0)}} <br/>
 	{{playerName(rubber, false, 1)}}
 	</p>
-	<p>
-	{{matchCard.rubbers[rubber].firstGame.homeScore}}
-	- 
-	{{matchCard.rubbers[rubber].firstGame.awayScore}} 
-	</p>
-	<p>
-	{{matchCard.rubbers[rubber].secondGame.homeScore}}
-	- 
-	{{matchCard.rubbers[rubber].secondGame.awayScore}}
-	</p>
+	<div>
+		<p>{{matchCard.rubbers[rubber].firstGame.homeScore}} - {{matchCard.rubbers[rubber].firstGame.awayScore}}</p>
+		<div ng-show="matchCard.homeTeamWins[rubber]">
+			<span style="float: right"><img src="../img/home_shirt.png" alt="H" style="width:25px;" /></span>
+			<span style="float: left"><img src="../img/home_shirt.png" alt="" style="width:25px;visibility:hidden" /></span>
+		</div>
+		<div ng-show="!matchCard.homeTeamWins[rubber]">
+			<span style="float: right"><img src="../img/away_shirt.png" alt="A" style="width:25px;" /></span>
+			<span style="float: left"><img src="../img/away_shirt.png" alt="" style="width:25px;visibility:hidden" /></span>
+		</div>
+	</div>
+	<p>{{matchCard.rubbers[rubber].secondGame.homeScore}} - {{matchCard.rubbers[rubber].secondGame.awayScore}} </p>
 	<p ng-show="matchCard.rubbers[rubber].finalGame.homeScore > 0 && matchCard.rubbers[rubber].finalGame.awayScore > 0">
-	{{matchCard.rubbers[rubber].finalGame.homeScore}}
-	- 
-	{{matchCard.rubbers[rubber].finalGame.awayScore}}
+	{{matchCard.rubbers[rubber].finalGame.homeScore}} - {{matchCard.rubbers[rubber].finalGame.awayScore}}
 	</p>
 </td>
