@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.FrontPageDao;
+import catholicon.dao.MatchDao;
+import catholicon.domain.Match;
 import catholicon.domain.UpcomingFixture;
 import catholicon.ex.DaoException;
 
@@ -17,12 +19,22 @@ public class FrontPageController {
 	
 	@Autowired
 	private FrontPageDao frontPageDao;
+	
+	@Autowired
+	private MatchDao matchDao;
 
 	
 	@RequestMapping(method=RequestMethod.GET, value="/frontpage/upcoming")
-	@Cacheable("HourCache")
+	@Cacheable(cacheNames="Upcoming")
 	public List<UpcomingFixture> getUpcomingFixtures() throws DaoException {
 		
 		return frontPageDao.getUpcomingFixtures();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/recent")
+	@Cacheable(cacheNames="Recent")
+	public List<Match> listRecent() throws DaoException {
+		
+		return matchDao.getRecentMatches();
 	}
 }

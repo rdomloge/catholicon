@@ -40,7 +40,7 @@ public class Loader {
 	
 	private HttpContext ctx;
 	
-	private static final CloseableHttpClient client = HttpClients.createDefault();
+	private CloseableHttpClient client = HttpClients.createDefault();
 	
 	public Loader(String baseUrl) {
 		this.BASE = baseUrl;
@@ -112,15 +112,6 @@ public class Loader {
 		}
 	}
 
-	/*
-		Username:RDomloge
-		Password:Badmuthafucka05
-		BrowserName:Google Chrome
-		BrowserVersion:46.0.2490.76
-		OperatingSystem:Linux 
-		BrowserEngine:Web Kit
-		BrowserEngineVersion:537.36
-	 */
 	public String sendLogin(String url, Login login) throws DaoException {
 		String fullUrl = BASE+url;
 		LOGGER.info(fullUrl);

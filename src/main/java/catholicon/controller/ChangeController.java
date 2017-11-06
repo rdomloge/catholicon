@@ -2,6 +2,7 @@ package catholicon.controller;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import catholicon.domain.Change;
 public class ChangeController {
 
 	@RequestMapping(method=RequestMethod.GET, value="/seasons/{seasonStartYear}/fixtures/{fixtureId}/changes")
+	@Cacheable(cacheNames="Changes")
 	public List<Change> getChanges(
 			@PathVariable("fixtureId") int fixtureId,
 			@PathVariable("seasonStartYear") int seasonStartYear) {
