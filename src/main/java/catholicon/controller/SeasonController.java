@@ -12,7 +12,7 @@ import catholicon.ex.DaoException;
 @RestController
 public class SeasonController {
 
-	@RequestMapping(method=RequestMethod.GET, value="/seasons")
+	@RequestMapping(method=RequestMethod.GET, value="/seasons", produces = "application/json; charset=UTF-8")
 	@Cacheable(cacheNames="Season")
 	public Season[] getSeasonList() throws DaoException {
 		
