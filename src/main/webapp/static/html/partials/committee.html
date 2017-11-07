@@ -1,0 +1,9 @@
+<h1>Committee</h1>
+<div class="w3-container">
+<div class="w3-card" ng-repeat="contact in committee">
+	<h1>{{contact.name}}</h1> 
+	<h2>
+		<a href="tel:{{contact.contactNumbers[0].number}}">{{contact.contactNumbers[0].number}}</a>
+	</h2>
+</div>
+</div>
