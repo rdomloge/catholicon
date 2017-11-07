@@ -37,7 +37,8 @@ public class LoaderFilterConfig extends WebMvcAutoConfiguration {
 	    		"/frontpage/upcoming", 
 	    		"/matchcard/*", 
 	    		"/fixture/*",
-	    		"/clubs/*");    
+	    		"/clubs/*",
+	    		"/committee");    
 	    registration.setName("loaderFilter");
 	    registration.setOrder(2);
 	    return registration;

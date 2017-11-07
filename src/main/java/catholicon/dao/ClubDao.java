@@ -30,6 +30,7 @@ public class ClubDao {
 		List<Club> clubList = new LinkedList<>();
 		
 		Elements clubs = doc.select("select[id$=ClubList] option");
+		if(clubs.size() < 1) throw new DaoException("Could not find any clubs");
 		
 		for(int i=0; i < clubs.size(); i++) {
 			Element clubEl = clubs.get(i);

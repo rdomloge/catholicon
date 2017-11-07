@@ -24,6 +24,29 @@
     defined on your system. On a standard Linux system this will be /tmp" 
     -->
     
+    
+    <!--
+    				### 1 week caching 604800s == 1 week ### 
+	-->
+    <cache name="MatchCards"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="604800"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Committee"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="604800"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	
     <!--
     				### 1 day caching 86400s == 1 day ### 
 	-->
@@ -64,15 +87,6 @@
 		maxElementsInMemory="100">
 	</cache>
 	<cache name="Leagues"
-		eternal="false"
-		diskSpoolBufferSizeMB="20"
-		timeToIdleSeconds="0" 
-		timeToLiveSeconds="86400"
-		memoryStoreEvictionPolicy="LFU"
-		transactionalMode="off"
-		maxElementsInMemory="100">
-	</cache>
-	<cache name="MatchCards"
 		eternal="false"
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="0" 

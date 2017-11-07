@@ -13,18 +13,10 @@ public class Club {
 	private int clubId;
 	private String clubName;
 	private int seasonId;
-	private String chairMan;
-	private PhoneNumber[] chairManPhone;
-	private String secretary;
-	private PhoneNumber[] secretaryPhone;
-	private String matchSec;
-	private PhoneNumber[] matchSecPhone;
-	private String treasurer;
-	private PhoneNumber[] treasurerPhone;
-	private String chairmanEmail;
-	private String secretaryEmail;
-	private String matchSecEmail;
-	private String treasurerEmail;
+	private Contact chairMan;
+	private Contact secretary;
+	private Contact matchSec;
+	private Contact treasurer;
 	
 	private List<Session> clubSessions;
 	
@@ -74,73 +66,42 @@ public class Club {
 	}
 
 	public void fillOutRoles(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairMan = ParserUtil.nullIfEmpty(chairMan);
-		this.secretary = ParserUtil.nullIfEmpty(secretary);
-		this.matchSec = ParserUtil.nullIfEmpty(matchSec);
-		this.treasurer = ParserUtil.nullIfEmpty(treasurer);
+		this.chairMan = null != ParserUtil.nullIfEmpty(chairMan) ? new Contact(chairMan) : null;
+		this.secretary = null != ParserUtil.nullIfEmpty(secretary) ? new Contact(secretary) : null;
+		this.matchSec = null != ParserUtil.nullIfEmpty(matchSec) ? new Contact(matchSec) : null;
+		this.treasurer = null != ParserUtil.nullIfEmpty(treasurer) ? new Contact(treasurer) : null;
 	}
 	
 	public void fillOutPhoneNumbers(PhoneNumber[] chairManPhone, PhoneNumber[] secretaryPhone, PhoneNumber[] matchSecPhone, PhoneNumber[] treasurerPhone) {
-		if(chairManPhone.length > 0) this.chairManPhone = chairManPhone;
-		if(secretaryPhone.length > 0) this.secretaryPhone = secretaryPhone;
-		if(matchSecPhone.length > 0) this.matchSecPhone = matchSecPhone;
-		if(treasurerPhone.length > 0) this.treasurerPhone = treasurerPhone;
+		if(chairManPhone.length > 0) chairMan.setContactNumbers(chairManPhone);
+		if(secretaryPhone.length > 0) secretary.setContactNumbers(secretaryPhone);
+		if(matchSecPhone.length > 0) matchSec.setContactNumbers(matchSecPhone);
+		if(treasurerPhone.length > 0) treasurer.setContactNumbers(treasurerPhone);
 	}
 	
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
 			String treasurerEmail) {
 		
-		this.chairmanEmail = ParserUtil.nullIfEmpty(chairmanEmail);
-		this.secretaryEmail = ParserUtil.nullIfEmpty(secretaryEmail);
-		this.matchSecEmail = ParserUtil.nullIfEmpty(matchSecEmail);
-		this.treasurerEmail = ParserUtil.nullIfEmpty(treasurerEmail);
-	}
-	
-	public String getChairmanEmail() {
-		return chairmanEmail;
+		chairMan.setEmail(null != ParserUtil.nullIfEmpty(chairmanEmail) ? chairmanEmail : null);
+		secretary.setEmail(null != ParserUtil.nullIfEmpty(secretaryEmail) ? secretaryEmail : null);
+		matchSec.setEmail(null != ParserUtil.nullIfEmpty(matchSecEmail) ? matchSecEmail : null);
+		treasurer.setEmail(null != ParserUtil.nullIfEmpty(treasurerEmail) ? treasurerEmail : null);
 	}
 
-	public String getSecretaryEmail() {
-		return secretaryEmail;
-	}
-
-	public String getMatchSecEmail() {
-		return matchSecEmail;
-	}
-
-	public String getTreasurerEmail() {
-		return treasurerEmail;
-	}
-
-	public String getChairMan() {
+	public Contact getChairMan() {
 		return chairMan;
 	}
 
-	public String getSecretary() {
+	public Contact getSecretary() {
 		return secretary;
 	}
 
-	public String getMatchSec() {
+	public Contact getMatchSec() {
 		return matchSec;
 	}
 
-	public String getTreasurer() {
+	public Contact getTreasurer() {
 		return treasurer;
 	}
-
-	public PhoneNumber[] getChairManPhone() {
-		return chairManPhone;
-	}
-
-	public PhoneNumber[] getSecretaryPhone() {
-		return secretaryPhone;
-	}
-
-	public PhoneNumber[] getMatchSecPhone() {
-		return matchSecPhone;
-	}
-
-	public PhoneNumber[] getTreasurerPhone() {
-		return treasurerPhone;
-	}
+	
 }
