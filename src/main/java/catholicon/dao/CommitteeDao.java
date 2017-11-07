@@ -41,22 +41,7 @@ public class CommitteeDao {
 			for (String json : jsonObjects) {
 				Map<String, String> map = ParserUtil.convertJsonToMap('['+json+']');
 				String title = map.get("title");
-				ContactRole role;
-				if(ContactRole.CHAIRMAN.toString().equalsIgnoreCase(title)) {
-					role = ContactRole.CHAIRMAN;
-				}
-				else if(ContactRole.MATCHSECRETARY.toString().equalsIgnoreCase(title)) {
-					role = ContactRole.MATCHSECRETARY;
-				}
-				else if(ContactRole.SECRETARY.toString().equalsIgnoreCase(title)) {
-					role = ContactRole.SECRETARY;
-				}
-				else if(ContactRole.TREASURER.toString().equalsIgnoreCase(title)) {
-					role = ContactRole.TREASURER;
-				}
-				else {
-					role = ContactRole.MEMBER;
-				}
+				ContactRole role = ContactRole.forPageText(title);
 				String email = null;
 				List<PhoneNumber> numbers = new LinkedList<>();
 				String mobile = map.get("mobileTel");
