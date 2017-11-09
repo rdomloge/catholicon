@@ -1,0 +1,20 @@
+
+<div class="w3-container">
+	
+	<h1 class="w3-padding">Committee</h1>
+	
+	<div class="w3-card-4" ng-repeat="contact in committee">
+		<header class="w3-container w3-padding-24 w3-text-blue">
+			<h1>{{contact.committeeRole}}</h1>
+		</header>
+		<div class="w3-container w3-padding-24">
+			<h1>{{contact.name}}</h1>
+			<h3>{{contact.clubName}}</h3>
+		</div>
+		<footer class="w3-container w3-padding-24">
+			<h2>
+				<a href="tel:{{contact.contactNumbers[0].number}}">{{contact.contactNumbers[0].number}}</a>
+			</h2>
+		</footer>
+	</div>
+</div>

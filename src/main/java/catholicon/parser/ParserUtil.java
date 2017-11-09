@@ -174,7 +174,7 @@ public class ParserUtil {
 		return parts.toArray(new String[parts.size()]);
 	}
 	
-	private static Pattern arrayPattern = Pattern.compile("\\{(.*)\\}");
+	private static Pattern arrayPattern = Pattern.compile("(?s)\\{(.*)\\}");
 
 	public static String[] splitArray(String jsonArray) {
 		Matcher m = arrayPattern.matcher(jsonArray);
@@ -185,5 +185,33 @@ public class ParserUtil {
 		}
 		
 		return parts.toArray(new String[parts.size()]);
+	}
+	
+	public static String[] splitArray2(String json) {
+		char[] chars = json.toCharArray();
+		List<String> list = new LinkedList<>();
+		int inBraceCount = 0;
+		StringBuilder buf = new StringBuilder();
+		for (char c : chars) {
+			if('{' == c) {
+				inBraceCount++;
+			}
+			else if('}' == c) {
+				inBraceCount--;
+				if(0 == inBraceCount) {
+					list.add(buf.toString());
+					buf.setLength(0);
+				}
+			}
+			else {
+				if(inBraceCount > 0) {
+					buf.append(c);
+				}
+				else {
+					//we are between strings
+				}
+			}
+		}
+		return list.toArray(new String[list.size()]);
 	}
 }

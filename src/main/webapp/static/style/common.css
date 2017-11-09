@@ -1,6 +1,6 @@
 html,body {
 	font-size: 16px;
-	line-height: 1em;
+	line-height: 1.2em;
 }
 
 .fixtureDetailsDialogue {
@@ -18,7 +18,7 @@ a, u {
 }
 
 #header {
-	line-height: 3em;
+	line-height: 2em;
 }
 
 .largeScreenBanner {
@@ -39,7 +39,6 @@ a, u {
 	
 	div#header {
 	    background-color: #009688 ! important;
-	    line-height: 1.5em;
 	}
 	
 	span.burger {
