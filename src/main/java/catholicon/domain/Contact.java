@@ -1,5 +1,9 @@
 package catholicon.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class Contact {
 	
 	private String name;
@@ -9,13 +13,16 @@ public class Contact {
 	private ContactRole committeeRole;
 	
 	private PhoneNumber[] contactNumbers;
+
+	private String clubName;
 	
-	public Contact(String name, String email, ContactRole committeeRole, PhoneNumber[] contactNumbers) {
+	public Contact(String name, String email, ContactRole committeeRole, PhoneNumber[] contactNumbers, String clubName) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.committeeRole = committeeRole;
 		this.contactNumbers = contactNumbers;
+		this.clubName = clubName;
 	}
 
 	public Contact(String name) {
@@ -48,6 +55,10 @@ public class Contact {
 
 	public void setContactNumbers(PhoneNumber[] contactNumbers) {
 		this.contactNumbers = contactNumbers;
+	}
+
+	public String getClubName() {
+		return clubName;
 	}
 	
 }

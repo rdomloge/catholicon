@@ -49,7 +49,8 @@ public class CommitteeDao {
 					numbers.add(new PhoneNumber(Type.MOBILE, mobile));
 				}
 				String name = map.get("name").replace("&nbsp;", " ");
-				Contact c = new Contact(name, email, role, numbers.toArray(new PhoneNumber[numbers.size()]));
+				String clubName = map.get("clubName");
+				Contact c = new Contact(name, email, role, numbers.toArray(new PhoneNumber[numbers.size()]), clubName);
 				list.add(c);
 			}
 		}
