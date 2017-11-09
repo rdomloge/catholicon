@@ -15,15 +15,18 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import catholicon.controller.MatchCardController;
 import catholicon.dao.ChangeDao;
 import catholicon.dao.DivisionDao;
 import catholicon.dao.LeagueDao;
 import catholicon.dao.Loader;
+import catholicon.dao.MatchCardDao;
 import catholicon.dao.MatchDao;
 import catholicon.domain.Change;
 import catholicon.domain.Change.ActionCode;
@@ -51,6 +54,9 @@ public class RecentMatchResultsSpider {
 	private MatchDao matchDao = new MatchDao();
 	private DivisionDao divisionDao = new DivisionDao();
 	private LeagueDao leagueDao = new LeagueDao();
+	
+	@Autowired
+	private MatchCardController matchCardController;
 	
 	private Set<Match> recentMatches = new HashSet<>();
 	private List<Match> sortedRecentMatches = new LinkedList<>();
@@ -164,6 +170,7 @@ public class RecentMatchResultsSpider {
 						if(date.after(cutOff)) {
 							LOGGER.debug("Match on "+match.getDate()+" is recent: "+dateStr);
 							recentMatches.add(match);
+							matchCardController.loadMatchCard(match.getFixtureId()); // cache a recent match card result, for good measure
 						}
 						else {
 							LOGGER.debug("Match on "+dateStr+" is too old");
