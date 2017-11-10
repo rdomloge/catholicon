@@ -18,7 +18,7 @@ public class DivisionController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/season/{seasonStartYear}/league/{leagueTypeId}/division/{divisionId}")
 	@Cacheable(cacheNames="Division")
-	public Division getLeague(
+	public Division getDivision(
 			@PathVariable("leagueTypeId") String leagueTypeId,
 			@PathVariable("divisionId") int divisionId,
 			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {
