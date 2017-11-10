@@ -11,8 +11,6 @@ import catholicon.dao.FixtureDao;
 import catholicon.domain.FixtureDetails;
 import catholicon.ex.DaoException;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 public class FixtureDetailsController {
 	
@@ -21,9 +19,7 @@ public class FixtureDetailsController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/fixture/{fixtureId}")
 	@Cacheable(cacheNames="Fixtures")
-	public FixtureDetails getFixtureDetails(
-			HttpServletRequest req,
-			@PathVariable("fixtureId") int fixtureId) throws DaoException {
+	public FixtureDetails getFixtureDetails(@PathVariable("fixtureId") int fixtureId) throws DaoException {
 		
 		return fixtureDao.load(fixtureId);
 	}
