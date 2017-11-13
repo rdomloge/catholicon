@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import catholicon.archive.RestArchive;
 import catholicon.filter.archive.stream.CharResponseWrapper;
+import catholicon.parser.ParserUtil;
 
 public class RestCachingFilter extends GenericFilterBean {
 
@@ -65,7 +67,7 @@ public class RestCachingFilter extends GenericFilterBean {
 	    	
 	    }
 	    catch(ServletException e) {
-	    	LOGGER.error("Could not fetch data ("+fullUrl+") - using archive", e);
+	    	LOGGER.error("Could not fetch data ("+fullUrl+") - using archive");
 	    }
 	    
 	    resp.getWriter().write(getCache(key));
@@ -75,7 +77,13 @@ public class RestCachingFilter extends GenericFilterBean {
 		Runnable r = new Runnable(){
 			@Override
 			public void run() {
-				restArchive.save(url, new String(data, Charset.forName("ISO8859_1")));
+				String json = new String(data, Charset.forName("ISO8859_1"));
+				if(StringUtils.isEmpty(ParserUtil.trim(json))) {
+					LOGGER.debug("Cache value for "+url+" is empty - not updating cache");
+					return;
+				}
+				
+				restArchive.save(url, json);
 				LOGGER.debug("Updated cache for "+url);
 			}};
 		exec.execute(r);
@@ -83,8 +91,11 @@ public class RestCachingFilter extends GenericFilterBean {
 	
 	private String getCache(String url) {
 		String json = restArchive.find(url);
-		if(null == json) {
+		if(StringUtils.isEmpty(json)) {
 			throw new CacheMissException(url);
+		}
+		else {
+			LOGGER.debug("Cache value: "+json);
 		}
 		
 		return json;

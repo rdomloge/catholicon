@@ -30,7 +30,10 @@ public class RedisFilterConfig {
 	    		"/frontpage/upcoming", 
 	    		"/matchcard/*", 
 	    		"/fixture/*",
-	    		"/recent"); 
+	    		"/recent",
+	    		"/committee",
+	    		"/clubs",
+	    		"/clubs/*"); 
         registrationBean.setName("restArchiveFilter");
         registrationBean.setOrder(1);
         return registrationBean;
