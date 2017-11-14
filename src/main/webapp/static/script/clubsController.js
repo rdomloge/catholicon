@@ -17,14 +17,21 @@ myApp.factory('clubsFactory', function($http, $log) {
 
 
 myApp.controller('clubsController', 
-		['$scope', '$log', 'clubsFactory', 'errorHandlerFactory', '$cookies', '$timeout',
-        function($scope, $log, clubsFactory, errorHandlerFactory, $cookies, $timeout) {
+		['$scope', '$log', 'clubsFactory', 'errorHandlerFactory', '$cookies', '$timeout', '$routeParams',
+        function($scope, $log, clubsFactory, errorHandlerFactory, $cookies, $timeout, $routeParams) {
 	
 			clubsFactory.getClubDescriptors().success(function(data) {
 				$log.debug("Data received for club descriptors", data);
 				$scope.clubDescriptors = data;
 				if(data.length) {
-					var clubId = data[0].clubId;
+					var clubId;
+					if($routeParams.clubId) {
+						clubId = $routeParams.clubId;
+					}
+					else {
+						clubId = data[0].clubId;						
+					}
+					
 					clubsFactory.getClub(clubId).success(function(data) {
 						$log.debug("Data received for club "+clubId, data);
 						$scope.selectedClub = data;
@@ -32,14 +39,5 @@ myApp.controller('clubsController',
 				}
 			}).error(errorHandlerFactory.getHandler());
 			
-			$scope.hideDropDownAndShow = function(clubDescr) {
-				$scope.showClubs = false;
-				$scope.selectedClub = undefined;
-				clubsFactory.getClub(clubDescr.clubId).success(function(data) {
-					$log.debug("Data received for club "+clubDescr.clubId, data);
-					$scope.selectedClub = data;
-				}).error(errorHandlerFactory.getHandler());
-			};
-	
 }]);
 
