@@ -82,10 +82,18 @@ public class Club {
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
 			String treasurerEmail) {
 		
-		chairMan.setEmail(null != ParserUtil.nullIfEmpty(chairmanEmail) ? chairmanEmail : null);
-		secretary.setEmail(null != ParserUtil.nullIfEmpty(secretaryEmail) ? secretaryEmail : null);
-		matchSec.setEmail(null != ParserUtil.nullIfEmpty(matchSecEmail) ? matchSecEmail : null);
-		treasurer.setEmail(null != ParserUtil.nullIfEmpty(treasurerEmail) ? treasurerEmail : null);
+		if(null != chairMan) {
+			chairMan.setEmail(null != ParserUtil.nullIfEmpty(chairmanEmail) ? chairmanEmail : null);
+		}
+		if(null != secretary) {
+			secretary.setEmail(null != ParserUtil.nullIfEmpty(secretaryEmail) ? secretaryEmail : null);
+		}
+		if(null != matchSec) {
+			matchSec.setEmail(null != ParserUtil.nullIfEmpty(matchSecEmail) ? matchSecEmail : null);
+		}
+		if(null != treasurer) {
+			treasurer.setEmail(null != ParserUtil.nullIfEmpty(treasurerEmail) ? treasurerEmail : null);
+		}
 	}
 
 	public Contact getChairMan() {

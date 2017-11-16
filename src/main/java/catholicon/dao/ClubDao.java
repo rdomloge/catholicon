@@ -2,6 +2,7 @@ package catholicon.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,7 @@ import catholicon.domain.PhoneNumber.Type;
 import catholicon.domain.Session;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
+import catholicon.parser.EmailParser;
 
 public class ClubDao {
 	
@@ -102,16 +104,30 @@ public class ClubDao {
 	}
 	
 	private void fillOutEmailAddrs(Document doc, Club club) {
+		Map<String, String> parsedEmails = EmailParser.parseEmails(doc.outerHtml());
 		/**
 		 * This doesn't work because the email address is generated
 		 */
-//		Elements emails = 
-//				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(3).select("td");
-//		String chairmanEmail = emails.get(0).ownText(); //<td><a href="Click to create email" onclick="GenerateMailHref(this, 'StephenGaunt');">Stephen Gaunt</a></td>
-//		String secretaryEmail = emails.get(1).ownText();
-//		String matchSecEmail = emails.get(2).ownText();
-//		String treasurerEmail = emails.get(3).ownText();
-//		club.fillOutEmailAddresses(chairmanEmail, secretaryEmail, matchSecEmail, treasurerEmail);
+		Elements emails = 
+				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(3).select("td");
+		
+		String chairmanJs = emails.get(0).select("a[onclick]").attr("onclick");
+		String chairmanIdentifier = EmailParser.parseIdentifier(chairmanJs);
+		String chairmanEmail = parsedEmails.get(chairmanIdentifier);
+		
+		String secretaryJs = emails.get(1).select("a[onclick]").attr("onclick");
+		String secretaryIdentifier = EmailParser.parseIdentifier(secretaryJs);
+		String secretaryEmail = parsedEmails.get(secretaryIdentifier);
+		
+		String matchSecJs = emails.get(2).select("a[onclick]").attr("onclick");
+		String matchSecIdentifier = EmailParser.parseIdentifier(matchSecJs);
+		String matchSecEmail = parsedEmails.get(matchSecIdentifier);
+		
+		String treasurerJs = emails.get(3).select("a[onclick]").attr("onclick");
+		String treasurerIdentifier = EmailParser.parseIdentifier(treasurerJs);
+		String treasurerEmail = parsedEmails.get(treasurerIdentifier);
+		
+		club.fillOutEmailAddresses(chairmanEmail, secretaryEmail, matchSecEmail, treasurerEmail);
 	}
 	
 	private void fillOutMatchSessions(Document doc, Club club) {
@@ -173,6 +189,7 @@ public class ClubDao {
 	
 	private void fillOutClub(Club club) {
 		String clubPage = ThreadLocalLoaderFilter.getLoader().load(String.format(clubUrl, club.getClubId(), club.getSeasonId()));
+		Map<String, String> emails = EmailParser.parseEmails(clubPage);
 		fillOutClub(club, Jsoup.parse(clubPage));
 	}
 }

@@ -1,22 +1,32 @@
 package catholicon.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import catholicon.ex.DaoException;
 
 public class PhoneNumber {
 	
 	public static enum Type {
-		HOME("H"), MOBILE("M");
+		HOME("H", "Home"), MOBILE("M", "Mobile");
 		
 		private String identifier;
 		
-		private Type(String identifier) {
+		private String jsonValue;
+		
+		private Type(String identifier, String jsonValue) {
 			this.identifier = identifier;
+			this.jsonValue = jsonValue;
 		}
 
 		public static Type forIdentifier(String s) {
 			if(HOME.identifier.equalsIgnoreCase(s)) return HOME;
 			if(MOBILE.identifier.equalsIgnoreCase(s)) return MOBILE;
 			throw new DaoException("No idea what this is: "+s);
+		}
+
+		@JsonValue
+		public String getJsonValue() {
+			return jsonValue;
 		}
 	}
 
