@@ -23,6 +23,9 @@
 				<span ng-repeat="phone in selectedClub.chairMan.contactNumbers">
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
+				<span ng-show="selectedClub.chairMan.email" class="w3-right">
+					<a href="mailto:{{selectedClub.chairMan.email}">{{selectedClub.chairMan.email}}</a>
+				</span>
 			</h4>
 		</div>
 		<div class="w3-row w3-border-bottom w3-border-blue">	
@@ -32,6 +35,9 @@
 				<span ng-hide="selectedClub.secretary.contactNumbers">n/a</span>
 				<span ng-repeat="phone in selectedClub.secretary.contactNumbers">
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.secretary.email" class="w3-right">
+					<a href="mailto:{{selectedClub.secretary.email}">{{selectedClub.secretary.email}}</a>
 				</span>
 			</h4>
 		</div>
@@ -43,6 +49,9 @@
 				<span ng-repeat="phone in selectedClub.matchSec.contactNumbers">
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
+				<span ng-show="selectedClub.matchSec.email" class="w3-right">
+					<a href="mailto:{{selectedClub.matchSec.email}">{{selectedClub.matchSec.email}}</a>
+				</span>
 			</h4>
 		</div>
 		<div class="w3-row w3-border-bottom w3-border-blue">	
@@ -52,6 +61,9 @@
 				<span ng-hide="selectedClub.treasurer.contactNumbers">n/a</span>
 				<span ng-repeat="phone in selectedClub.treasurer.contactNumbers">
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.treasurer.email" class="w3-right">
+					<a href="mailto:{{selectedClub.treasurer.email}">{{selectedClub.treasurer.email}}</a>
 				</span>
 			</h4>
 		</div>
