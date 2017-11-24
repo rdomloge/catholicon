@@ -18,7 +18,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class PlayerReportDao {
 	
 	private static final String url = 
-			"/Live/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
+			"/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	public PlayerReport[] loadPlayerReport(String season, String league) throws DaoException {
 		String formattedUrl = String.format(url, league, season);

@@ -19,10 +19,10 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class DivisionDao {
 	
 	public static final String url = 
-			"/Live/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
+			"/Leagues.asp?LeagueTypeID=%1$s&CompetitionStyle=0&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	public static String leagueUrl = 
-			"/Live/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
+			"/Division.asp?LeagueTypeID=%1$s&Division=%2$s&Season=%3$s&Juniors=false&Schools=false&Website=1";
 	
 	public List<DivisionDescriptor> getDivisionsForLeague(int leagueTypeId, int seasonStartYear) throws DaoException {
 		

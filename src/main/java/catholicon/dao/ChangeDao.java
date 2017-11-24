@@ -12,7 +12,7 @@ import catholicon.parser.ParserUtil;
 
 public class ChangeDao {
 
-	private static final String url = "/Live/MatchCardHistories.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=%2$s&Website=1";
+	private static final String url = "/MatchCardHistories.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=%2$s&Website=1";
 	
 	private static final Pattern p = Pattern.compile("(?s)var matchHistoryList =\\s+\\[\\s+(.*)\\];");
 	/*

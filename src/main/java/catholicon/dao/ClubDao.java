@@ -21,9 +21,9 @@ import catholicon.parser.EmailParser;
 
 public class ClubDao {
 	
-	private static String seedUrl = "/Live/ClubInfo.asp?Season=0&website=1";
+	private static String seedUrl = "/ClubInfo.asp?Season=0&website=1";
 
-	private static String clubUrl = "/Live/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
+	private static String clubUrl = "/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	
 	public List<Club> getClubIds(int seasonId) {

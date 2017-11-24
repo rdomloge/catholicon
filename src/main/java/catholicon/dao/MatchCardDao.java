@@ -18,7 +18,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class MatchCardDao {
 	
 	private static final String initialUrlTemplate = 
-			"/Live/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
+			"/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	private static final String NAME_WITHHELD = "Name withheld";
 	

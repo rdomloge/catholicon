@@ -17,7 +17,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class FixtureDao {
 	
 	private String url = 
-			"/Live/EditFixture.asp?Edit=false&HomeTeamID=228&AwayTeamID=215&FixtureID=%1$s&FixtureIndex=1&Juniors=false&Schools=false&Season=0&Website=1";
+			"/EditFixture.asp?Edit=false&HomeTeamID=228&AwayTeamID=215&FixtureID=%1$s&FixtureIndex=1&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	public FixtureDetails load(int fixtureId) throws DaoException {
 		String page = ThreadLocalLoaderFilter.getLoader().load(String.format(url, fixtureId));

@@ -16,9 +16,9 @@ import catholicon.parser.ParserUtil;
 @Component
 public class WelcomeDao {
 	
-	private static final String welcomeUrl = "/Live/WelcomePage.asp?Flags=31&Season=0&Juniors=false&Schools=false&Website=1";
+	private static final String welcomeUrl = "/WelcomePage.asp?Flags=31&Season=0&Juniors=false&Schools=false&Website=1";
 
-	private static final String url = "/Live/Login.asp?FromHotlink=&AutoLogin=&UserLogID=&Season=0&Juniors=false&Schools=false&Website=1";
+	private static final String url = "/Login.asp?FromHotlink=&AutoLogin=&UserLogID=&Season=0&Juniors=false&Schools=false&Website=1";
 	
 	public List<WelcomePageItem> loadWelcomePage() throws DaoException {
 		String welcomePage = ThreadLocalLoaderFilter.getLoader().load(welcomeUrl);
