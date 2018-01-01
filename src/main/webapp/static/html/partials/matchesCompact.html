@@ -1,13 +1,10 @@
 
-
 <div class="w3-container" ng-controller="matchListController">
 	
-	<h3>
-		{{teamName}}
-	</h3>
-	<h4>
-		{{season == 0 ? 'this' : season}} season
-	</h4>
+	<h3 class="teamName">{{teamName}}</h3>
+	<img class="webCal" alt="webcal" src="../img/webcal.png" ng-click="openWebCal()" />
+	
+	<h4>{{season == 0 ? 'this' : season}} season</h4>
 	
 	<div ng-repeat="match in matches | orderBy:'date'" 
 			class="" >
@@ -23,7 +20,7 @@
 	  			{{isHome(match) ? 'H' : 'A'}}
 	  		</div>
 	  		<div class="w3-col m1 s1">
-	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" width="30px"/>
+	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" style="width:30px"/>
 	  		</div>
 	  		<div class="w3-col m2 s10">
 	  			{{match.date | date: 'dd MMM'}}
@@ -40,4 +37,5 @@
 	<fixture-details-directive>
 	</fixture-details-directive>
 	
+	<web-cal-directive />
 </div>

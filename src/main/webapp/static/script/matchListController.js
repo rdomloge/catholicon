@@ -89,10 +89,14 @@ myApp.controller('matchListController',
 	$scope.showFixture = function(fixtureId) {
 		$scope.$broadcast('fixture-details', {id: fixtureId});
 	}
-	
+
 	$scope.teamId = $routeParams.teamId;
 	$scope.season = $routeParams.season;
-	
+
+	$scope.openWebCal = function() {
+		$scope.$broadcast('web-cal', {season: $scope.season, teamId: $scope.teamId})
+	}
+
 	$scope.scrollTo = function(element) {
 		
 	}

@@ -9,3 +9,13 @@
 .matchesCompactRow {
 	line-height: 1.5em;
 }
+
+.webCal {
+	float: right;
+	width: 45px;
+	padding: 2px;	
+}
+
+.teamName {
+	display: inline;	
+}

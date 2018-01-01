@@ -179,5 +179,14 @@
 		transactionalMode="off"
 		maxElementsInMemory="50">
 	</cache>
+	<cache name="MatchWebCals"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
 
 </ehcache>
