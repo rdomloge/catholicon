@@ -20,6 +20,7 @@ import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.util.UidGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class WebCalController {
 		icsCalendar.getProperties().add(
 				new ProdId("-//Events Calendar//iCal4j 1.0//EN"));
 		icsCalendar.getProperties().add(CalScale.GREGORIAN);
+		icsCalendar.getProperties().add(Version.VERSION_2_0);
 
 		for (Match match : matches) {
 			VEvent event = createEvent(match);
