@@ -2,7 +2,7 @@
 <div class="w3-container" ng-controller="matchListController">
 	
 	<h3 class="teamName">{{teamName}}</h3>
-	<img class="webCal" alt="webcal" src="../img/webcal.png" ng-click="openWebCal()" />
+	<a href="{{openWebCal()}}"><img class="webCal" alt="webcal" src="../img/webcal.png" /></a>
 	
 	<h4>{{season == 0 ? 'this' : season}} season</h4>
 	
@@ -34,8 +34,5 @@
 	  	</div>
 	</div>
 	
-	<fixture-details-directive>
-	</fixture-details-directive>
-	
-	<web-cal-directive />
+	<fixture-details-directive />
 </div>

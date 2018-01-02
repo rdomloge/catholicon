@@ -1,7 +1,5 @@
 package catholicon.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.SocketException;
@@ -12,7 +10,6 @@ import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServletResponse;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
-import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
@@ -96,7 +93,7 @@ public class WebCalController {
 		TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance()
 				.createRegistry();
 		TimeZone timezone = registry.getTimeZone(TZ_EUROPE_LONDON);
-		VTimeZone tz = timezone.getVTimeZone();
+		//VTimeZone tz = timezone.getVTimeZone();
 
 		java.util.Date matchDate = new SimpleDateFormat("yyyy-MM-dd")
 				.parse(match.getDate());
@@ -106,12 +103,12 @@ public class WebCalController {
 		String eventName = String.format("Match: %s v %s", match.getHomeTeam()
 				.getName(), match.getAwayTeam().getName());
 
-		DateTime startDate = createStartDate(timezone, matchCal);
-		DateTime endDate = createEndDate(timezone, matchCal);
+		DateTime startDate = createStartDate(matchCal);
+		DateTime endDate = createEndDate(matchCal);
 
 		VEvent meeting = new VEvent(startDate, endDate, eventName);
 
-		meeting.getProperties().add(tz.getTimeZoneId());
+		//meeting.getProperties().add(tz.getTimeZoneId());
 
 		UidGenerator ug = new UidGenerator("uidGen");
 		Uid uid = ug.generateUid();
@@ -120,10 +117,8 @@ public class WebCalController {
 		return meeting;
 	}
 
-	private DateTime createStartDate(TimeZone timezone,
-			java.util.Calendar matchCal) {
+	private DateTime createStartDate(java.util.Calendar matchCal) {
 		java.util.Calendar date = new GregorianCalendar();
-		date.setTimeZone(timezone);
 		date.set(java.util.Calendar.MONTH,
 				matchCal.get(java.util.Calendar.MONTH));
 		date.set(java.util.Calendar.DAY_OF_MONTH,
@@ -136,10 +131,8 @@ public class WebCalController {
 		return new DateTime(date.getTime());
 	}
 
-	private DateTime createEndDate(TimeZone timezone,
-			java.util.Calendar matchCal) {
+	private DateTime createEndDate(java.util.Calendar matchCal) {
 		java.util.Calendar date = new GregorianCalendar();
-		date.setTimeZone(timezone);
 		date.set(java.util.Calendar.MONTH,
 				matchCal.get(java.util.Calendar.MONTH));
 		date.set(java.util.Calendar.DAY_OF_MONTH,

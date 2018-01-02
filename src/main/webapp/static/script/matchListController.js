@@ -94,7 +94,8 @@ myApp.controller('matchListController',
 	$scope.season = $routeParams.season;
 
 	$scope.openWebCal = function() {
-		$scope.$broadcast('web-cal', {season: $scope.season, teamId: $scope.teamId})
+		return Config.BASE_URL + '/season/' + $scope.season
+		 + "/matches/" + $scope.teamId + "/webcal";
 	}
 
 	$scope.scrollTo = function(element) {
