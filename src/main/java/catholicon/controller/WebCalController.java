@@ -3,10 +3,13 @@ package catholicon.controller;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+
+import javax.servlet.http.HttpServletResponse;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Date;
@@ -44,21 +47,26 @@ public class WebCalController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/season/{seasonStartYear}/matches/{team}/webcal")
 	@Cacheable(cacheNames = "MatchWebCals")
-	public String getWebCal(
+	public void getWebCal(HttpServletResponse response,
 			@PathVariable("seasonStartYear") int seasonStartYear,
-			@PathVariable("team") String team) throws DaoException, SocketException, ParseException {
+			@PathVariable("team") String team) throws DaoException, ParseException, IOException {
 
 		Match[] matches = matchDao.load(seasonStartYear, team);
 
 		System.out.printf("getWebCal[team=%s, season=%d] : matches=%d\n\n",
 				team, seasonStartYear, matches.length);
 
-		createWebCal(seasonStartYear, team, matches);
-
-		return "";
+		createWebCal(response, seasonStartYear, team, matches);
+		
+		response.flushBuffer();
 	}
+	
+	
+	private void createWebCal(HttpServletResponse response, 
+			int seasonStartYear, String team, Match[] matches) throws ParseException, IOException {
 
-	private void createWebCal(int seasonStartYear, String team, Match[] matches) throws SocketException, ParseException {
+		OutputStream out = response.getOutputStream();
+		response.setContentType("text/calendar");
 
 		net.fortuna.ical4j.model.Calendar icsCalendar = new net.fortuna.ical4j.model.Calendar();
 		icsCalendar.getProperties().add(
@@ -71,21 +79,13 @@ public class WebCalController {
 			icsCalendar.getComponents().add(event);
 		}
 
-		final String filename = "s" + seasonStartYear + "t" + team + ".ics";
-		FileOutputStream fout;
+		CalendarOutputter outputter = new CalendarOutputter();
+
 		try {
-			fout = new FileOutputStream(filename);
-
-			CalendarOutputter outputter = new CalendarOutputter();
-
-			try {
-				outputter.output(icsCalendar, fout);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ValidationException e) {
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
+			outputter.output(icsCalendar, out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ValidationException e) {
 			e.printStackTrace();
 		}
 
