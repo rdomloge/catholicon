@@ -29,3 +29,8 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 		};
 	});
 } ]);
+
+myApp.config([ "$compileProvider", function($compileProvider) {   
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|webcal):/);
+	// Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+} ]);
