@@ -4,9 +4,7 @@
 		{{season.seasonStartYear}}
 	</button>
 	<div id="leagueDropDown" ng-class="show ? 'w3-bar-block w3-white w3-card-4' : 'w3-hide'">
-		<a href="#/" ng-class="leagues ? 'w3-hide' : 'w3-bar-item w3-button'">Loading...</a>
-		<a href="#/" ng-repeat="league in leagues">
-			<division-menu-item-directive league="league" season="season"/>
-		</a>
+		<button href="#/" ng-class="leagues ? 'w3-hide' : 'w3-bar-item w3-button'">Loading...</button>
+		<division-menu-item-directive ng-repeat="league in leagues" league="league" season="season"/>
 	</div>
 </div>
