@@ -1,16 +1,15 @@
 <div class="w3-dropdown-click w3-right">
-	{{divisionFilter}}
-  <button class="w3-button w3-black" ng-click="show=!show" ng-init="show = false">Division</button>
-  <div ng-class="show ? 'w3-show w3-dropdown-content w3-bar-block w3-card w3-light-grey' : 'w3-hide'" 
-  		id="divisionFilter" style="right:0">
-    <button class="w3-bar-item w3-button" ng-click="setDivisionFilter('')">
-    	All
-    </button>
-    <button class="w3-bar-item w3-button" ng-click="setDivisionFilter(division)" 
-    		ng-repeat="division in divisions">
-    	{{division}}
-    </button>
-  </div>
+	<button class="w3-button w3-black" ng-click="show=!show"
+		ng-init="show = false">{{divisionFilter ? divisionFilter : 'Division'}} <i class="arrow arrowdown" style="border-color: white"></i></button>
+	<div
+		ng-class="show ? 'w3-show w3-dropdown-content w3-bar-block w3-card w3-light-grey' : 'w3-hide'"
+		id="divisionFilter" style="right: 0">
+		<button class="w3-bar-item w3-button" ng-click="setDivisionFilter('')">
+			All</button>
+		<button class="w3-bar-item w3-button"
+			ng-click="setDivisionFilter(division)"
+			ng-repeat="division in divisions">{{division}}</button>
+	</div>
 </div>
 
 <table id="playerReportTable">
@@ -19,14 +18,14 @@
 		<th>Player Name</th>
 		<th>Team Name</th>
 		<th class="rd-mobile-div-hidden-cols" ng-click="sortCol = 'division'">
-			Division
-		</th>
+			Division</th>
 		<th class="rd-mobile-div-hidden-cols">Matches Played</th>
 		<th class="rd-mobile-div-hidden-cols">Rubbers</th>
 		<th class="rd-mobile-div-hidden-cols">Rating</th>
 		<th style="width: 10%">Pts</th>
 	</tr>
-	<tr ng-repeat="player in playerReport | orderBy:sortCol | filter : divisionFilter">
+	<tr
+		ng-repeat="player in playerReport | orderBy:sortCol | filter : divisionFilter">
 		<td>{{player.position}}</td>
 		<td>{{player.playerName}}</td>
 		<td>{{player.teamName}}</td>

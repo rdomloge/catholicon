@@ -22,11 +22,6 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
-	factory.getPlayerReport = function(season, league) {
-		$log.info("Loading player report");
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+league+'/report');
-	};
-	
 	return factory;
 });
 
