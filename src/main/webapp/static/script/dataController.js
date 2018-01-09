@@ -82,14 +82,6 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 //	});
 });
 
-myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {
-	dataFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {
-		$log.debug("Data received for playerReport", data);
-		$scope.playerReport = data;
-	});
-	
-});
-
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
 	
 	var thinkers = 0;
