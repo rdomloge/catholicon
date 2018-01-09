@@ -1,9 +1,10 @@
 <div>
 	<button class="w3-button w3-block w3-left-align" ng-init="show = (season.apiIdentifier == 0)" ng-click="show = !show; load()" 
 			ga-on="click" ga-event-category="menu_league" ga-event-action="click">
-		{{league.label}}</button>
+		{{league.label}}
+	</button>
 	<div id="divisionDropDown" ng-class="show ? 'w3-bar-block w3-white w3-card-4' : 'w3-hide'">
-		<a href="#/" ng-class="divisions ? 'w3-hide' : 'w3-bar-item w3-button'">Loading...</a>
+		<button ng-class="divisions ? 'w3-hide' : 'w3-bar-item w3-button'">Loading...</button>
 		<a href="#/season/{{division.season}}/league/{{division.leagueTypeId}}/division/{{division.divisionId}}" 
 			ng-repeat="division in divisions" class="w3-button w3-block w3-left-align" ng-click="menuItemSelected()" 
 			ga-on="click" ga-event-category="menu_division" ga-event-action="click">
