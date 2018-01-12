@@ -94,8 +94,8 @@ myApp.controller('matchListController',
 	$scope.season = $routeParams.season;
 
 	$scope.openWebCal = function() {
-		var protocol = "webcal:/";
-		return protocol + Config.BASE_URL + '/season/' + $scope.season
+		// var protocol = "webcal:/";
+		return Config.BASE_URL + '/season/' + $scope.season
 		 + "/matches/" + $scope.teamId + "/webcal";
 	}
 
