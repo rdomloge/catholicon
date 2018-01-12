@@ -22,11 +22,6 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
 	};
 	
-	factory.getPlayerReport = function(season, league) {
-		$log.info("Loading player report");
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+league+'/report');
-	};
-	
 	return factory;
 });
 
@@ -80,14 +75,6 @@ myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 //	$scope.$on('menu_item_selected', function(event) {
 //		$scope.show = false;
 //	});
-});
-
-myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {
-	dataFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {
-		$log.debug("Data received for playerReport", data);
-		$scope.playerReport = data;
-	});
-	
 });
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {
