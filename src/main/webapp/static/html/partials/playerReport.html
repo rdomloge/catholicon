@@ -19,7 +19,7 @@
 
 <table id="playerReportTable">
 	<tr>
-		<th style="width: 10%">#</th>
+		<th class="w3-left" style="width: 10%">#</th>
 		<th>Player Name</th>
 		<th>Team Name</th>
 		<th class="rd-mobile-div-hidden-cols" ng-click="sortCol = 'division'">
@@ -27,17 +27,17 @@
 		</th>
 		<th class="rd-mobile-div-hidden-cols">Matches Played</th>
 		<th class="rd-mobile-div-hidden-cols">Rubbers</th>
-		<th class="rd-mobile-div-hidden-cols">Rating</th>
-		<th style="width: 10%">Pts</th>
+		<th class="rd-mobile-div-hidden-cols">Pts</th>
+		<th style="width: 10%">Rating</th>
 	</tr>
 	<tr ng-repeat="player in playerReport | orderBy:sortCol | filter : divisionFilter">
-		<td>{{player.position}}</td>
+		<td style="width: 10%">{{$index+1}}</td>
 		<td>{{player.playerName}}</td>
 		<td>{{player.teamName}}</td>
 		<td class="rd-mobile-div-hidden-cols">{{player.division}}</td>
 		<td class="rd-mobile-div-hidden-cols">{{player.matchesPlayed}}</td>
 		<td class="rd-mobile-div-hidden-cols">{{player.rubbers}}</td>
-		<td class="rd-mobile-div-hidden-cols">{{player.rating}}</td>
-		<td class="w3-right">{{player.pointsDiff}}</td>
+		<td class="rd-mobile-div-hidden-cols">{{player.pointsDiff}}</td>
+		<td class="w3-right">{{player.rating | number:2}}%</td>
 	</tr>
 </table>
