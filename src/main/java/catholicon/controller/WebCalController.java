@@ -9,17 +9,6 @@ import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.fortuna.ical4j.data.CalendarOutputter;
-import net.fortuna.ical4j.model.DateTime;
-import net.fortuna.ical4j.model.ValidationException;
-import net.fortuna.ical4j.model.component.VEvent;
-import net.fortuna.ical4j.model.property.CalScale;
-import net.fortuna.ical4j.model.property.Description;
-import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.StreetAddress;
-import net.fortuna.ical4j.model.property.Version;
-import net.fortuna.ical4j.util.UidGenerator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +21,16 @@ import catholicon.dao.MatchDao;
 import catholicon.domain.FixtureDetails;
 import catholicon.domain.Match;
 import catholicon.ex.DaoException;
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.ValidationException;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.Description;
+import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.StreetAddress;
+import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.property.Version;
 
 @RestController
 public class WebCalController {
@@ -89,19 +88,13 @@ public class WebCalController {
 
 		VEvent meeting = new VEvent(startDate, endDate, eventName);
 
-		UidGenerator ug = new UidGenerator("uidGen");
-		meeting.getProperties().add(ug.generateUid());
-		
-		String result = match.getScoreExtracted().contains("-") ?
-			String.format("Result: Home %d - Away %d ", 
-					match.getHomeTeam().getScore(), match.getAwayTeam().getScore()) : "";
+		meeting.getProperties().add(new Uid(match.getDate()+'_'+match.getHomeTeam().getName()+'_'+match.getAwayTeam().getName()));
 		
 		String description = String.format(
-				"BDBL Badminton %s Match\nHome Team: %s\nAway Team: %s\n%s",
+				"BDBL Badminton %s Match\nHome Team: %s\nAway Team: %s",
 				fixture.getLeague(),
 				match.getHomeTeam().getName(),
-				match.getAwayTeam().getName(),
-				result);
+				match.getAwayTeam().getName());
 
 		String address = fixture.getVenue();
 
