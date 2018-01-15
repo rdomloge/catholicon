@@ -119,7 +119,7 @@ public class WebCalController {
 		date.set(java.util.Calendar.MONTH, Integer.parseInt(matchDate.substring(5, 7)));
 		date.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(matchDate.substring(8, 10)));
 		date.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(matchTime.substring(0, 2)));
-		date.set(java.util.Calendar.MINUTE, Integer.parseInt(matchTime.substring(2, 4)));
+		date.set(java.util.Calendar.MINUTE, Integer.parseInt(matchTime.substring(3, 5)));
 		date.set(java.util.Calendar.SECOND, 0);
 
 		return new DateTime(date.getTime());
