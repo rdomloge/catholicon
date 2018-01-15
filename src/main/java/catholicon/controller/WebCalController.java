@@ -109,7 +109,8 @@ public class WebCalController {
 
 		java.util.Calendar date = new GregorianCalendar();
 		date.set(java.util.Calendar.YEAR, Integer.parseInt(matchDate.substring(0, 4)));
-		date.set(java.util.Calendar.MONTH, Integer.parseInt(matchDate.substring(5, 7)));
+		date.set(java.util.Calendar.MONTH, 
+				Integer.parseInt(matchDate.substring(5, 7)) - 1);
 		date.set(java.util.Calendar.DAY_OF_MONTH, Integer.parseInt(matchDate.substring(8, 10)));
 		date.set(java.util.Calendar.HOUR_OF_DAY, Integer.parseInt(matchTime.substring(0, 2)));
 		date.set(java.util.Calendar.MINUTE, Integer.parseInt(matchTime.substring(3, 5)));
