@@ -27,6 +27,7 @@ import net.fortuna.ical4j.model.ValidationException;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Description;
+import net.fortuna.ical4j.model.property.Location;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.StreetAddress;
 import net.fortuna.ical4j.model.property.Uid;
@@ -99,7 +100,7 @@ public class WebCalController {
 		String address = fixture.getVenue();
 
 		meeting.getProperties().add(new Description(description));
-		meeting.getProperties().add(new StreetAddress(address));
+		meeting.getProperties().add(new Location(address));
 
 		return meeting;
 	}
