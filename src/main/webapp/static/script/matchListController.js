@@ -34,6 +34,23 @@ myApp.controller('matchListController',
 			: $scope.matches[0].awayTeam.name;
 	});
 	
+	$scope.selectUrlText = function() {
+		var copyTextarea = document.querySelector('.js-copytextarea');
+		copyTextarea.select();
+		try {
+		    var successful = document.execCommand('copy');
+		    var msg = successful ? 'successful' : 'unsuccessful';
+		    $log.debug('Copying text command was ' + msg);
+		    $scope.urlCopySuccessMsg = successful ? 'Copied' : 'Copy failed';
+		    $timeout(function() {
+		    	$scope.urlCopySuccessMsg = '';
+		    	$log.debug("Reset variable");
+		    }, 2000);
+		  } catch (err) {
+		    console.log('Oops, unable to copy');
+		  }
+	}
+	
 	$scope.getTeamId = function() {
 		return $routeParams.teamId;
 	}

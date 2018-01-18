@@ -1,11 +1,37 @@
 
-<div class="w3-container" ng-controller="matchListController">
-	
+<div class="w3-container" ng-controller="matchListController"  ng-init="showCalendarOptions = false"
+	style="padding-top: 10px">
+
 	<h3 class="teamName">{{teamName}}</h3>
-	<a href="{{openWebCal()}}"><img class="webCal" alt="webcal" src="../img/webcal.png" /></a>
-	
 	<h4>{{season == 0 ? 'this' : season}} season</h4>
 	
+	<button ng-click="showCalendarOptions = !showCalendarOptions" 
+			class="w3-button w3-black w3-right">Calendar</button>
+		
+	<div class="w3-container w3-modal fixtureDetailsDialogue" 
+			ng-style="showCalendarOptions ? {display: 'block'} : {display: 'none'}" ng-cloak>
+		<div class="w3-modal-content w3-card-8">
+			<header class="w3-container w3-light-grey w3-padding">
+				<h1>Calendar options</h1>
+			</header>
+			<section class="w3-container w3-padding">
+				<textarea class="w3-center w3-block js-copytextarea w3-padding" id="calendarUrl" ng-init="select()">{{openWebCal()}}</textarea>
+			</section>
+			<section class="w3-container w3-right">
+				<a class="w3-button w3-black w3-padding" href="{{openWebCal()}}">Import into your calendar</a>
+				<button class="w3-button w3-black w3-padding" ng-click="selectUrlText()">Copy URL to clipboard</button>
+			</section>
+			<footer ng-click="showCalendarOptions = false" class="w3-container w3-light-grey">
+				<p class="w3-right w3-large w3-text-black w3-right">
+					X
+				</p>
+				<p class="w3-right w3-large w3-text-red w3-right w3-margin-right">
+					{{urlCopySuccessMsg}}
+				</p>
+			</footer>
+		</div>
+	</div>
+
 	<div ng-repeat="match in matches | orderBy:'date'" 
 			class="" >
 		<div style="padding: 10px 0 10px 0"
