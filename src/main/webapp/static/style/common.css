@@ -21,6 +21,10 @@ a, u {
 	line-height: 2em;
 }
 
+.button {
+	font-size: 15px;
+}
+
 .largeScreenBanner {
 	background-image: url(../img/bannerImage.jpg);
     background-position: -50px -100px;	
@@ -30,7 +34,7 @@ a, u {
 
 @media screen and (max-width:600px) {
 	html,body {
-		font-size: 130%;
+		font-size: 120%;
 	}
 	
 	.largeScreenBanner {
@@ -50,13 +54,13 @@ a, u {
 	}
 	
 	table#leagueTable, table#leagueTable td {
-		font-size: 75%;
-		width=100%;
+		font-size: 65%;
+		width: 100%;
 	}
 	
 	table#playerReportTable, table#playerReportTable td {
 		font-size: 65%;
-		width=100%;
+		width: 100%;
 		word-wrap: break-word;
 	}
 	
@@ -66,12 +70,12 @@ a, u {
 	
 	table#leagueTable th {
 		font-size: 55%;
-		width=100%;
+		width: 100%;
 	}
 	
 	table#playerReportTable th {
 		font-size: 55%;
-		width=100%;
+		width: 100%;
 	}
 	
 	td a.rd-division-link-to-matches {
