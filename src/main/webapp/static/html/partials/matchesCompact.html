@@ -6,7 +6,7 @@
 	<h4>{{season == 0 ? 'this' : season}} season</h4>
 	
 	<button ng-click="showCalendarOptions = !showCalendarOptions" 
-			class="w3-button w3-black w3-right">Calendar</button>
+			class="button w3-button w3-black w3-right">Calendar</button>
 		
 	<div class="w3-container w3-modal fixtureDetailsDialogue" 
 			ng-style="showCalendarOptions ? {display: 'block'} : {display: 'none'}" ng-cloak>
@@ -15,11 +15,12 @@
 				<h1>Calendar options</h1>
 			</header>
 			<section class="w3-container w3-padding">
-				<textarea class="w3-center w3-block js-copytextarea w3-padding" id="calendarUrl" ng-init="select()">{{openWebCal()}}</textarea>
+				<textarea class="w3-center w3-block js-copytextarea w3-padding w3-small" 
+					id="calendarUrl" ng-init="select()">{{openWebCal()}}</textarea>
 			</section>
-			<section class="w3-container w3-right">
-				<a class="w3-button w3-black w3-padding" href="{{openWebCal()}}">Import into your calendar</a>
-				<button class="w3-button w3-black w3-padding" ng-click="selectUrlText()">Copy URL to clipboard</button>
+			<section class="w3-container w3-center">
+				<a class="button w3-button w3-margin w3-black w3-padding" href="{{openWebCal()}}">Import into your calendar</a>
+				<button class="button w3-button w3-margin w3-black w3-padding" ng-click="selectUrlText()">Copy URL to clipboard</button>
 			</section>
 			<footer ng-click="showCalendarOptions = false" class="w3-container w3-light-grey">
 				<p class="w3-right w3-large w3-text-black w3-right">
