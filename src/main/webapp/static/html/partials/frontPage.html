@@ -33,7 +33,7 @@
 	<div class="w3-container w3-light-grey" style="padding: 0">
 		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
-		  	<a href="#/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
+		  	<a href="#!/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
 			    <div class="w3-col s5 w3-small recentMatchTeam">
 					<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
 					{{match.homeTeam.score}}</div>

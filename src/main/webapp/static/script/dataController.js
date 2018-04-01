@@ -39,42 +39,34 @@ myApp.factory('errorHandlerFactory', function($log, $rootScope) {
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
-	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).success(function(data) {
-		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
-		$scope.divisions = data;
+	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).then(function(page) {
+		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", page.data);
+		$scope.divisions = page.data;
 	});
 }]);
 
 myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId+' for season '+$routeParams.season);
 	
-	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).success(function (data){
-		$log.debug("Data received for league", data);
-		$scope.league = data;
+	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).then(function (page){
+		$log.debug("Data received for league", page.data);
+		$scope.league = page.data;
 	});
 }]);
 
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId, $routeParams.season)
-			.success(function(data) {
-		$log.debug("Data received for division "+$routeParams.divisionId, data);
-		$scope.division = data;
+			.then(function(page) {
+		$log.debug("Data received for division "+$routeParams.divisionId, page.data);
+		$scope.division = page.data;
 	});
 }]);
 
 myApp.controller('seasonListController', function($scope, $log, dataFactory) {
-	dataFactory.getSeasonList().success(function(data) {
-		$log.debug("Data received for seasons", data);
-		$scope.seasons = data;
+	dataFactory.getSeasonList().then(function(page) {
+		$log.debug("Data received for seasons", page.data);
+		$scope.seasons = page.data;
 	});
-	
-//	$scope.registerMenuItem = function() {
-//		$scope.$broadcast('menu_item_selected');
-//	}
-	
-//	$scope.$on('menu_item_selected', function(event) {
-//		$scope.show = false;
-//	});
 });
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {

@@ -1,8 +1,8 @@
 myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory, $routeParams, $rootScope) {
 	$log.debug("Getting match card for "+$routeParams.fixtureId);
-	dataFactory.getMatchCard($routeParams.fixtureId).success(function(data) {
-		$log.debug("Data received for match card", data);
-		$scope.matchCard = data;
+	dataFactory.getMatchCard($routeParams.fixtureId).then(function(page) {
+		$log.debug("Data received for match card", page.data);
+		$scope.matchCard = page.data;
 	});
 
 	$scope.hideNames = function() {

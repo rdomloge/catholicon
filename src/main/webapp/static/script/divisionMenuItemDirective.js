@@ -24,9 +24,9 @@ myApp.directive('divisionMenuItemDirective', function($log) {
 
 myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$log', '$rootScope', function($scope, divisionFactory, $log, $rootScope) {
 	$scope.load = function() {
-		divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).success(function(data) {
-			$log.debug("Data received for divisions", data);
-			$scope.divisions = data;
+		divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).then(function(page) {
+			$log.debug("Data received for divisions", page.data);
+			$scope.divisions = page.data;
 		});
 	}
 	
