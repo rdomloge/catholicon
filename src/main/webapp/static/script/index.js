@@ -23,32 +23,63 @@ var scriptPhases = [
 	"../script/niceDate.js"],
 	["../script/secure.js",
 	"../script/jwtLogin.js"]];
+
+var stylePhases = [
+	["../style/w3.css",
+		"../style/common.css"],
+	["../style/loadingAnimation.css",
+		"../style/frontPage.css",],
+	["../style/match.css", 
+		"../style/league.css", 
+		"../style/matchCard.css", 
+		"../style/niceDate.css",
+		"../font/titillium.css"]
+];
 	
-var phaseNumber = 0;;
-var nextPhaseCallBack = function() { 
-	phaseNumber++;
-	if(phaseNumber < scriptPhases.length) {
-		phase = scriptPhases[phaseNumber];
-		loadPhase(phase, nextPhaseCallBack);
-	}
-};
-loadPhase(scriptPhases[phaseNumber], nextPhaseCallBack);
 
+function loadPhasedResources(resources, type, onCompleteCallBack) {
+	console.log('Started loading '+type);
+	var phaseNumber = 0;
+	var nextPhaseCallBack = function() { 
+		phaseNumber++;
+		if(phaseNumber < resources.length) {
+			var phase = resources[phaseNumber];
+			loadPhase(phase, nextPhaseCallBack, type);
+		}
+		else {
+			console.log('Finished loading '+type);
+			if(onCompleteCallBack) onCompleteCallBack();
+		}
+	};
+	loadPhase(resources[phaseNumber], nextPhaseCallBack, type);
+}
 
-function loadPhase(phase, nextPhaseCallBack) {
+loadPhasedResources(scriptPhases, 'script');
+loadPhasedResources(stylePhases, 'link');
+
+function loadPhase(phase, nextPhaseCallBack, type) {
 	var remaining = phase.length;
 	var phaseCountDownCallBack = function() {
 		remaining--;
 		if(remaining <= 0) nextPhaseCallBack();
 	}
 	for(var i=0; i < phase.length; i++) {
-		loadScript(phase[i], phaseCountDownCallBack);
+		loadResource(phase[i], phaseCountDownCallBack, type);
 	}
 }
 
-function loadScript(scriptUrl, callBack) {
-	var script = document.createElement('script');
-	script.onload = callBack;
-	script.src = scriptUrl;
-	document.body.appendChild(script);
+function loadResource(scriptUrl, callBack, type) {
+	var element = document.createElement(type);
+	element.onload = callBack;
+	
+	if('link' == type) {
+		element.rel="stylesheet";
+		element.type="text/css"
+		element.href=scriptUrl;
+	}
+	else {
+		element.src = scriptUrl;		
+	}
+	
+	document.head.appendChild(element);
 }
