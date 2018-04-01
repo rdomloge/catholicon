@@ -21,13 +21,13 @@ myApp.controller('matchListController',
 			
 	var firstUnplayed;
 			
-	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
-		$log.debug("Data received for matches", data);
+	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).then(function(page) {
+		$log.debug("Data received for matches", page.data);
 		
-		decorateWinningTeam(data);
-		decorateFirstUnplayed(data);
+		decorateWinningTeam(page.data);
+		decorateFirstUnplayed(page.data);
 		
-		$scope.matches = data;
+		$scope.matches = page.data;
 		$scope.teamName = 
 			$scope.matches[0].homeTeam.id == $routeParams.teamId 
 			? $scope.matches[0].homeTeam.name 

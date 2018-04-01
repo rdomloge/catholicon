@@ -23,10 +23,10 @@ myApp.directive('leagueMenuItemDirective', function($log) {
 
 myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log', function($scope, leagueFactory, $log) {
 	$scope.load = function() {
-		leagueFactory.getLeagues($scope.season).success(
-			function(data) {
-				$log.debug("Data received for leagues", data);
-				$scope.leagues = data;
+		leagueFactory.getLeagues($scope.season).then(
+			function(page) {
+				$log.debug("Data received for leagues", page.data);
+				$scope.leagues = page.data;
 			}
 		);		
 	}
