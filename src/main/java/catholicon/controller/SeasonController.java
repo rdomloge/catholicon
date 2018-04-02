@@ -20,7 +20,7 @@ public class SeasonController {
 	@Cacheable(cacheNames="Season")
 	public ResponseEntity<Season[]> getSeasonList() throws DaoException {
 		return ResponseEntity.ok()
-				.cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
+				.cacheControl(CacheControl.maxAge(7, TimeUnit.DAYS))
 				.body(new SeasonDao().loadSeasons());
 	}
 }
