@@ -29,9 +29,9 @@ myApp.controller('fixtureDetailsController', ['$scope', '$log', 'fixtureDetailFa
 	$scope.$on('fixture-details', function(event, args) {
 		$log.debug('Request to view fixture details', args);
 		$scope.showFixtureDetailsDialogue = true;
-		fixtureDetailFactory.getFixtureDetail(args.id).success(function(data) {
-			$log.debug("Data received for fixture", data);
-			$scope.fixtureDetails = data;
+		fixtureDetailFactory.getFixtureDetail(args.id).then(function(page) {
+			$log.debug("Data received for fixture", page.data);
+			$scope.fixtureDetails = page.data;
 		});
 	});
 	

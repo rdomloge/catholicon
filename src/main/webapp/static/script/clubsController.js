@@ -20,24 +20,24 @@ myApp.controller('clubsController',
 		['$scope', '$log', 'clubsFactory', 'errorHandlerFactory', '$cookies', '$timeout', '$routeParams',
         function($scope, $log, clubsFactory, errorHandlerFactory, $cookies, $timeout, $routeParams) {
 	
-			clubsFactory.getClubDescriptors().success(function(data) {
-				$log.debug("Data received for club descriptors", data);
-				$scope.clubDescriptors = data;
-				if(data.length) {
+			clubsFactory.getClubDescriptors().then(function(page) {
+				$log.debug("Data received for club descriptors", page.data);
+				$scope.clubDescriptors = page.data;
+				if(page.data.length) {
 					var clubId;
 					if($routeParams.clubId) {
 						clubId = $routeParams.clubId;
 					}
 					else {
-						clubId = data[0].clubId;						
+						clubId = page.data[0].clubId;						
 					}
 					
-					clubsFactory.getClub(clubId).success(function(data) {
-						$log.debug("Data received for club "+clubId, data);
-						$scope.selectedClub = data;
-					}).error(errorHandlerFactory.getHandler());
+					clubsFactory.getClub(clubId).then(function(page) {
+						$log.debug("Data received for club "+clubId, page.data);
+						$scope.selectedClub = page.data;
+					}, errorHandlerFactory.getHandler());
 				}
-			}).error(errorHandlerFactory.getHandler());
+			}, errorHandlerFactory.getHandler());
 			
 }]);
 

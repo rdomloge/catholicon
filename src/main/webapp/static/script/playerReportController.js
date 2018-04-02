@@ -10,10 +10,10 @@ myApp.factory('playerReportFactory', function($http, $log) {
 });
 
 myApp.controller('playerReportController', function($scope, $log, playerReportFactory, $routeParams) {
-	playerReportFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {
-		$log.debug("Data received for playerReport", data);
-		$scope.playerReport = data;
-		addUniqueListOfDivisionsToScope(data);
+	playerReportFactory.getPlayerReport($routeParams.season, $routeParams.league).then(function(page) {
+		$log.debug("Data received for playerReport", page.data);
+		$scope.playerReport = page.data;
+		addUniqueListOfDivisionsToScope(page.data);
 	});
 	
 	$scope.setDivisionFilter = function(division) {

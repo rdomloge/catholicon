@@ -5,7 +5,7 @@
 	</button>
 	<div id="divisionDropDown" ng-class="show ? 'w3-bar-block w3-white w3-card-4' : 'w3-hide'">
 		<button ng-class="divisions ? 'w3-hide' : 'w3-bar-item w3-button'">Loading...</button>
-		<a href="#/season/{{division.season}}/league/{{division.leagueTypeId}}/division/{{division.divisionId}}" 
+		<a ng-href="#!/season/{{division.season}}/league/{{division.leagueTypeId}}/division/{{division.divisionId}}" 
 			ng-repeat="division in divisions" class="w3-button w3-block w3-left-align" ng-click="menuItemSelected()" 
 			ga-on="click" ga-event-category="menu_division" ga-event-action="click">
 			{{division.label}}
