@@ -4,7 +4,7 @@
   <div class="w3-dropdown-click w3-right">
     <button ng-click="showClubs = ! showClubs" class="w3-button w3-black">{{selectedClub.clubName}} <i class="arrow arrowdown" style="border-color: white"></i></button>
     <div id="clubSelector" ng-class="showClubs ? 'w3-show' : ''" class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-      <a href="#/clubs/{{clubDescr.clubId}}" 
+      <a ng-href="#!/clubs/{{clubDescr.clubId}}" 
 	      	ng-repeat="clubDescr in clubDescriptors" 
 	      	class="w3-bar-item w3-button w3-medium">
       	{{clubDescr.clubName}}

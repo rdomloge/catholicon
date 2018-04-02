@@ -1,9 +1,9 @@
 
 var scriptPhases = [
-	["../script/angular/1.5.8/angular.min.js"], 
-	["../script/angular/1.5.8/angular-route.min.js",
-	"../script/angular/1.5.8/angular-resource.js",
-	"../script/angular/1.5.8/angular-cookies.js",
+	["../script/angular/1.6.9/angular.min.js"], 
+	["../script/angular/1.6.9/angular-route.min.js",
+	"../script/angular/1.6.9/angular-resource.min.js",
+	"../script/angular/1.6.9/angular-cookies.min.js",
 	"../libs/angular-translate.min.js"],
 	["../libs/angular-translate-loader-url.min.js"],
 	["../script/catholicon-common.js"],
