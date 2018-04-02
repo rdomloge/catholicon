@@ -111,7 +111,7 @@ public class CachePrimerSpider {
 
 		@Override
 		void _run() {
-			List<Club> clubs = clubController.getClubs(new String[] {"clubId", "clubName"});
+			List<Club> clubs = clubController.getClubs(new String[] {"clubId", "clubName"}).getBody();
 			for (Club club : clubs) {
 				exec.execute(new ClubSpider(club));
 			}
@@ -147,7 +147,7 @@ public class CachePrimerSpider {
 		public void _run() {
 			LOGGER.debug("Cache primer spider loading seasons");
 			
-			Season[] seasons = seasonController.getSeasonList();
+			Season[] seasons = seasonController.getSeasonList().getBody();
 			for (int i = 0; i < Math.min(seasons.length, maxSeasonsToSpider); i++) {
 				exec.execute(new LeagueSpider(seasons[i]));
 			}
@@ -164,7 +164,7 @@ public class CachePrimerSpider {
 		@Override
 		public void _run() {
 			LOGGER.debug("Spider loading leagues for "+season.getSeasonStartYear());
-			List<League> leagues = leagueController.listLeagues(season.getApiIdentifier());
+			List<League> leagues = leagueController.listLeagues(season.getApiIdentifier()).getBody();
 			
 			for (League league : leagues) {
 				exec.execute(new DivisionsSpider(league));
@@ -184,7 +184,7 @@ public class CachePrimerSpider {
 		public void _run() {
 			LOGGER.debug("Spider loading divisions for league "+league.getLeagueTypeId()+" for "+league.getSeason());
 			
-			List<DivisionDescriptor> divisionsForLeague = divisionController.getDivisionsForLeague(league.getLeagueTypeId(), league.getSeason());
+			List<DivisionDescriptor> divisionsForLeague = divisionController.getDivisionsForLeague(league.getLeagueTypeId(), league.getSeason()).getBody();
 			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
 				exec.execute(new DivisionSpider(divisionDescriptor));
 			}
@@ -208,7 +208,7 @@ public class CachePrimerSpider {
 			Division division = divisionController.getDivision(
 					leagueTypeId, 
 					divisionId, 
-					seasonStartYear);
+					seasonStartYear).getBody();
 			TeamPosition[] teamPositions = division.getPositions();
 			for (TeamPosition teamPosition : teamPositions) {
 				exec.execute(new MatchesSpider(seasonStartYear, teamPosition));
@@ -230,7 +230,7 @@ public class CachePrimerSpider {
 		@Override
 		public void _run() {
 			LOGGER.debug("Spider loading matches for team "+teamPosition.getTeamId()+" in "+seasonStartYear);
-			Match[] matches = matchController.loadMatches(""+teamPosition.getTeamId(), seasonStartYear);
+			Match[] matches = matchController.loadMatches(""+teamPosition.getTeamId(), seasonStartYear).getBody();
 			for (Match match : matches) {
 				if(null != match.getFixtureId()) {
 					exec.execute(new FixtureDetailsSpider(match));

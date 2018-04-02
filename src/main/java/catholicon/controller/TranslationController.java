@@ -2,8 +2,11 @@ package catholicon.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +18,7 @@ public class TranslationController {
 
 	@RequestMapping(method=RequestMethod.GET, value="/i18n")
 	@Cacheable(cacheNames="Translations")
-	public Map<String, String> fetchTranslations(@RequestParam("lang") String lang) {
+	public ResponseEntity<Map<String,String>> fetchTranslations(@RequestParam("lang") String lang) {
 		
 		Map<String, String> map = new HashMap<>();
 		
@@ -31,7 +34,6 @@ public class TranslationController {
 				map.put("LOGIN", "S'identifier");
 				break;
 		}
-		
-		return map;
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(7, TimeUnit.DAYS)).body(map);
 	}
 }

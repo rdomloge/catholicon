@@ -3,10 +3,8 @@ package catholicon.configuration;
 import javax.servlet.Filter;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.RedirectViewControllerRegistration;
@@ -15,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@EnableScheduling
-@ComponentScan(basePackages = {"catholicon", "catholicon.dao"})
 public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
 
 	public static final int CACHE_TIME_ONE_HOUR = 60*60;

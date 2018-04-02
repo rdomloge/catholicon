@@ -30,46 +30,9 @@
 	</script>
 	<!-- <script async src="https://www.google-analytics.com/analytics_debug.js"></script> -->
 	<script async src="https://www.google-analytics.com/analytics.js"></script>
-		
-	
-	<script src="../script/angular/1.6.9/angular.min.js"></script>
-	<script src="../script/angular/1.6.9/angular-route.min.js"></script>
-	<script src="../script/angular/1.6.9/angular-resource.min.js"></script>
-	<script src="../script/angular/1.6.9/angular-cookies.min.js"></script>
-	
-	<script src="../libs/angular-translate.min.js"></script>
-	<script src="../libs/angular-translate-loader-url.min.js"></script>
 
-	<script src="../script/catholicon-common.js"></script>
-	<script src="../script/catholicon-configure.js"></script>
-	<script src="../script/dataController.js"></script>
-	<script src="../script/niceDate.js"></script>
-	<script src="../script/matchCard.js"></script>
-	<script src="../script/frontPageController.js"></script>
-	<script src="../script/matchListController.js"></script>
-	<script src="../script/playerReportController.js"></script>
-	<script src="../script/fixtureDetailsDirective.js"></script>
-	<script src="../script/leagueMenuItemDirective.js"></script>
-	<script src="../script/divisionMenuItemDirective.js"></script>
-	<script src="../script/upcomingFixtureDirective.js"></script>
-	<script src="../script/clubsController.js"></script>
-	<script src="../script/committeeController.js"></script>
-	<script src="../script/secure.js"></script>
-	<script src="../script/jwtLogin.js"></script>
-	
-	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="../font/titillium.css" rel="stylesheet">
-	
-	<link rel="stylesheet" href="../style/w3.css">
-	<link rel="stylesheet" type="text/css" href="../style/common.css">
-	<link rel="stylesheet" type="text/css" href="../style/match.css">
-	<link rel="stylesheet" type="text/css" href="../style/league.css">
-	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
-	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
-	<link rel="stylesheet" type="text/css" href="../style/niceDate.css">
-	<link rel="stylesheet" type="text/css" href="../style/frontPage.css">
 </head>
 <body>
 	<!-- Sidebar -->
@@ -151,73 +114,11 @@
 
 	<!-- Placeholder for views -->
 	<ng-view/>
-	
-	<script>
-		myApp.config(function ($routeProvider) {
-			$routeProvider
-				.when('/season/:season', 
-					{
-						templateUrl: 'partials/leagueList.html',
-						controller: 'leagueListController'
-					})
-				.when('/season/:season/matches/:teamId/list',
-					{
-						templateUrl: 'partials/matches.html'
-					})
-				.when('/season/:season/matches/:teamId/listcompact',
-					{
-						templateUrl: 'partials/matchesCompact.html'
-					})
-				.when('/season/:season/league/:leagueTypeId/divisions',
-					{
-						templateUrl: 'partials/divisionList.html',
-						controller: 'leagueDivisionListController'
-					})
-				.when('/season/:season/league/:league/report',
-					{
-						templateUrl: 'partials/playerReport.html',
-						controller: 'playerReportController'
-					})
-				.when('/season/:season/league/:leagueTypeId/division/:divisionId', 
-					{
-						templateUrl: 'partials/division.html',
-						controller: 'divisionController'
-					})
-				.when('/matchcard/:fixtureId',
-					{
-						templateUrl: 'partials/matchcard/matchCard.html'
-					})
-				.when('/clubs',
-					{
-						templateUrl: 'partials/clubs.html',
-						controller: 'clubsController'
-					})
-				.when('/clubs/:clubId',
-					{
-						templateUrl: 'partials/clubs.html',
-						controller: 'clubsController'
-					})
-				.when('/committee',
-					{
-						templateUrl: 'partials/committee.html',
-						controller: 'committeeController'
-					})
-				.when('/',
-					{
-						templateUrl: 'partials/frontPage.html'
-					})
-				.when('/secure/login', 
-					{
-						templateUrl: 'partials/secure/login.html'
-					})
-				.when('/secure/jwtlogin', 
-					{
-						templateUrl: 'partials/secure/jwtlogin.html'
-					});
-		});
-		
-	</script>
+
 </div>
 	
 </body>
+	
+	
+	<script async src="../script/index.js"></script>
 </html>
