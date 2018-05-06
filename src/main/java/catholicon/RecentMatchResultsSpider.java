@@ -50,6 +50,9 @@ public class RecentMatchResultsSpider {
 	@Value("${BASE_URL:http://192.168.0.14}")
 	private String BASE;
 	
+	@Value("${RECENT_MATCH_RESULT_SPIDER_DISABLED:false}")
+	private boolean disableSpider;
+	
 	private Loader loader;
 	private MatchDao matchDao = new MatchDao();
 	private DivisionDao divisionDao = new DivisionDao();
@@ -68,6 +71,7 @@ public class RecentMatchResultsSpider {
 
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
 	public void spiderLatestResults() {
+		if(disableSpider) return;
 		LOGGER.info("Updating latest fixtures");
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();

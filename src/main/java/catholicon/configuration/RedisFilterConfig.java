@@ -3,16 +3,12 @@ package catholicon.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import catholicon.archive.RestArchive;
 import catholicon.filter.archive.RestCachingFilter;
 
 @Configuration
-@ComponentScan(basePackages = { "catholicon"}) 
-@EnableWebMvc
 public class RedisFilterConfig {
 	
 	@Autowired
@@ -35,7 +31,7 @@ public class RedisFilterConfig {
 	    		"/clubs",
 	    		"/clubs/*"); 
         registrationBean.setName("restArchiveFilter");
-        registrationBean.setOrder(1);
+        registrationBean.setOrder(2);
         return registrationBean;
     }
 	

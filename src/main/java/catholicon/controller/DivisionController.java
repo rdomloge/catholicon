@@ -27,7 +27,7 @@ public class DivisionController {
 			@PathVariable("seasonStartYear") int seasonStartYear) throws DaoException {
 		
 		return ResponseEntity.ok()
-				.cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
+				.cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
 				.body(new DivisionDao().load(leagueTypeId, divisionId, seasonStartYear));
 	}
 	

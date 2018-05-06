@@ -34,6 +34,11 @@ a, u {
 @media screen and (min-width:600px) {
 	.largeScreenBanner {
 		padding-left: 5px;
+		background-color: #000526;
+	}
+	
+	.largeScreenBanner h2 {
+		background-color: transparent;
 	}
 }
 

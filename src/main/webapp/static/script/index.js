@@ -1,28 +1,8 @@
 
 var scriptPhases = [
-	["../script/angular/1.6.9/angular.min.js"], 
-	["../script/angular/1.6.9/angular-route.min.js",
-	"../script/angular/1.6.9/angular-resource.min.js",
-	"../script/angular/1.6.9/angular-cookies.min.js",
-	"../libs/angular-translate.min.js"],
-	["../libs/angular-translate-loader-url.min.js"],
-	["../script/catholicon-common.js"],
-	["../script/routing.js"],
-	["../script/catholicon-configure.js",
-	"../script/dataController.js",
-	"../script/frontPageController.js"],
-	["../script/leagueMenuItemDirective.js",
-	"../script/divisionMenuItemDirective.js",
-	"../script/upcomingFixtureDirective.js"],
-	["../script/fixtureDetailsDirective.js",
-	"../script/playerReportController.js",
-	"../script/matchCard.js",
-	"../script/matchListController.js",
-	"../script/clubsController.js",
-	"../script/committeeController.js",
-	"../script/niceDate.js"],
-	["../script/secure.js",
-	"../script/jwtLogin.js"]];
+	["../script/libs/angular1.6.9-ALL.js"],
+	["../script/primaryScripts.js"],
+	["../script/secondaryScripts.js"]];
 
 var stylePhases = [
 	["../style/w3.css",
