@@ -150,6 +150,9 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 
+				mvn clean net.alchim31.maven:yuicompressor-maven-plugin:compress package 
+			-->
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
