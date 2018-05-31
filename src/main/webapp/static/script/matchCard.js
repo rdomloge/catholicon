@@ -1,6 +1,19 @@
-myApp.controller('matchCardController', function ($scope, $log, $http, dataFactory, $routeParams, $rootScope) {
+
+
+myApp.factory('matchCardFactory', function($http, $log) {
+	var factory = {};
+	
+	factory.getMatchCard = function(fixtureId) {
+		$log.info("Loading match card for "+fixtureId);
+		return $http.get(Config.BASE_URL+'/matchcard/'+fixtureId);
+	}
+	
+	return factory;
+});
+
+myApp.controller('matchCardController', function ($scope, $log, $http, matchCardFactory, $routeParams, $rootScope) {
 	$log.debug("Getting match card for "+$routeParams.fixtureId);
-	dataFactory.getMatchCard($routeParams.fixtureId).then(function(page) {
+	matchCardFactory.getMatchCard($routeParams.fixtureId).then(function(page) {
 		$log.debug("Data received for match card", page.data);
 		$scope.matchCard = page.data;
 	});
@@ -103,9 +116,6 @@ myApp.directive('matchCard6Row', function($log, $rootScope) {
 				$rootScope.name2 = name2;
 			};
 		},
-		link: function($scope) {
-			$log.debug('Rubber', $scope.rubber());
-		}
 	}
 });
 
@@ -130,8 +140,5 @@ myApp.directive('matchCard4Row', function($log, $rootScope) {
 				$rootScope.name2 = name2;
 			};
 		},
-		link: function($scope) {
-			$log.debug('Rubber', $scope.rubber());
-		}
 	}
 });

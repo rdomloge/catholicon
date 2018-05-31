@@ -58,5 +58,13 @@ myApp.controller('frontPageController',
 		var yearFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 		$cookies.put('front-page-search', $scope.frontPageFilter, {expires: yearFromNow});
 	});
+	
+	$scope.offSeason = function() {
+		if($scope.upcomingFixtures &&
+			$scope.upcomingFixtures.length > 1) {
+			return false;
+		}
+		return true;
+	}
 }]);
 

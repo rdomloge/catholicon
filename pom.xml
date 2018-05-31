@@ -7,7 +7,7 @@
 	<groupId>com.domloge</groupId>
 	<artifactId>Catholicon</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Catholicon - 'Better BDBL'</name>
 
 	<properties>
@@ -178,6 +178,7 @@
 								<include>${basedir}/src/main/webapp/static/script/leagueMenuItemDirective.js</include>
 								<include>${basedir}/src/main/webapp/static/script/divisionMenuItemDirective.js</include>
 								<include>${basedir}/src/main/webapp/static/script/upcomingFixtureDirective.js</include>
+								<include>${basedir}/src/main/webapp/static/script/news.js</include>
 							</includes>
 							<!-- files to exclude, path relative to output's directory <excludes> 
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->

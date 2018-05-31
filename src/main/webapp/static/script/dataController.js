@@ -12,11 +12,6 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');	
 	}
 
-	factory.getMatchCard = function(fixtureId) {
-		$log.info("Loading match card for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/matchcard/'+fixtureId);
-	}
-	
 	factory.getDivision = function(leagueTypeId, divisionId, season) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);

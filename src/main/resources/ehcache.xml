@@ -46,6 +46,15 @@
 		transactionalMode="off"
 		maxElementsInMemory="100">
 	</cache>
+	<cache name="News"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="604800"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
 	
     <!--
     				### 1 day caching 86400s == 1 day ### 

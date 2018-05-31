@@ -17,21 +17,9 @@
 		</div>
 	</div>
 	
-	<div ng-class="recentMatches.length ? 'w3-right w3-medium w3-margin' : 'w3-hide'" style="padding-top: 3px">
-		<p class="w3-center w3-left" style="margin: 5px; line-height: 1.5em">
-			{{recentMatches.length}} new results
-		</p>
-		<!-- Rounded switch -->
-		<label class="switch">
-		  <input type="checkbox" ng-click="recentMatchesToggle = !recentMatchesToggle" 
-		  	ga-on="click" ga-event-category="recent_matches_toggle" ga-event-action="click">
-		  <span class="slider round"></span>
-		</label>
-	</div>
-	
-	
-	<div class="w3-container w3-light-grey" style="padding: 0">
-		<div id="recentMatchesAccordion" ng-class="recentMatchesToggle ? 'w3-animate-zoom' : 'w3-hide'" ngcloak>
+	<div class="w3-container w3-blue-grey" style="padding: 0">
+		<h2 class="w3-padding w3-padding-64">Results</h2>
+		<div id="recentMatchesAccordion">
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
 		  	<a href="#!/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
 			    <div class="w3-col s5 w3-small recentMatchTeam">
@@ -60,37 +48,39 @@
 		ng-cloak>
 	</div>	
 	
-	<ul class="w3-ul w3-card-4">
-		<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
-			<div class="calendar">
-				{{fixture.fixtureDate | date: 'dd'}} 
-				<em>{{fixture.fixtureDate | date: 'MMM'}}</em>
-			</div>
-		    <div class="w3-large rd-80px-leftmargin">{{fixture.homeTeamName}}</div>
-		    <img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)" class="frontPageInfoIcon" 
-		    	ga-on="click" ga-event-category="fixtureDetails" ga-event-action="show"/>
-		    <div class="w3-large rd-80px-leftmargin">{{fixture.awayTeamName}}</div>
-		    <div class="w3-small rd-80px-leftmargin w3-left" style="margin-bottom: 10px;">{{fixture.fixtureDate | date: 'EEEE'}}</div>
-		    
-		    <nice-date date="fixture.fixtureDate"/>
-		</li>
-	</ul>
-	
 	<div ng-show="upcomingFixtures.length > 0 && filteredixtures.length < 1" class="w3-medium w3-padding-4 w3-center" ng-cloak>
-		<div class="emptyImage">
-			<img src="../img/empty.jpg" />
-		</div>
 		<div class="emptyText">
 			<p>Your filter '{{frontPageFilter}}' is hiding all {{upcomingFixtures.length}} upcoming fixtures</p>
 		</div>
 	</div>
-	
-	<div id="offSeason" ng-hide="upcomingFixtures.length" ng-class="upcomingFixtures.length ? 'w3-medium w3-padding-4 w3-center' : 'w3-hide'">
-		<div class="emptyImage">
-			<img src="../img/empty.jpg"/>
+	<div class="w3-half w3-container w3-teal">
+     	<h2 class="w3-padding-64">Upcoming</h2>
+		<div id="offSeason" ng-cloak ng-class="offSeason() ? 'w3-medium w3-padding-4 w3-center' : 'w3-hide'">
+			<div>
+				<p>There are no upcoming fixtures - looks like we are off season!</p>
+			</div>
 		</div>
-		<div class="emptyText">
-			<p>There are no upcoming fixtures - looks like we are off season!</p>
+		<ul class="w3-ul w3-card-4">
+			<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
+				<div class="calendar">
+					{{fixture.fixtureDate | date: 'dd'}} 
+					<em>{{fixture.fixtureDate | date: 'MMM'}}</em>
+				</div>
+			    <div class="w3-large rd-80px-leftmargin">{{fixture.homeTeamName}}</div>
+			    <img src="../img/info.png" ng-click="showFixture(fixture.fixtureId)" class="frontPageInfoIcon" 
+			    	ga-on="click" ga-event-category="fixtureDetails" ga-event-action="show"/>
+			    <div class="w3-large rd-80px-leftmargin">{{fixture.awayTeamName}}</div>
+			    <div class="w3-small rd-80px-leftmargin w3-left" style="margin-bottom: 10px;">{{fixture.fixtureDate | date: 'EEEE'}}</div>
+			    
+			    <nice-date date="fixture.fixtureDate"/>
+			</li>
+		</ul>
+	</div>
+	<div class="w3-half w3-container w3-dark-grey" ng-controller="newsController">
+		<h2 class="w3-padding-64">News</h2>
+		<div class="w3-card w3-padding w3-margin-bottom" ng-repeat="newsItem in news">
+			<p class="w3-xxlarge">{{newsItem.primaryTitle}}</p>
+			<p class="w3-xlarge">{{newsItem.secondaryTitle}}</p>
 		</div>
 	</div>
 </div>
