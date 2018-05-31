@@ -53,13 +53,8 @@
 			<p>Your filter '{{frontPageFilter}}' is hiding all {{upcomingFixtures.length}} upcoming fixtures</p>
 		</div>
 	</div>
-	<div class="w3-half w3-container w3-teal">
+	<div ng-class="offSeason() ? 'w3-hide' : 'w3-half w3-container w3-teal'" ng-cloak>
      	<h2 class="w3-padding-64">Upcoming</h2>
-		<div id="offSeason" ng-cloak ng-class="offSeason() ? 'w3-medium w3-padding-4 w3-center' : 'w3-hide'">
-			<div>
-				<p>There are no upcoming fixtures - looks like we are off season!</p>
-			</div>
-		</div>
 		<ul class="w3-ul w3-card-4">
 			<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
 				<div class="calendar">
@@ -76,7 +71,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="w3-half w3-container w3-dark-grey" ng-controller="newsController">
+	<div ng-class="offSeason() ? 'w3-container w3-dark-grey' : 'w3-half w3-container w3-dark-grey'" ng-controller="newsController">
 		<h2 class="w3-padding-64">News</h2>
 		<div class="w3-card w3-padding w3-margin-bottom" ng-repeat="newsItem in news">
 			<p class="w3-xxlarge">{{newsItem.primaryTitle}}</p>
