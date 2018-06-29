@@ -1,0 +1,15 @@
+<a href="#!/matchcard/{{match.fixtureId}}" ga-on="click"
+	ga-event-category="recent_match" ga-event-action="show_match_card">
+	<div class="w3-col s5 w3-small recentMatchTeam">
+		<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
+			{{match.homeTeam.score}}</div>
+		<div class="w3-center">{{match.homeTeam.name}}</div>
+	</div>
+	<div class="w3-col s2 w3-medium w3-center w3-padding">
+		{{match.date | date: 'dd MMM'}}</div>
+	<div class="w3-col s5 w3-small recentMatchTeam">
+		<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
+			{{match.awayTeam.score}}</div>
+		<div class="w3-center">{{match.awayTeam.name}}</div>
+	</div>
+</a>
