@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import catholicon.dao.NewsDao;
+import catholicon.dao.NewsArchiveDao;
 import catholicon.domain.NewsItem;
 
 @RestController
 public class NewsController {
 
 	@Autowired
-	private NewsDao newsDao;
+	private NewsArchiveDao newsDao;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/newsitems")
 	@Cacheable(cacheNames = "News")

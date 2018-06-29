@@ -3,39 +3,11 @@
 	<fixture-details-directive>
 	</fixture-details-directive>
 	
-	<div class="w3-right w3-margin">
-		<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" 
-			style="width: 40px; padding:3px" class="w3-dropdown-hover w3-light-grey">
-		<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;" style="z-index: 4">
-		  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-4" 
-		  		style="width:300px; right:0">
-		    <form class="w3-container w3-margin-bottom">
-				<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
-				<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
-			</form>
-		  </div>
-		</div>
-	</div>
-	
-	<div class="w3-container w3-blue-grey" style="padding: 0">
-		<h2 class="w3-padding w3-padding-64">Results</h2>
+	<div ng-show="recentMatches && recentMatches.length > 0" class="w3-container w3-blue-grey" style="padding: 0">
+		<h1 class="w3-padding w3-padding-32">Results</h1>
 		<div id="recentMatchesAccordion">
 		  <div ng-repeat="match in recentMatches" class="w3-row w3-padding-small">
-		  	<a href="#!/matchcard/{{match.fixtureId}}" ga-on="click" ga-event-category="recent_match" ga-event-action="show_match_card">
-			    <div class="w3-col s5 w3-small recentMatchTeam">
-					<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
-					{{match.homeTeam.score}}</div>
-					<div class="w3-center">{{match.homeTeam.name}}</div>			    	
-			    </div>
-			    <div class="w3-col s2 w3-medium w3-center w3-padding">
-			    	{{match.date | date: 'dd MMM'}}
-			    </div>
-			    <div class="w3-col s5 w3-small recentMatchTeam">
-			    	<div style="font-size: 300%; font-weight: 900; color: coral; text-align: center;">
-			    	{{match.awayTeam.score}}</div>
-			    	<div class="w3-center">{{match.awayTeam.name}}</div>
-			    </div>
-		    </a>
+		  	<recent-match match="match"/>
 		  </div>
 		</div>
 	</div>
@@ -54,8 +26,21 @@
 		</div>
 	</div>
 	<div ng-class="offSeason() ? 'w3-hide' : 'w3-half w3-container w3-teal'" ng-cloak>
-     	<h2 class="w3-padding-64">Upcoming</h2>
-		<ul class="w3-ul w3-card-4">
+     	<h1 class="w3-padding-32 w3-left">Upcoming</h1>
+     	<div class="w3-right w3-margin">
+			<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" 
+				style="width: 40px; padding:3px; background-color: inherit" class="w3-dropdown-hover">
+			<div id="filterForm" class="w3-dropdown-click w3-right" ng-init="showFilter=false;" style="z-index: 4">
+			  <div ng-class="showFilter ? 'w3-show' : ''" class="w3-dropdown-content w3-panel w3-card-4" 
+			  		style="width:300px; right:0">
+			    <form class="w3-container w3-margin-bottom">
+					<input class="w3-input" ng-model="frontPageFilter" name="fixtureFilter"/>
+					<label class="w3-xlarge w3-label w3-validate">Filter teams</label>
+				</form>
+			  </div>
+			</div>
+		</div>
+		<ul class="w3-ul w3-card-4 w3-left">
 			<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
 				<div class="calendar">
 					{{fixture.fixtureDate | date: 'dd'}} 
@@ -71,11 +56,10 @@
 			</li>
 		</ul>
 	</div>
-	<div ng-class="offSeason() ? 'w3-container w3-dark-grey' : 'w3-half w3-container w3-dark-grey'" ng-controller="newsController">
-		<h2 class="w3-padding-64">News</h2>
-		<div class="w3-card w3-padding w3-margin-bottom" ng-repeat="newsItem in news">
-			<p class="w3-xxlarge">{{newsItem.primaryTitle}}</p>
-			<p class="w3-xlarge">{{newsItem.secondaryTitle}}</p>
+	<div ng-controller="newsController" ng-class="'w3-container w3-dark-grey ' + (offSeason() ? '' : 'w3-half')">
+		<h1 class="w3-padding-32">News</h1>
+		<div class="w3-card w3-padding w3-margin-bottom" ng-repeat="item in news">
+			<news-item data="item"/>
 		</div>
 	</div>
 </div>

@@ -12,6 +12,14 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 			'request' : function(config) {
 				$rootScope.$broadcast('started-thinking');
 				//ga('send', 'pageview', config.url); // tell Google Analytics about what URL we are fetching
+				var url = new URL(window.location.href);
+				var test = url.searchParams.get("test");
+				if(test) {
+					if( ! config.params) {
+						config.params = { };
+					}
+					config.params.test = "";
+				}
 				return config;
 			},
 

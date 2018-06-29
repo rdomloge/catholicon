@@ -11,17 +11,6 @@ myApp.factory('newsFactory', function($http, $log) {
 
 myApp.controller('newsController', ['$routeParams', 'newsFactory', '$log', '$scope', function($routeParams, newsFactory, $log, $scope) {
 	$log.debug("Fetching news");
-//	$scope.toggleNews = function() {
-//		if($scope.news) {
-//			$scope.news = undefined;
-//		}
-//		else {
-//			newsFactory.getNewsList().then(function(page) {
-//				$log.debug("Data received for news", page.data);
-//				$scope.news = page.data;
-//			});			
-//		}
-//	}
 	
 	newsFactory.getNewsList().then(function(page) {
 		$log.debug("Data received for news", page.data);
@@ -29,3 +18,14 @@ myApp.controller('newsController', ['$routeParams', 'newsFactory', '$log', '$sco
 	});
 	
 }]);
+
+myApp.directive('newsItem', function($log) {
+	return {
+		restrict : 'E',
+		replace : true,
+		scope: {
+			data: '='
+		},
+		templateUrl : 'partials/newsItem.html'
+	}
+});

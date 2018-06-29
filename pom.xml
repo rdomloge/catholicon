@@ -7,7 +7,7 @@
 	<groupId>com.domloge</groupId>
 	<artifactId>Catholicon</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>Catholicon - 'Better BDBL'</name>
 
 	<properties>
@@ -151,7 +151,7 @@
 				</executions>
 			</plugin>
 			<!-- 
-				mvn clean net.alchim31.maven:yuicompressor-maven-plugin:compress package 
+				mvn clean yuicompressor:compress package 
 			-->
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
@@ -196,6 +196,7 @@
 							<!--inputDir>base directory for non absolute incl	udes, default to 
 								parent dir of output</inputDir -->
 							<includes>
+								<include>${basedir}/src/main/webapp/static/script/recentMatch.js</include>
 								<include>${basedir}/src/main/webapp/static/script/fixtureDetailsDirective.js</include>
 								<include>${basedir}/src/main/webapp/static/script/playerReportController.js</include>
 								<include>${basedir}/src/main/webapp/static/script/matchCard.js</include>
