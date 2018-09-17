@@ -26,7 +26,6 @@
 		</div>
 	</div>
 	<div ng-class="offSeason() ? 'w3-hide' : 'w3-half w3-container w3-teal'" ng-cloak>
-     	<h1 class="w3-padding-32 w3-left">Upcoming</h1>
      	<div class="w3-right w3-margin">
 			<img ng-click="showFilter = !showFilter" src="../img/filter.png" alt="home" 
 				style="width: 40px; padding:3px; background-color: inherit" class="w3-dropdown-hover">
@@ -40,7 +39,8 @@
 			  </div>
 			</div>
 		</div>
-		<ul class="w3-ul w3-card-4 w3-left">
+		<h1 class="w3-padding-32">Upcoming</h1>
+		<ul class="w3-ul w3-card-4">
 			<li ng-repeat="fixture in filteredixtures = (upcomingFixtures | filter: frontPageFilter)" class="frontPageItem w3-padding-16">
 				<div class="calendar">
 					{{fixture.fixtureDate | date: 'dd'}} 
