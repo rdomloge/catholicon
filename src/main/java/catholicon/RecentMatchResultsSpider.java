@@ -96,7 +96,12 @@ public class RecentMatchResultsSpider {
 			stopWatch.stop();
 			LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
 			for (Match match : sortedRecentMatches) {
-				LOGGER.debug("[RECENT] "+match.getHomeTeam().getName()+" v "+match.getAwayTeam().getName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+				LOGGER.debug("[RECENT]({}) {} v {} on {}: {}",
+						match.getFixtureId(),
+						match.getHomeTeam().getName(),
+						match.getAwayTeam().getName(),
+						match.getDate(),
+						match.getScoreExtracted());
 			}
 		}
 		catch(DaoException dex) {
@@ -157,6 +162,7 @@ public class RecentMatchResultsSpider {
 			
 			Match[] matchs = matchDao.load(0, ""+team);
 			for (Match match : matchs) {
+				if(recentMatches.contains(match)) continue;
 				if(match.isPlayed() || match.isUnConfirmed()) {
 					String dateStr = null;
 					List<Change> changeHistory = new ChangeDao().getChanges(Integer.parseInt(match.getFixtureId()), 0);
@@ -167,17 +173,20 @@ public class RecentMatchResultsSpider {
 					}
 					if(null == dateStr) {
 						dateStr = match.getDate();
-						LOGGER.warn("No changes for match "+match.getFixtureId()+" - using match date");
+						LOGGER.warn("No changes for match {} - using match date {}", 
+								match.getFixtureId(),
+								match.getDate());
 					}
 					try {
 						Date date = matchDateFormat.parse(dateStr);
 						if(date.after(cutOff)) {
-							LOGGER.debug("Match on "+match.getDate()+" is recent: "+dateStr);
 							recentMatches.add(match);
+							LOGGER.debug("Match {} on {} is recent: {}",
+									match.getFixtureId(),match.getDate(),dateStr);
 							matchCardController.loadMatchCard(match.getFixtureId()); // cache a recent match card result, for good measure
 						}
 						else {
-							LOGGER.debug("Match on "+dateStr+" is too old");
+							LOGGER.debug("Match {} on {} is too old", match.getFixtureId(), dateStr);
 						}
 					} 
 					catch (ParseException e) {
