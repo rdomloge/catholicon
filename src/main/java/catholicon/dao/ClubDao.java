@@ -79,7 +79,7 @@ public class ClubDao {
 	
 	private void fillOutPhoneNumbers(Document doc, Club club) {
 		Elements phoneNumbers = 
-				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(2).select("td");
+				doc.select("#clubForm center i table[cellpadding=3] tbody tr:nth-child(3) td");
 		PhoneNumber[] chairmanPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(0).ownText().trim());
 		PhoneNumber[] secretaryPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(1).ownText().trim());
 		PhoneNumber[] matchSecPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(2).ownText().trim());
@@ -89,14 +89,16 @@ public class ClubDao {
 	
 	private PhoneNumber[] parsePhoneNumbers(String s) {
 		List<PhoneNumber> numbers = new LinkedList<>();
-		String regex = "[ 0-9]+\\([HM]\\)";
+		String regex = "([ 0-9]+).*\\(([MH])\\)";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(s);
 		if(m.find()) {
-			String entry = m.group();
-			int bracket = entry.indexOf('(');
-			String number = entry.substring(0, bracket-1);
-			String type = entry.substring(bracket+1, entry.indexOf(')'));
+//			String entry = m.group();
+//			int bracket = entry.indexOf('(');
+//			String number = entry.substring(0, bracket-1);
+//			String type = entry.substring(bracket+1, entry.indexOf(')'));
+			String number = m.group(1);
+			String type = m.group(2);
 			numbers.add(new PhoneNumber(Type.forIdentifier(type), number));
 		}
 		
