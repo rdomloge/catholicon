@@ -17,6 +17,8 @@ hs_err_pid*
 *.prefs
 target/*
 bin/
+src/main/java/catholicon/CodeToBeCalledByFunction.java
+catholicon.log
 
 .idea/*
 /target/
