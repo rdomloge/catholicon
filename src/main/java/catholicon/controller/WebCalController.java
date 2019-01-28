@@ -79,6 +79,7 @@ public class WebCalController {
 	}
 
 	private VEvent createEvent(Match match) throws ParseException, SocketException {
+		
 		String eventName = String.format("Match: %s v %s", match.getHomeTeam()
 				.getName(), match.getAwayTeam().getName());
 

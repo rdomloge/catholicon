@@ -18,11 +18,11 @@ public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/html/**").addResourceLocations("/static/html/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-		registry.addResourceHandler("/static/script/**").addResourceLocations("/static/script/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-		registry.addResourceHandler("/static/style/**").addResourceLocations("/static/style/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-		registry.addResourceHandler("/static/img/**").addResourceLocations("/static/img/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-		registry.addResourceHandler("/static/font/**").addResourceLocations("/static/font/").setCachePeriod(CACHE_TIME_ONE_MONTH);
+//		registry.addResourceHandler("/static/html/**").addResourceLocations("/static/html/").setCachePeriod(CACHE_TIME_ONE_WEEK);
+//		registry.addResourceHandler("/static/script/**").addResourceLocations("/static/script/").setCachePeriod(CACHE_TIME_ONE_WEEK);
+//		registry.addResourceHandler("/static/style/**").addResourceLocations("/static/style/").setCachePeriod(CACHE_TIME_ONE_WEEK);
+//		registry.addResourceHandler("/static/img/**").addResourceLocations("/static/img/").setCachePeriod(CACHE_TIME_ONE_WEEK);
+//		registry.addResourceHandler("/static/font/**").addResourceLocations("/static/font/").setCachePeriod(CACHE_TIME_ONE_MONTH);
 	}
 	
 //	@Bean

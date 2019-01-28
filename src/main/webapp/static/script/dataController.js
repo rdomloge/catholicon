@@ -4,7 +4,8 @@ myApp.factory('dataFactory', function($http, $log) {
 	
 	factory.getSeasonList = function() {
 		$log.info("Loading seasons list");
-		return $http.get(Config.BASE_URL+'/seasons');
+//		return $http.get(Config.BASE_URL+'/seasons');
+		return $http.get(Config.MS_SEASONS_BASE+'?sort=seasonStartYear,desc');
 	}
 	
 	factory.getDivisions = function(leagueTypeId, season) {
@@ -59,8 +60,8 @@ myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '
 
 myApp.controller('seasonListController', function($scope, $log, dataFactory) {
 	dataFactory.getSeasonList().then(function(page) {
-		$log.debug("Data received for seasons", page.data);
-		$scope.seasons = page.data;
+		$log.debug("Data received for seasons", page.data._embedded.seasons);
+		$scope.seasons = page.data._embedded.seasons;
 	});
 });
 
