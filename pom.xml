@@ -204,6 +204,7 @@
 								<include>${basedir}/src/main/webapp/static/script/clubsController.js</include>
 								<include>${basedir}/src/main/webapp/static/script/committeeController.js</include>
 								<include>${basedir}/src/main/webapp/static/script/niceDate.js</include>
+								<include>${basedir}/src/main/webapp/static/script/unconfirmedController.js</include>
 							</includes>
 							<!-- files to exclude, path relative to output's directory <excludes> 
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
@@ -234,6 +235,17 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-site-plugin</artifactId>
+	                <version>3.7.1</version>
+	            </plugin>
+	
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-project-info-reports-plugin</artifactId>
+	                <version>3.0.0</version>
+	            </plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
