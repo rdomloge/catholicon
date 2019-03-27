@@ -1,7 +1,10 @@
 pipeline {
-    agent { 
-    	dockerfile true 
-    }
+    agent any
+    
+    environment {
+		registry = "docker_hub_account/repository_name"
+		registryCredential = 'dockerhub'
+	}
 
     stages {
         stage ('Initialize') {
@@ -29,5 +32,13 @@ pipeline {
                 }
             }
         }
+        
+        stage('Building image') {
+	    	steps{
+	    		script {
+	        		docker.build registry + ":$BUILD_NUMBER"
+	        	}
+	      	}
+	    }
     }
 }
