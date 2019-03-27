@@ -18,9 +18,12 @@ pipeline {
             post {
                 success {
                     junit 'target/surefire-reports/**/*.xml'
-                    checkout scm
-    				def customImage = docker.build("my-image:${env.BUILD_ID}")
-    				customImage.push() 
+                    node {
+	                    checkout scm
+	    				def customImage = docker.build("my-image:${env.BUILD_ID}")
+	    				customImage.push() 
+                    }
+
                 }
             }
         }
