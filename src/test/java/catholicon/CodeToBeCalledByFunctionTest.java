@@ -1,10 +1,9 @@
 package catholicon;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.framework.Assert.*;
+import org.junit.Test;
 
-import org.junit.jupiter.api.Test;
-
-class CodeToBeCalledByFunctionTest {
+public class CodeToBeCalledByFunctionTest {
 
 	@Test
 	final void testCreateMessage() {
