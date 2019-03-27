@@ -9,6 +9,7 @@
 	<packaging>war</packaging>
 	<version>1.0.5-SNAPSHOT</version>
 	<name>Catholicon - 'Better BDBL'</name>
+	<!-- Test comment to provoke CICD build -->
 
 	<properties>
 		<jackson.library>2.7.5</jackson.library>
