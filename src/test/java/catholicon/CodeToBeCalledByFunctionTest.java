@@ -6,7 +6,7 @@ import org.junit.Test;
 public class CodeToBeCalledByFunctionTest {
 
 	@Test
-	final void testCreateMessage() {
+	public void testCreateMessage() {
 		fail("Not yet implemented"); // TODO
 	}
 
