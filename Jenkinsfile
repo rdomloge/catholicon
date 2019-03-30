@@ -22,7 +22,6 @@ pipeline {
             }
             post {
                 success {
-                	sh "chown jenkins:jenkins ${workspace}/target/catholicon.war"
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
@@ -34,7 +33,7 @@ pipeline {
 	    		script {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
-	        		docker.build(registry + ":$BUILD_NUMBER", "--build-arg ws=${workspace} .")
+	        		docker.build(registry + ":$BUILD_NUMBER")
 	        	}
 	      	}
 	    }
