@@ -46,13 +46,6 @@ pipeline {
         		}
       		}
     	}
-    	
-    	stage('Test API') {
-    	                
-    	}
-
-		stage('Test UI') {
-		}
 
     }
 }
