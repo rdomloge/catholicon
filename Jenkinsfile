@@ -19,14 +19,20 @@ pipeline {
         stage ('Build') {
             steps {
                 sh 'mvn -Dmaven.test.skip=true package'
-                sh 'mvn test'
             }
+        }
+        
+        stage('Unit tests') {
+            steps {
+                sh 'mvn test'
+			}           
             post {
                 success {
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
-        }
+		}
+
         
         stage('Building image') {
 	    	steps{
