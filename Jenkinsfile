@@ -33,7 +33,7 @@ pipeline {
 	    		script {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
-	        		docker.build(registry + ":$BUILD_NUMBER", "--build-arg ws=${workspace}")
+	        		docker.build(registry + ":$BUILD_NUMBER", "--build-arg ws=${workspace} .")
 	        	}
 	      	}
 	    }
