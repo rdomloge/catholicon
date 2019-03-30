@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk-alpine
-RUN apt-get update
+RUN apk update
 
 ## UTF-8
 #RUN locale-gen en_US.UTF-8
