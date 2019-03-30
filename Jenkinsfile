@@ -28,7 +28,7 @@ pipeline {
         }
         
         stage('Building image') {
-        	
+        	docker.withRegistry('docker.io', 'rdomloge') 
 	    	steps{
 	    		script {
 		        	def workspace = env.WORKSPACE
