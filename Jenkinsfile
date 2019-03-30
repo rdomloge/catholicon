@@ -34,7 +34,7 @@ pipeline {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
 	        		def image = docker.build(registry + ":$BUILD_NUMBER")
-            		image.push 'master'
+            		//image.push 'master'
 	        	}
 	      	}
 	    }
@@ -44,11 +44,9 @@ pipeline {
         		branch 'master'
       		}
       		steps {
-      			script {
-        			withDockerRegistry([ credentialsId: "ef879a02-b51a-49bb-a743-58f46dd8b4c8", url: "" ]) {
-	          			sh 'docker push rdomloge/catholicon:latest'
-	        		}
-	        	}
+    			withDockerRegistry([ credentialsId: "ef879a02-b51a-49bb-a743-58f46dd8b4c8", url: "" ]) {
+          			sh 'docker push rdomloge/catholicon:latest'
+        		}
       		}
     	}
     }
