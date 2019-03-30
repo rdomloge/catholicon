@@ -18,7 +18,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.ignore=true package'
+                sh 'mvn -Dmaven.test.skip=true package'
                 sh 'mvn test'
             }
             post {
