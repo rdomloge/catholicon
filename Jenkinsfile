@@ -19,10 +19,10 @@ pipeline {
         stage ('Build') {
             steps {
             	parallel {
-            		a: {
+            		script {
 		                sh 'mvn -Dmaven.test.ignore=true package'
             		}
-					b: {
+					script {
 		                sh 'mvn site'
 					}
                 }
