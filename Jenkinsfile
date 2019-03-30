@@ -22,8 +22,7 @@ pipeline {
             }
             post {
                 success {
-                	echo "War: "
-                	sh "chown docker:docker ${workspace}/target/catholicon.war"
+                	sh "chown jenkins:jenkins ${workspace}/target/catholicon.war"
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
