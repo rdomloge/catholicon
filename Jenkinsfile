@@ -18,10 +18,14 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.ignore=true package'
-            }
-            steps {
-                sh 'mvn site'
+            	parallel {
+            		a: {
+		                sh 'mvn -Dmaven.test.ignore=true package'
+            		}
+					b: {
+		                sh 'mvn site'
+					}
+                }
             }
             post {
                 success {
