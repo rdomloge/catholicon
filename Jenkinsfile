@@ -40,7 +40,9 @@ pipeline {
 	    
 	    stage('Publish image') {
 	    	steps{
-            	image.push 'master'         
+	    		script {
+            		image.push 'master'
+            	}         
             }
                    
 		}
