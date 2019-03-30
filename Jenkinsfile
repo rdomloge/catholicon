@@ -19,6 +19,7 @@ pipeline {
         stage ('Build') {
             steps {
                 sh 'mvn -Dmaven.test.ignore=true package'
+                sh 'mvn test'
             }
             post {
                 success {
@@ -45,5 +46,13 @@ pipeline {
         		}
       		}
     	}
+    	
+    	stage('Test API') {
+    	                
+    	}
+
+		stage('Test UI') {
+		}
+
     }
 }
