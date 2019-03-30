@@ -18,10 +18,12 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                sh 'mvn -Dmaven.test.ignore=true package'
             }
             post {
                 success {
+                	echo "War: "
+                	ls ${workspace}/target
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
