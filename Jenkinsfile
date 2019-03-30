@@ -34,6 +34,7 @@ pipeline {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
 	        		def image = docker.build(registry + ":$BUILD_NUMBER")
+            		image.push 'master'
 	        	}
 	      	}
 	    }
@@ -41,7 +42,6 @@ pipeline {
 	    stage('Publish image') {
 	    	steps{
 	    		script {
-            		image.push 'master'
             	}         
             }
                    
