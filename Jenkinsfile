@@ -23,7 +23,7 @@ pipeline {
             post {
                 success {
                 	echo "War: "
-                	ls "${workspace}/target"
+                	sh "ls ${workspace}/target"
                     junit 'target/surefire-reports/**/*.xml'
                 }
             }
