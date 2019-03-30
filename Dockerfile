@@ -15,9 +15,8 @@ ENV LC_ALL     en_US.UTF-8
 ## JAVA_HOME
 #ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN apt-get install -y git
-RUN apt-cache search maven
-RUN apt-get install -y maven
+RUN apk add git
+RUN apk add maven
 RUN git clone git://github.com/rdomloge/catholicon.git
 RUN mvn -f catholicon/pom.xml package
 RUN mkdir -p catholicon/bin
