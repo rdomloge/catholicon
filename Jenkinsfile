@@ -20,6 +20,9 @@ pipeline {
             steps {
                 sh 'mvn -Dmaven.test.ignore=true package'
             }
+            steps {
+                sh 'mvn site'
+            }
             post {
                 success {
                     junit 'target/surefire-reports/**/*.xml'
