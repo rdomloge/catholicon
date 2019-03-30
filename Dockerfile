@@ -1,4 +1,4 @@
-FROM oracle-serverjre-8
+FROM openjdk-8-jdk-alpine
 RUN apt-get update
 
 ## UTF-8
