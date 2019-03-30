@@ -38,14 +38,5 @@ pipeline {
 	        	}
 	      	}
 	    }
-	    
-	    stage('Publish image') {
-	    	steps{
-	    		script {
-            	}         
-            }
-                   
-		}
-
     }
 }
