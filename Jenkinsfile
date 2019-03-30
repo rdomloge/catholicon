@@ -28,6 +28,9 @@ pipeline {
         }
         
         stage('Building image') {
+        	def workspace = env.WORKSPACE
+        	echo "workspace directory is ${workspace}"
+        	
 	    	steps{
 	    		script {
 	        		docker.build registry + ":$BUILD_NUMBER"
