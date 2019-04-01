@@ -57,7 +57,7 @@ pipeline {
 	    	steps{
 	    		script{
 	    			sh '''
-	    				docker run --rm -d --name catholicon-integration-test -P rdomloge/catholicon:$BUILD_NUMBER
+	    				docker run --rm -d --name catholicon-integration-test -p 9090:9090 rdomloge/catholicon:$BUILD_NUMBER
 	    				docker ps --format "{{.Ports}}" --filter="name=catholicon-integration-test"
 					'''
 	    		}
