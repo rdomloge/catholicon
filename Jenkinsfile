@@ -69,6 +69,7 @@ pipeline {
 						sh '''
 							wget --retry-connrefused --tries=10 --waitretry=5 -q \
 							http://localhost:9090/seasons -O /dev/null
+							wget -O - http://localhost:9090/seasons
 						'''
 					}
 					
