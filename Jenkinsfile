@@ -59,12 +59,13 @@ pipeline {
 	    			sh '''
 	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 rdomloge/catholicon:$BUILD_NUMBER
 	    				docker ps --format "{{.Ports}}" --filter="name=catholicon-integration-test"
+	    				mvn verify -Pfailsafe
 					'''
 	    		}
 			} 
 			post{
 				success{
-				    sh 'mvn verify -Pfailsafe'
+				    echo "Integration tests passed"
 				}
 
 				always{
