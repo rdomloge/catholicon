@@ -56,7 +56,7 @@ pipeline {
     	stage('Integration tests') {
 	    	steps{
 	    		script{
-	    			sh 'docker run -rm -d --name catholicon-integration-test -p 8080:8080 rdomloge/catholicon'
+	    			sh 'docker run --rm -d --name catholicon-integration-test -p 8080:8080 rdomloge/catholicon'
 					sh 'mvn verify -Pfailsafe'
 					sh 'docker kill catholicon-integration-test'
 	    		}
