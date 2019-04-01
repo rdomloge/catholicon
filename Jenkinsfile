@@ -69,7 +69,6 @@ pipeline {
 						sh '''
 							wget --retry-connrefused --tries=10 --waitretry=5 -q \
 							http://localhost:9090/seasons -O /dev/null
-							wget -O - http://localhost:9090/seasons
 						'''
 					}
 					
@@ -87,6 +86,8 @@ pipeline {
 
 				always{
 					script{
+						// This is just here for debugging
+						sh 'wget -O - http://localhost:9090/seasons'
 						// Piping to true means the script returns true either way
 						// We want to kill the container if it exists, and not fail if it didn't start 
 					    sh 'docker kill catholicon-integration-test || true'
