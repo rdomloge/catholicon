@@ -9,7 +9,6 @@ import org.junit.Test;
 
 public class SeasonControllerTest {
 
-	@Test
 	public final void test() {
 		get("/lotto").then().body("lotto.lottoId", equalTo(5));
 	}
