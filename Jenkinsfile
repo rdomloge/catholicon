@@ -63,8 +63,10 @@ pipeline {
 	    		}
 			} 
 			post{
-				script{
-				    sh 'docker kill catholicon-integration-test'
+				always{
+					script{
+					    sh 'docker kill catholicon-integration-test'
+					}
 				}
 			}
     	}
