@@ -56,17 +56,24 @@ pipeline {
     	stage('Integration tests') {
 	    	steps{
 	    		script{
+	    			// Start the container to run the integration tests against
 	    			sh '''
 	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
+					
+					// This makes the script wait until the container has warmed up
 					waitUntil {
 						sh '''
-							wget --retry-connrefused --tries=120 --waitretry=1 -q 
+							wget --retry-connrefused --tries=5 --waitretry=3 -q \
 							http://localhost:9090/seasons -O /dev/null
 						'''
 					}
+					
+					// This is just for some debug
 	    			sh 'docker ps --format "{{.Ports}}" --filter="name=catholicon-integration-test"'
+	    			
+	    			// Run the integration tests against the running container
 	    			sh 'mvn verify -Pfailsafe'
 	    		}
 			} 
@@ -77,7 +84,8 @@ pipeline {
 
 				always{
 					script{
-						// piping to true means the script returns true either way
+						// Piping to true means the script returns true either way
+						// We want to kill the container if it exists, and not fail if it didn't start 
 					    sh 'docker kill catholicon-integration-test || true'
 					}
 				}
