@@ -58,14 +58,18 @@ pipeline {
 	    		script{
 	    			sh '''
 	    				docker run --rm -d --name catholicon-integration-test -p 8080:8080 rdomloge/catholicon:$BUILD_NUMBER
-						mvn verify -Pfailsafe
 					'''
 	    		}
 			} 
 			post{
+				success{
+				    sh 'mvn verify -Pfailsafe'
+				}
+
 				always{
 					script{
-					    sh 'docker kill catholicon-integration-test'
+						// piping to true means the script returns true either way
+					    sh 'docker kill catholicon-integration-test || true'
 					}
 				}
 			}
