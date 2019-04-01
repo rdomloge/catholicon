@@ -59,12 +59,16 @@ pipeline {
 	    			sh '''
 	    				docker run --rm -d --name catholicon-integration-test -p 8080:8080 rdomloge/catholicon:$BUILD_NUMBER
 						mvn verify -Pfailsafe
-						docker kill catholicon-integration-test
 					'''
 	    		}
 			} 
+			post{
+				script{
+				    sh 'docker kill catholicon-integration-test'
+				}
+			}
     	}
-
+		
 
     }
 }
