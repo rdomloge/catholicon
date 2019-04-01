@@ -15,7 +15,7 @@ public class SeasonControllerRestIT {
 	@Test
 	public final void test() {
 		given()
-			.baseUri("http://localhost:9090")
+			.baseUri("http://0.0.0.0:9090")
 			.get("/seasons")
 			.then().body("id", hasItems(0))
 			.and()
