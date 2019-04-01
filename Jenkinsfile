@@ -63,6 +63,7 @@ pipeline {
 					'''
 					
 					// This makes the script wait until the container has warmed up
+					sh 'apk-get install -y wget'
 					waitUntil {
 						sh '''
 							wget --retry-connrefused --tries=5 --waitretry=3 -q \
