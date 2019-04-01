@@ -7,11 +7,16 @@ import static org.hamcrest.Matchers.*;
 
 import org.junit.Test;
 
+import io.restassured.config.JsonConfig;
+import io.restassured.config.RestAssuredConfig;
+
 public class SeasonControllerRestIT {
 
 	@Test
 	public final void test() {
-		get("/lotto").then().body("lotto.lottoId", equalTo(5));
+		given()
+			.baseUri("htp://localhost:8080/catholicon")
+			.get("/seasons").then().body("id", equalTo(0));
 	}
 
 }

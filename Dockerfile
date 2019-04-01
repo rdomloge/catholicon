@@ -7,9 +7,9 @@ ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 
 COPY target/catholicon.war ./catholicon.war
-RUN echo java -jar catholicon/target/catholicon.war\ 
---BASE_URL=http://bdbl.org.uk \
---SPIDER_FORCE_REFRESH=true \& \
+RUN echo java -jar catholicon.war\ 
+ --BASE_URL=http://bdbl.org.uk \
+ --SPIDER_FORCE_REFRESH=true \
 > catholicon.sh
 RUN chmod a+x catholicon.sh
 
