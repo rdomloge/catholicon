@@ -60,6 +60,12 @@ pipeline {
 	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
+					waitUntil {
+						sh '''
+							wget --retry-connrefused --tries=120 --waitretry=1 -q 
+							http://localhost:9090/seasons -O /dev/null
+						'''
+					}
 	    			sh 'docker ps --format "{{.Ports}}" --filter="name=catholicon-integration-test"'
 	    			sh 'mvn verify -Pfailsafe'
 	    		}
