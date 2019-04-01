@@ -61,12 +61,13 @@ pipeline {
 	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
-					
-					// This makes the script wait until the container has warmed up
+
+					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
+					// This makes the script wait until the container has warmed up
 					waitUntil {
 						sh '''
-							wget --retry-connrefused --tries=5 --waitretry=3 -q \
+							wget --retry-connrefused --tries=10 --waitretry=5 -q \
 							http://localhost:9090/seasons -O /dev/null
 						'''
 					}
