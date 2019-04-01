@@ -15,8 +15,11 @@ public class SeasonControllerRestIT {
 	@Test
 	public final void test() {
 		given()
-			.baseUri("http://localhost:8080/catholicon")
-			.get("/seasons").then().body("id", equalTo(0));
+			.baseUri("http://localhost:8080")
+			.get("/seasons")
+			.then().body("id", hasItems(0))
+			.and()
+			.body("apiIdentifier", hasItems(0));
 	}
 
 }
