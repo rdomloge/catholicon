@@ -63,6 +63,7 @@ pipeline {
 					'''
 					
 					def ip = sh "docker inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test"
+					echo "Container is running on "+${ip}
 
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
