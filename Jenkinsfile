@@ -84,9 +84,7 @@ pipeline {
 					//	sh "wget --retry-connrefused --tries=20 --waitretry=5 -q \
 					//		''http://${CONTAINER_IP}:8080/seasons'' -O /dev/null"
 					//}
-					echo 'Zzzz'
-					sleep 10
-					echo 'Fzah what happened??'
+					sleep 20
 				}
 			}
 			post {
