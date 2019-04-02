@@ -7,13 +7,10 @@ import static org.hamcrest.Matchers.*;
 
 import org.junit.Test;
 
-import io.restassured.config.JsonConfig;
-import io.restassured.config.RestAssuredConfig;
-
 public class SeasonControllerRestIT {
 
 	@Test
-	public final void test() {
+	public final void testSeasons() {
 		String ip = System.getProperty("ip");
 		System.out.println("IP: "+ip);
 		given()
