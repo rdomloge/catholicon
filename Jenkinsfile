@@ -62,17 +62,15 @@ pipeline {
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
 					
-					def ip = sh(script: "docker container inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test", returnStdout:true)
+					def ip = sh(script: "docker container inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test", returnStdout:	true)
 					echo "Container is running on ${ip}"
 
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
 					// This makes the script wait until the container has warmed up
 					waitUntil {
-						sh '''
-							wget --retry-connrefused --tries=10 --waitretry=5 -q \
-							http://${ip}:9090/seasons -O /dev/null
-						'''
+						sh 'wget --retry-connrefused --tries=10 --waitretry=5 -q \
+							http://${ip}:9090/seasons -O /dev/null'
 					}
 					
 					// This is just for some debug
