@@ -90,7 +90,7 @@ pipeline {
 				always {
 				    script{
 	    				echo "Trying ${CONTAINER_IP}"
-	    		    	sh "wget -O - -t 1 'http://${CONTAINER_IP}:8080/seasons'"
+	    		    	sh "wget -O - -t 1 ''http://${CONTAINER_IP}:8080/seasons''"
 	    			}
 				}
 				failure {
