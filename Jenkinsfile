@@ -82,7 +82,7 @@ pipeline {
 					// This makes the script wait until the container has warmed up
 					waitUntil {
 						sh "wget --retry-connrefused --tries=10 --waitretry=5 -q \
-							http://${CONTAINER_IP}:9090/seasons -O /dev/null"
+							''http://${CONTAINER_IP}:9090/seasons -O /dev/null''"
 					}
 				}
 			}
@@ -90,7 +90,7 @@ pipeline {
 				always {
 				    script{
 	    				echo "Trying ${CONTAINER_IP}"
-	    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:9090/seasons"
+	    		    	sh "wget -O - -t 1 'http://${CONTAINER_IP}:9090/seasons'"
 	    			}
 				}
 
