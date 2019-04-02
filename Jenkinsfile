@@ -82,7 +82,7 @@ pipeline {
 					// This makes the script wait until the container has warmed up
 					waitUntil {
 						sh "wget --retry-connrefused --tries=20 --waitretry=5 -q \
-							''http://localhost:9090/seasons -O /dev/null''"
+							''http://${CONTAINER_IP}:8080/seasons -O /dev/null''"
 					}
 				}
 			}
@@ -90,7 +90,7 @@ pipeline {
 				always {
 				    script{
 	    				echo "Trying ${CONTAINER_IP}"
-	    		    	sh "wget -O - -t 1 'http://${CONTAINER_IP}:9090/seasons'"
+	    		    	sh "wget -O - -t 1 'http://${CONTAINER_IP}:8080/seasons'"
 	    			}
 				}
 				failure {
@@ -116,7 +116,7 @@ pipeline {
 		    			}
 		    			script{
 		    				echo "Trying ${CONTAINER_IP}"
-		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:9090/seasons"
+		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:8080/seasons"
 		    			}
 		    		}
 	    		}
@@ -124,7 +124,7 @@ pipeline {
 		    		steps{
 		    			script{
 		    				echo "Trying ${CONTAINER_IP}"
-		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:9090/seasons"
+		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:8080/seasons"
 		    			}
 		    		}
 				}
