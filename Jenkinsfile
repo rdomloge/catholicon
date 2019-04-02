@@ -113,7 +113,7 @@ pipeline {
 		    		steps{
 		    			script{
 			    			// Run the integration tests against the running container
-			    			sh 'mvn verify -Pfailsafe -Dip=${CONTAINER_IP}'
+			    			sh "mvn verify -Pfailsafe -Dip=${CONTAINER_IP}"
 		    			}
 		    			script{
 		    				echo "Trying ${CONTAINER_IP}"
