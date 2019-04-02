@@ -61,6 +61,8 @@ pipeline {
 	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
+					
+					sh "docker inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test"
 
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
