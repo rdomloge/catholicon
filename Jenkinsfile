@@ -57,9 +57,11 @@ pipeline {
         		//}
         		
         		// To push to local registry
-        		docker.withRegistry('https://localhost:5000') {
-			        //sh 'docker push rdomloge/catholicon'
-			        IMAGE.push();
+        		script{
+	        		docker.withRegistry('https://localhost:5000') {
+				        //sh 'docker push rdomloge/catholicon'
+				        IMAGE.push();
+				    }
 			    }
       		}
     	}
