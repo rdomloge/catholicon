@@ -14,8 +14,10 @@ public class SeasonControllerRestIT {
 
 	@Test
 	public final void test() {
+		String ip = System.getenv("ip");
+		System.out.println("IP: "+ip);
 		given()
-			.baseUri("http://localhost:9090")
+			.baseUri("http://"+ip+":8080")
 			.get("/seasons")
 			.then().body("id", hasItems(0))
 			.and()
