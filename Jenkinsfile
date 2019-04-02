@@ -81,7 +81,7 @@ pipeline {
 					sh 'apk add wget'
 					// This makes the script wait until the container has warmed up
 					waitUntil {
-						sh "wget --retry-connrefused --tries=10 --waitretry=5 -q \
+						sh "wget --retry-connrefused --tries=20 --waitretry=5 -q \
 							''http://${CONTAINER_IP}:9090/seasons -O /dev/null''"
 					}
 				}
@@ -93,6 +93,14 @@ pipeline {
 	    		    	sh "wget -O - -t 1 'http://${CONTAINER_IP}:9090/seasons'"
 	    			}
 				}
+				failure {
+				    script{
+						// Piping to true means the script returns true either way
+						// Need to kill the container if we failed to start it, for the next run 
+					    sh 'docker kill catholicon-integration-test || true'
+					}
+				}
+
 
 			}
     	}
