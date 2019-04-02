@@ -14,7 +14,7 @@ public class SeasonControllerRestIT {
 
 	@Test
 	public final void test() {
-		String ip = System.getenv("ip");
+		String ip = System.getProperty("ip");
 		System.out.println("IP: "+ip);
 		given()
 			.baseUri("http://"+ip+":8080")
