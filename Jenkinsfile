@@ -74,7 +74,8 @@ pipeline {
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
 					
-					CONTAINER_IP = sh(script: "docker container inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test", returnStdout:	true)
+					def ipWithWhiteSpace = sh(script: "docker container inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test", returnStdout:	true)
+					CONTAINER_IP = sh(script: "echo $ipWithWhiteSpace | xargs", returnStdout: true) 
 					echo "Container is running on ${CONTAINER_IP}"
 
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
