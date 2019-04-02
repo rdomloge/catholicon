@@ -54,8 +54,8 @@ pipeline {
     	}
     	
     	stage('Integration tests') {
-	    	steps{
-	    		parallel(
+    		parallel{
+    			stage('Run tests'){
 		    		script{
 		    			// Start the container to run the integration tests against
 		    			sh '''
@@ -79,14 +79,14 @@ pipeline {
 		    			
 		    			// Run the integration tests against the running container
 		    			sh 'mvn verify -Pfailsafe -Dip=${ip}'
-		    		},
-		    		
+		    		}
+	    		}
+	    		stage('Debug info'){
 		    		script{
 		    		    sh "wget -O - -t 1 http://${ip}:9090/seasons"
 		    		}
-
-	    		)
-			} 
+				}
+    		}
 			post{
 				success{
 				    echo "Integration tests passed"
