@@ -2,6 +2,8 @@ package catholicon.domain;
 
 import java.util.Map;
 
+import catholicon.parser.ParserUtil;
+
 public class MatchCard {
 	
 	private Rubber[] rubbers = new Rubber[9];
@@ -26,7 +28,7 @@ public class MatchCard {
 		this.awayPlayers = awayPlayers;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
-		this.matchDate = matchDate;
+		this.matchDate = ParserUtil.convertDayMonthYearToYearMonthDay(matchDate);
 		
 		this.homeScore = homeScore;
 		this.awayScore = awayScore;

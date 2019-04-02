@@ -51,6 +51,11 @@ myApp.config(function ($routeProvider) {
 			{
 				templateUrl: 'partials/frontPage.html'
 			})
+		.when('/unconfirmed',
+			{
+				templateUrl: 'partials/unconfirmed.html',
+				controller: 'unconfirmedController'
+			})
 		.when('/secure/login', 
 			{
 				templateUrl: 'partials/secure/login.html'

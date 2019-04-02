@@ -38,6 +38,17 @@ public class ParserUtil {
 		return "TBA";
 	}
 	
+	public static String convertDayMonthYearToYearMonthDay(String dayMonthYear) {
+		SimpleDateFormat dmyFormat = new SimpleDateFormat("dd MMM yyyy");
+		SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return ymdFormat.format(dmyFormat.parse(dayMonthYear));
+		} 
+		catch (ParseException e) {
+			return "[Cannot parse] "+dayMonthYear;
+		}
+	}
+	
 	/**
      * Returns a copy of the string, with leading and trailing whitespace
      * omitted.
