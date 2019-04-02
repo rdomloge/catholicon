@@ -1,4 +1,5 @@
 def CONTAINER_IP
+def IMAGE
 
 pipeline {
     agent any
@@ -42,7 +43,7 @@ pipeline {
 	    		script {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
-	        		def image = docker.build(registry + ":$BUILD_NUMBER")
+	        		IMAGE = docker.build(registry + ":$BUILD_NUMBER")
             		//image.push 'master'
 	        	}
 	      	}
@@ -56,9 +57,10 @@ pipeline {
         		//}
         		
         		// To push to local registry
-        		withDockerRegistry([ url: "https://localhost:5000" ]) {
-					sh 'docker push rdomloge/catholicon'
-        		}
+        		docker.withRegistry('https://registry.example.com') {
+			        //sh 'docker push rdomloge/catholicon'
+			        IMAGE.push();
+			    }
       		}
     	}
     	
