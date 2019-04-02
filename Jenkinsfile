@@ -56,7 +56,7 @@ pipeline {
     	stage('Integration tests') {
     		parallel{
     			stage('Run tests'){
-		    		script{
+		    		steps{
 		    			// Start the container to run the integration tests against
 		    			sh '''
 		    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
@@ -82,7 +82,7 @@ pipeline {
 		    		}
 	    		}
 	    		stage('Debug info'){
-		    		script{
+		    		steps{
 		    		    sh "wget -O - -t 1 http://${ip}:9090/seasons"
 		    		}
 				}
