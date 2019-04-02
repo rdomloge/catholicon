@@ -9,6 +9,35 @@
 	<packaging>war</packaging>
 	<version>1.0.5-SNAPSHOT</version>
 	<name>Catholicon - 'Better BDBL'</name>
+	<!-- Test comment to provoke CICD build -->
+
+	<profiles>
+		<profile>
+		    <id>failsafe</id>
+		    <build>
+		        <plugins>
+		        	<plugin>
+					    <artifactId>maven-failsafe-plugin</artifactId>
+					    <version>2.22.0</version>
+					    <executions>
+		                    <execution>
+		                        <goals>
+		                            <goal>integration-test</goal>
+		                            <goal>verify</goal>
+		                        </goals>
+		                    </execution>
+		                </executions>
+					    <configuration>
+					        <includes>
+					            <include>**/*RestIT.java</include>
+					            <include>**/*RestITCase.java</include>
+					        </includes>
+					    </configuration>
+					</plugin>
+		        </plugins>
+		    </build>
+		</profile>
+	</profiles>
 
 	<properties>
 		<jackson.library>2.7.5</jackson.library>
@@ -23,6 +52,10 @@
 	</parent>
 
 	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-jwt</artifactId>
@@ -93,17 +126,6 @@
 			<version>1.0.2</version>
 		</dependency>
 
-		<!-- SPRING DATA/ R E D I S -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<!-- <version>1.8.7.RELEASE</version> -->
-		</dependency>
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-
 		<!-- SWAGGER -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -115,6 +137,16 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.6.1</version>
 		</dependency>
+		
+		<!--  T E S T I N G -->
+		
+		<dependency>
+		      <groupId>io.rest-assured</groupId>
+		      <artifactId>rest-assured</artifactId>
+		      <version>3.3.0</version>
+		      <scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<pluginRepositories>
@@ -251,8 +283,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.2</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -278,5 +310,5 @@
 
 		<finalName>catholicon</finalName>
 	</build>
-
+	
 </project>
