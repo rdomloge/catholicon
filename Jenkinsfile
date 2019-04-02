@@ -47,7 +47,7 @@ pipeline {
 	    
 	    stage('Publish') {
       		steps {
-    			withDockerRegistry([ credentialsId: "ef879a02-b51a-49bb-a743-58f46dd8b4c8" ]) {
+    			withDockerRegistry([ credentialsId: "ef879a02-b51a-49bb-a743-58f46dd8b4c8", url: "" ]) {
           			sh 'docker push rdomloge/catholicon'
         		}
       		}
