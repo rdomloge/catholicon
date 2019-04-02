@@ -62,7 +62,7 @@ pipeline {
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
 					
-					sh "docker inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test"
+					def ip = sh "docker inspect -f '{{ .NetworkSettings.IPAddress }}' catholicon-integration-test"
 
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
@@ -70,7 +70,7 @@ pipeline {
 					waitUntil {
 						sh '''
 							wget --retry-connrefused --tries=10 --waitretry=5 -q \
-							http://localhost:9090/seasons -O /dev/null
+							http://${ip}:9090/seasons -O /dev/null
 						'''
 					}
 					
@@ -78,7 +78,7 @@ pipeline {
 	    			sh 'docker ps --format "{{.Ports}}" --filter="name=catholicon-integration-test"'
 	    			
 	    			// Run the integration tests against the running container
-	    			sh 'mvn verify -Pfailsafe'
+	    			sh 'mvn verify -Pfailsafe -Dip=${ip}'
 	    		}
 			} 
 			post{
