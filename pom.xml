@@ -30,7 +30,7 @@
 					    <configuration>
 					        <includes>
 					            <include>**/*RestIT.java</include>
-					            <include>**/*RestITCase.java</include>
+					            <include>**/*ITCase.java</include>
 					        </includes>
 					    </configuration>
 					</plugin>
