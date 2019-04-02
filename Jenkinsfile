@@ -44,7 +44,6 @@ pipeline {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
 	        		IMAGE = docker.build(registry + ":$BUILD_NUMBER")
-            		//image.push 'master'
 	        	}
 	      	}
 	    }
@@ -93,6 +92,10 @@ pipeline {
 			    			
 			    			// Run the integration tests against the running container
 			    			sh 'mvn verify -Pfailsafe -Dip=${CONTAINER_IP}'
+		    			}
+		    			script{
+		    				echo "Trying ${CONTAINER_IP}"
+		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:9090/seasons"
 		    			}
 		    		}
 	    		}
