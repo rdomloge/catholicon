@@ -1,7 +1,8 @@
+def CONTAINER_IP
+
 pipeline {
     agent any
     
-    def CONTAINER_IP
     
     environment {
 		registry = "rdomloge/catholicon"
