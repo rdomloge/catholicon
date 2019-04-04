@@ -82,7 +82,7 @@ pipeline {
 					// This makes the script wait until the container has warmed up
 					waitUntil {
 						sh "wget --retry-connrefused --tries=20 --waitretry=5 -q \
-							'http://${CONTAINER_IP}:8080/seasons' -O /dev/null"
+							'http://${CONTAINER_IP}:8080/seasons' -O"
 					}
 					//sleep 30
 				}
