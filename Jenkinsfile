@@ -129,7 +129,7 @@ pipeline {
 		stage('Release') {
 		    steps {
 		        script {
-		            sh "mvn --settings ${maven_settings} -DreleaseVersion=${release_version} -DdevelopmentVersion=${development_version} release:prepare release:perform -B"
+		            sh "mvn release:prepare release:perform -B"
 		        }
 
 		    }
