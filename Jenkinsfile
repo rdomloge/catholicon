@@ -83,7 +83,8 @@ pipeline {
 					timeout(30) {
 						waitUntil {
 							sleep 1
-							sh script: "wget -q http://${CONTAINER_IP}:8080/seasons -O /dev/null", returnStatus: true == 0
+							def r = sh script: "wget -q http://${CONTAINER_IP}:8080/seasons -O /dev/null", returnStatus: true
+							return r == 0
 						}
 					}
 					//sleep 30
