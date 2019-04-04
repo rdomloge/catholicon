@@ -88,12 +88,6 @@ pipeline {
 				}
 			}
 			post {
-				always {
-				    script{
-	    				echo "Trying ${CONTAINER_IP}"
-	    		    	sh "wget -O - -T 1 --timeout 1 -t 1 'http://${CONTAINER_IP}:8080/seasons'"
-	    			}
-				}
 				failure {
 				    script{
 						// Piping to true means the script returns true either way
@@ -108,27 +102,15 @@ pipeline {
 
     	
     	stage('Integration tests') {
-    		parallel{
-    			stage('Run tests'){
-		    		steps{
-		    			script{
-			    			// Run the integration tests against the running container
-			    			sh "mvn verify -Pfailsafe -Dip=${CONTAINER_IP}"
-		    			}
-		    			script{
-		    				echo "Trying ${CONTAINER_IP}"
-		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:8080/seasons"
-		    			}
-		    		}
-	    		}
-	    		stage('Debug info'){
-		    		steps{
-		    			script{
-		    				echo "Trying ${CONTAINER_IP}"
-		    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:8080/seasons"
-		    			}
-		    		}
-				}
+    		steps{
+    			script{
+	    			// Run the integration tests against the running container
+	    			sh "mvn verify -Pfailsafe -Dip=${CONTAINER_IP}"
+    			}
+    			script{
+    				echo "Trying ${CONTAINER_IP}"
+    		    	sh "wget -O - -t 1 http://${CONTAINER_IP}:8080/seasons"
+    			}
     		}
 			post{
 				success{
