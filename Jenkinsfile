@@ -81,7 +81,10 @@ pipeline {
 					sh 'apk add wget'
 					// This makes the script wait until the container has warmed up
 					waitUntil {
-						return sh "wget --retry-connrefused --tries=20 --waitretry=5 -q 'http://${CONTAINER_IP}:8080/seasons' -O /dev/null"
+						sh '''
+							wget --retry-connrefused --tries=20 --waitretry=5 -q \ 
+								'http://${CONTAINER_IP}:8080/seasons' -O /dev/null
+						'''
 					}
 					//sleep 30
 				}
