@@ -82,7 +82,7 @@ pipeline {
 					// This makes the script wait until the container has warmed up
 					timeout(30) {
 						waitUntil {
-							sleep 1
+							sleep 4
 							def r = sh script: "wget -q http://${CONTAINER_IP}:8080/seasons -O /dev/null", returnStatus: true
 							return r == 0
 						}
@@ -129,7 +129,7 @@ pipeline {
 		stage('Release') {
 		    steps {
 		        script {
-		            sh "${maven_bin} --settings ${maven_settings} -DreleaseVersion=${release_version} -DdevelopmentVersion=${development_version} release:prepare release:perform -B"
+		            sh "mvn --settings ${maven_settings} -DreleaseVersion=${release_version} -DdevelopmentVersion=${development_version} release:prepare release:perform -B"
 		        }
 
 		    }
