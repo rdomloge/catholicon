@@ -126,6 +126,15 @@ pipeline {
 			}
     	}
 		
+		stage('Release') {
+		    steps {
+		        script {
+		            sh "${maven_bin} --settings ${maven_settings} -DreleaseVersion=${release_version} -DdevelopmentVersion=${development_version} release:prepare release:perform -B"
+		        }
+
+		    }
+
+		}
 
     }
 }
