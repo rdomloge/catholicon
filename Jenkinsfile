@@ -70,7 +70,7 @@ pipeline {
     			script{
 	    			// Start the container to run the integration tests against
 	    			sh '''
-	    				docker run --rm -d --name catholicon-integration-test -p 9090:8080 \
+	    				docker run --rm -d --network="cicd" --name catholicon-integration-test -p 9090:8080 \
 	    				rdomloge/catholicon:$BUILD_NUMBER
 					'''
 					
