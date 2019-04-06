@@ -158,6 +158,7 @@
 	</pluginRepositories>
 
 	<build>
+		<finalName>catholicon</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -317,7 +318,16 @@
 			</plugins>
 		</pluginManagement>
 
-		<finalName>catholicon</finalName>
 	</build>
-	
+	<distributionManagement>
+	   <repository>
+	      <id>nexus-releases</id>
+	      <url>http://nexus:8081/nexus/content/repositories/releases</url>
+	   </repository>
+	</distributionManagement>
+	<scm>
+	   <connection>scm:git:git@github.com:rdomloge/catholicon.git</connection>
+	   <url>scm:git:git@github.com:rdomloge/catholicon.git</url>
+	   <developerConnection>scm:git:git@github.com:rdomloge/catholicon.git</developerConnection>
+	</scm>
 </project>
