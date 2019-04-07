@@ -133,8 +133,12 @@ pipeline {
 		        }
 
 		    }
+		    post {
+			failure {
+				cat ~/.ssh/id_rsa.pub
+		        }
 
+    		    }
 		}
-
-    }
+	}
 }
