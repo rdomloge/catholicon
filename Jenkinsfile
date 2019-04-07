@@ -160,7 +160,7 @@ pipeline {
 		    }
 		}
 		
-		stage('Deploy-pro-prod') {
+		stage('Deploy-pre-prod') {
 			when{
 			    branch "develop"
 			}
