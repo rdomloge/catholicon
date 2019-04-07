@@ -126,7 +126,7 @@ pipeline {
 			}
     	}
 		
-		stage('Release') {
+		stage('Tag & Release') {
 			when{
 			    branch "master"
 			}
@@ -169,60 +169,5 @@ pipeline {
 		        }
 		    }
 		}
-		
-		stage('Deploy-pre-prod') {
-			when{
-			    branch "develop"
-			}
-			
-		    steps {
-		        script {
-		        	echo "Deploying PRE-PROD build tagged '$BUILD_NUMBER'"
-		        	try {
-			            sh 'docker kill catholicon-pre-prod'
-		        	} catch(err) {
-		        		echo 'Failed to stop pre-prod'      
-		        	}
-		        	
-		        	try {
-		        	    sh 'docker rm catholicon-pre-prod'
-		        	} catch(err) {
-						echo 'Failed to remove pre-prod'
-		        	}
-		        	
-		            sh "docker run -d --name catholicon-pre-prod -p 8090:8090 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
-		        }
-		    }
-		}
-		
-		stage('Deploy-feature') {
-		    when{
-		        not {
-		        	anyOf{
-			            branch "develop"
-			            branch "master"
-		        	}
-		        }
-		    }
-		    
-		    steps{
-			    script {
-			        echo 'In a feature branch - deploying on a random port'
-			        try {
-			            sh 'docker kill catholicon-feature'
-		        	} catch(err) {
-		        		echo 'Failed to stop feature'      
-		        	}
-		        	
-		        	try {
-		        	    sh 'docker rm catholicon-feature'
-		        	} catch(err) {
-						echo 'Failed to remove feature'
-		        	}
-			        sh "docker run -d --name catholicon-feature -P localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
-			    }
-		    }
-		}
-
 	}
 }
