@@ -134,12 +134,21 @@ pipeline {
 
 		    }
 		    post {
-			failure {
-			    script {
-				sh 'cat ~/.ssh/id_rsa.pub'
-			    }
+				failure {
+			    	script {
+						sh 'cat ~/.ssh/id_rsa.pub'
+			    	}
 		        }
-    		    }
+    		}
+		}
+		
+		stage('Deploy') {
+		    steps {
+		        script {
+		            sh 'docker kill catholicon || true'
+		            sh 'docker run -d -p 8080:8080 localhost:5000/rdomloge/catholicon'
+		        }
+		    }
 		}
 	}
 }
