@@ -169,6 +169,7 @@ pipeline {
 		        script {
 		        	echo "Deploying PRE-PROD build tagged '$BUILD_NUMBER'"
 		            sh 'docker kill catholicon-pre-prod || true'
+		            sh 'docker rm catholicon-re-prod'
 		            sh "docker run -d --name catholicon-pre-prod -p 8090:8090 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
