@@ -129,7 +129,7 @@ pipeline {
 		stage('Release') {
 		    steps {
 		        script {
-		            sh "mvn -Dmaven.test.skip=true release:prepare release:perform -B"
+		            sh "mvn -Dmaven.test.skip=true release:clean release:prepare release:perform -B"
 		        }
 
 		    }
