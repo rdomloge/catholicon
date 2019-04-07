@@ -127,6 +127,10 @@ pipeline {
     	}
 		
 		stage('Release') {
+			when{
+			    branch "master"
+			}
+
 		    steps {
 		        script {
 		            sh "mvn -Dmaven.test.skip=true release:clean release:prepare release:perform -B"
@@ -142,12 +146,30 @@ pipeline {
     		}
 		}
 		
-		stage('Deploy') {
+		stage('Deploy-prod') {
+			when{
+			    branch "master"
+			}
+			
 		    steps {
 		        script {
-		        	echo "Deploying build tagged '$BUILD_NUMBER'"
+		        	echo "Deploying PROD build tagged '$BUILD_NUMBER'"
 		            sh 'docker kill catholicon || true'
 		            sh "docker run -d --name catholicon -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
+		        }
+		    }
+		}
+		
+		stage('Deploy-pro-prod') {
+			when{
+			    branch "develop"
+			}
+			
+		    steps {
+		        script {
+		        	echo "Deploying PRE-PROD build tagged '$BUILD_NUMBER'"
+		            sh 'docker kill catholicon-pre-prod || true'
+		            sh "docker run -d --name catholicon-pre-prod -p 8090:8090 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
 		}
