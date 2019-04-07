@@ -126,7 +126,7 @@ pipeline {
 			}
     	}
 		
-		stage('Release') {
+		stage('Tag & Release') {
 			when{
 			    branch "master"
 			}
@@ -154,11 +154,20 @@ pipeline {
 		    steps {
 		        script {
 		        	echo "Deploying PROD build tagged '$BUILD_NUMBER'"
-		            sh 'docker kill catholicon || true'
+		        	try {
+			            sh 'docker kill catholicon'
+		        	} catch(err) {
+		        		echo 'Failed to stop prod'      
+		        	}
+		        	
+		        	try {
+		        	    sh 'docker rm catholicon'
+		        	} catch(err) {
+						echo 'Failed to remove prod'
+		        	}
 		            sh "docker run -d --name catholicon -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
 		}
-
 	}
 }
