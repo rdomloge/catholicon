@@ -1,6 +1,5 @@
 package catholicon.dao;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ import catholicon.parser.ParserUtil;
 @Component
 public class FrontPageDao {
 	
-	private static final String url = "/Live/BdblHome.asp?Season=0&website=1";
+	private static final String url = "/BdblHome.asp?Season=0&website=1";
 	
 	private static final Pattern p = Pattern.compile("\\{(..*)\\};");
 

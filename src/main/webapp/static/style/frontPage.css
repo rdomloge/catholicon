@@ -17,15 +17,12 @@ li.frontPageItem {
 	z-index: 1;
 }
 
+#recentMatchesAccordion {
+	padding-bottom: 32px;
+}
+
 .rd-80px-leftmargin {
 	margin-left: 95px;
-}
-
-.emptyImage {
-	margin-top: 30px;
-}
-
-.emptyText {
 }
 
 /* Pure CSS Post Tags */	

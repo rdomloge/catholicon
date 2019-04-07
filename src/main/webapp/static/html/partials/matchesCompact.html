@@ -1,21 +1,45 @@
 
+<div class="w3-container" ng-controller="matchListController"  ng-init="showCalendarOptions = false"
+	style="padding-top: 10px">
 
-<div class="w3-container" ng-controller="matchListController">
+	<h3 class="teamName">{{teamName}}</h3>
+	<h4>{{season == 0 ? 'this' : season}} season</h4>
 	
-	<h3>
-		{{teamName}}
-	</h3>
-	<h4>
-		{{season == 0 ? 'this' : season}} season
-	</h4>
-	
+	<button ng-click="showCalendarOptions = !showCalendarOptions" 
+			class="button w3-button w3-black w3-right">Calendar</button>
+		
+	<div class="w3-container w3-modal fixtureDetailsDialogue" 
+			ng-style="showCalendarOptions ? {display: 'block'} : {display: 'none'}" ng-cloak>
+		<div class="w3-modal-content w3-card-8">
+			<header class="w3-container w3-light-grey w3-padding">
+				<h1>Calendar options</h1>
+			</header>
+			<section class="w3-container w3-padding">
+				<textarea class="w3-center w3-block js-copytextarea w3-padding w3-small" 
+					id="calendarUrl" ng-init="select()">{{openWebCal()}}</textarea>
+			</section>
+			<section class="w3-container w3-center">
+				<a class="button w3-button w3-margin w3-black w3-padding" href="{{openWebCal()}}">Import into your calendar</a>
+				<button class="button w3-button w3-margin w3-black w3-padding" ng-click="selectUrlText()">Copy URL to clipboard</button>
+			</section>
+			<footer ng-click="showCalendarOptions = false" class="w3-container w3-light-grey">
+				<p class="w3-right w3-large w3-text-black w3-right">
+					X
+				</p>
+				<p class="w3-right w3-large w3-text-red w3-right w3-margin-right">
+					{{urlCopySuccessMsg}}
+				</p>
+			</footer>
+		</div>
+	</div>
+
 	<div ng-repeat="match in matches | orderBy:'date'" 
 			class="" >
 		<div style="padding: 10px 0 10px 0"
 				ng-init="opposition = getOpposition(match)"
 				ng-class="$index % 2 == 0 ? 'w3-row-padding w3-large matchesCompactRow' : 'w3-row-padding w3-large matchesCompactRow w3-light-grey'">
 	  		<div class="w3-col m6 s10">
-	  			<a ng-href="#/season/{{getSeason()}}/matches/{{opposition.id}}/listcompact">
+	  			<a ng-href="#!/season/{{getSeason()}}/matches/{{opposition.id}}/listcompact">
 	  				{{opposition.name}}
 	  			</a>
 	  		</div>
@@ -23,13 +47,13 @@
 	  			{{isHome(match) ? 'H' : 'A'}}
 	  		</div>
 	  		<div class="w3-col m1 s1">
-	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" width="30px"/>
+	  			<img src="../img/info.png" ng-click="showFixture(match.fixtureId)" style="width:30px"/>
 	  		</div>
 	  		<div class="w3-col m2 s10">
 	  			{{match.date | date: 'dd MMM'}}
 	  		</div>
 	  		<div class="w3-col m2 s2 w3-block" ng-if="match.fixtureStatus == 5">
-				<a ng-href="#/matchcard/{{match.fixtureId}}" style="width: 100%" 
+				<a ng-href="#!/matchcard/{{match.fixtureId}}" style="width: 100%" 
 						ng-class="isWin(match) ? 'w3-text-green w3-right' : 'w3-text-red w3-right'">
 					{{match.scoreExtracted}}
 				</a>
@@ -37,7 +61,5 @@
 	  	</div>
 	</div>
 	
-	<fixture-details-directive>
-	</fixture-details-directive>
-	
+	<fixture-details-directive />
 </div>

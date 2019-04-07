@@ -1,0 +1,26 @@
+<h1 class="w3-panel w3-xxlarge">Unconfirmed results</h1>
+
+<p class="w3-panel"><sup>* = to action</sup></p>
+
+<table class="w3-panel w3-table-all">
+	<tr ng-repeat="result in unconfirmed | orderBy:'matchDate'" ng-init="mergeFixtureDetails(result)">
+		<td>
+			{{result.matchDate | date:'dd MMM'}}
+		</td>
+		<td>
+			{{result.homeTeam}} 
+			<span ng-show="homeTeamToAction(result)">*</span>
+		</td>
+		<td>
+			{{result.awayTeam}}
+			<span ng-hide="homeTeamToAction(result)">*</span>
+		</td>
+		</td>
+		<td>
+			<a ng-href="#!/matchcard/{{result.fixtureId}}" style="width: 100%" 
+						ng-class="isWin(match) ? 'w3-text-green w3-right' : 'w3-text-red w3-right'">
+				{{result.homeScore}} - {{result.awayScore}}
+			</a>
+		</td>
+	</tr>
+</table>

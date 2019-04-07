@@ -2,23 +2,21 @@ package catholicon.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import catholicon.parser.ParserUtil;
+
+@JsonInclude(Include.NON_NULL)
 public class Club {
 	
 	private int clubId;
 	private String clubName;
 	private int seasonId;
-	private String chairMan;
-	private String chairManPhone;
-	private String secretary;
-	private String secretaryPhone;
-	private String matchSec;
-	private String matchSecPhone;
-	private String treasurer;
-	private String treasurerPhone;
-	private String chairmanEmail;
-	private String secretaryEmail;
-	private String matchSecEmail;
-	private String treasurerEmail;
+	private Contact chairMan;
+	private Contact secretary;
+	private Contact matchSec;
+	private Contact treasurer;
 	
 	private List<Session> clubSessions;
 	
@@ -40,10 +38,18 @@ public class Club {
 		this.matchSessions = matchSessions;
 	}
 
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
 	public Club(int clubId, String clubName, int seasonId) {
-		super();
 		this.clubId = clubId;
 		this.clubName = clubName;
+		this.seasonId = seasonId;
+	}
+	
+	public Club(int clubId, int seasonId) {
+		this.clubId = clubId;
 		this.seasonId = seasonId;
 	}
 	
@@ -60,73 +66,50 @@ public class Club {
 	}
 
 	public void fillOutRoles(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairMan = chairMan;
-		this.secretary = secretary;
-		this.matchSec = matchSec;
-		this.treasurer = treasurer;
+		this.chairMan = null != ParserUtil.nullIfEmpty(chairMan) ? new Contact(chairMan) : null;
+		this.secretary = null != ParserUtil.nullIfEmpty(secretary) ? new Contact(secretary) : null;
+		this.matchSec = null != ParserUtil.nullIfEmpty(matchSec) ? new Contact(matchSec) : null;
+		this.treasurer = null != ParserUtil.nullIfEmpty(treasurer) ? new Contact(treasurer) : null;
 	}
 	
-	public void fillOutPhoneNumbers(String chairMan, String secretary, String matchSec, String treasurer) {
-		this.chairManPhone = chairMan;
-		this.secretaryPhone = secretary;
-		this.matchSecPhone = matchSec;
-		this.treasurerPhone = treasurer;
+	public void fillOutPhoneNumbers(PhoneNumber[] chairManPhone, PhoneNumber[] secretaryPhone, PhoneNumber[] matchSecPhone, PhoneNumber[] treasurerPhone) {
+		if(chairManPhone.length > 0) chairMan.setContactNumbers(chairManPhone);
+		if(secretaryPhone.length > 0) secretary.setContactNumbers(secretaryPhone);
+		if(matchSecPhone.length > 0) matchSec.setContactNumbers(matchSecPhone);
+		if(treasurerPhone.length > 0) treasurer.setContactNumbers(treasurerPhone);
 	}
 	
 	public void fillOutEmailAddresses(String chairmanEmail, String secretaryEmail, String matchSecEmail,
 			String treasurerEmail) {
 		
-		this.chairmanEmail = chairmanEmail;
-		this.secretaryEmail = secretaryEmail;
-		this.matchSecEmail = matchSecEmail;
-		this.treasurerEmail = treasurerEmail;
+		if(null != chairMan) {
+			chairMan.setEmail(null != ParserUtil.nullIfEmpty(chairmanEmail) ? chairmanEmail : null);
+		}
+		if(null != secretary) {
+			secretary.setEmail(null != ParserUtil.nullIfEmpty(secretaryEmail) ? secretaryEmail : null);
+		}
+		if(null != matchSec) {
+			matchSec.setEmail(null != ParserUtil.nullIfEmpty(matchSecEmail) ? matchSecEmail : null);
+		}
+		if(null != treasurer) {
+			treasurer.setEmail(null != ParserUtil.nullIfEmpty(treasurerEmail) ? treasurerEmail : null);
+		}
 	}
 
-	public String getChairmanEmail() {
-		return chairmanEmail;
-	}
-
-	public String getSecretaryEmail() {
-		return secretaryEmail;
-	}
-
-	public String getMatchSecEmail() {
-		return matchSecEmail;
-	}
-
-	public String getTreasurerEmail() {
-		return treasurerEmail;
-	}
-
-	public String getChairMan() {
+	public Contact getChairMan() {
 		return chairMan;
 	}
 
-	public String getSecretary() {
+	public Contact getSecretary() {
 		return secretary;
 	}
 
-	public String getMatchSec() {
+	public Contact getMatchSec() {
 		return matchSec;
 	}
 
-	public String getTreasurer() {
+	public Contact getTreasurer() {
 		return treasurer;
 	}
-
-	public String getChairManPhone() {
-		return chairManPhone;
-	}
-
-	public String getSecretaryPhone() {
-		return secretaryPhone;
-	}
-
-	public String getMatchSecPhone() {
-		return matchSecPhone;
-	}
-
-	public String getTreasurerPhone() {
-		return treasurerPhone;
-	}
+	
 }

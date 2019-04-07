@@ -23,6 +23,19 @@ public class Match {
 	private Team awayTeam = new Team();
 
 
+	public Match(String date, int fixtureStatus, String fixtureText, String fixtureId, String scoreText,
+			String scoreExtracted, Team homeTeam, Team awayTeam) {
+		super();
+		this.date = date;
+		this.fixtureStatus = fixtureStatus;
+		this.fixtureText = fixtureText;
+		this.fixtureId = fixtureId;
+		this.scoreText = scoreText;
+		this.scoreExtracted = scoreExtracted;
+		this.homeTeam = homeTeam;
+		this.awayTeam = awayTeam;
+	}
+
 	/**
 	 * matchDate:new Date("04 Feb 2016"), fixtureID:1220, leagueTypeID:13, fixtureStatus:5, 
 	 * cardStatus:5, walkoverStatus:0, teamToAction:164, websiteID:1, homeClubID:3, 

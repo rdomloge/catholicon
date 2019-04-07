@@ -43,20 +43,28 @@ myApp.controller('frontPageController',
 		$scope.$broadcast('fixture-details', {id: fixtureId});
 	}
 	
-	frontPageFactory.getUpcomingFixtures().success(function(data) {
-		$log.debug("Data received for upcoming fixtures", data);
-		$scope.upcomingFixtures = data;
-	}).error(errorHandlerFactory.getHandler());
+	frontPageFactory.getUpcomingFixtures().then(function(page) {
+		$log.debug("Data received for upcoming fixtures", page.data);
+		$scope.upcomingFixtures = page.data;
+	}, errorHandlerFactory.getHandler());
 	
-	frontPageFactory.getRecentMatches().success(function(data) {
-		$log.debug("Data received for recent matches", data);
-		$scope.recentMatches = data;
-	}).error(errorHandlerFactory.getHandler());
+	frontPageFactory.getRecentMatches().then(function(page) {
+		$log.debug("Data received for recent matches", page.data);
+		$scope.recentMatches = page.data;
+	}, errorHandlerFactory.getHandler());
 	
 	$scope.$watch('frontPageFilter', function() {
 		$log.debug('frontPageFilter has just changed', $scope.frontPageFilter);
 		var yearFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 		$cookies.put('front-page-search', $scope.frontPageFilter, {expires: yearFromNow});
 	});
+	
+	$scope.offSeason = function() {
+		if($scope.upcomingFixtures &&
+			$scope.upcomingFixtures.length > 1) {
+			return false;
+		}
+		return true;
+	}
 }]);
 

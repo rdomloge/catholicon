@@ -2,6 +2,9 @@ package catholicon.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,38 +12,53 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import catholicon.domain.Club;
+import catholicon.domain.PhoneNumber;
+import catholicon.domain.PhoneNumber.Type;
 import catholicon.domain.Session;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
+import catholicon.parser.EmailParser;
 
 public class ClubDao {
 	
-	private static String seedUrl = "/Live/ClubInfo.asp?Season=0&website=1";
+	private static String seedUrl = "/ClubInfo.asp?Season=0&website=1";
 
-	private static String clubUrl = "/Live/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
-//	<td colspan="2"><select onchange='changeClub(this);' id="ClubList"><option value="1">Aldermaston Badminton Club</option><option value="2" selected>Alresford Badminton Club</option><option value="3">Andover Badminton Club</option><option value="4">Andover Sports Badminton Club</option><option value="6">Beechdown Badminton Club</option><option value="7">BH Pegasus Badminton Club</option><option value="16">Challengers Badminton Club</option><option value="9">Hurst Badminton Club</option><option value="11">Phoenix Badminton Club</option><option value="12">St Marys Badminton Club</option><option value="13">Viking Badminton Club</option><option value="14">Waverley Badminton Club</option><option value="15">Whitchurch Badminton Club</option></select></td>
+	private static String clubUrl = "/ClubInfo.asp?Club=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
-	public List<Club> getClubs(int seasonId) {
+	
+	public List<Club> getClubIds(int seasonId) {
 		String seedPage = ThreadLocalLoaderFilter.getLoader().load(seedUrl);
+		Document doc = Jsoup.parse(seedPage);
 		List<Club> clubList = new LinkedList<>();
 		
-		Document doc = Jsoup.parse(seedPage);
 		Elements clubs = doc.select("select[id$=ClubList] option");
-		if(clubs.size() < 1) throw new DaoException("Could not find the club list select");
+		if(clubs.size() < 1) throw new DaoException("Could not find any clubs");
+		
 		for(int i=0; i < clubs.size(); i++) {
 			Element clubEl = clubs.get(i);
 			int clubId = Integer.parseInt(clubEl.attr("value"));
-			String clubName = clubEl.ownText();
+			String clubName = clubEl.ownText().replaceAll("Badminton Club", "");
 			Club club = new Club(clubId, clubName, seasonId);
 			clubList.add(club);
-			if(i == 0) fillOutClub(club, doc);
-			else fillOutClub(club);
 		}
-		
 		return clubList;
 	}
 	
+	public Club getClub(int seasonId, int clubId) {
+		Club club = new Club(clubId, seasonId);
+		fillOutClub(club);
+		return club;
+	}
+	
+	private static String getClubName(Document doc) {
+		// var clubName = "Aldermaston Badminton Club";
+		String script = doc.getElementsByTag("script").get(6).html();
+		int firstQuote = script.indexOf('"')+1;
+		return script.substring(firstQuote, script.indexOf('"', firstQuote)).replaceAll("Badminton Club", "");		
+	}
+	
 	private void fillOutClub(Club club, Document doc) {
+		club.setClubName(getClubName(doc));
 		String chairMan = parseRole(doc, "#ChairmanID + span");
 		String secretary = parseRole(doc, "#SecretaryID + span");
 		String matchSec = parseRole(doc, "#MatchSecID + span");
@@ -50,6 +68,7 @@ public class ClubDao {
 		fillOutPhoneNumbers(doc, club);
 		fillOutEmailAddrs(doc, club);
 		fillOutClubSessions(doc, club);
+		fillOutMatchSessions(doc, club);
 	}
 	
 	private static String parseRole(Document doc, String selector) {
@@ -60,60 +79,119 @@ public class ClubDao {
 	
 	private void fillOutPhoneNumbers(Document doc, Club club) {
 		Elements phoneNumbers = 
-				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(2).select("td");
-		String chairmanPhone = phoneNumbers.get(0).ownText();
-		String secretaryPhone = phoneNumbers.get(1).ownText();
-		String matchSecPhone = phoneNumbers.get(2).ownText();
-		String treasurerPhone = phoneNumbers.get(3).ownText();
-		club.fillOutPhoneNumbers(chairmanPhone, secretaryPhone, matchSecPhone, treasurerPhone);
+				doc.select("#clubForm center i table[cellpadding=3] tbody tr:nth-child(3) td");
+		PhoneNumber[] chairmanPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(0).ownText().trim());
+		PhoneNumber[] secretaryPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(1).ownText().trim());
+		PhoneNumber[] matchSecPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(2).ownText().trim());
+		PhoneNumber[] treasurerPhoneNumbers = parsePhoneNumbers(phoneNumbers.get(3).ownText().trim());
+		club.fillOutPhoneNumbers(chairmanPhoneNumbers, secretaryPhoneNumbers, matchSecPhoneNumbers, treasurerPhoneNumbers);
+	}
+	
+	private PhoneNumber[] parsePhoneNumbers(String s) {
+		List<PhoneNumber> numbers = new LinkedList<>();
+		String regex = "([ 0-9]+).*\\(([MH])\\)";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(s);
+		if(m.find()) {
+//			String entry = m.group();
+//			int bracket = entry.indexOf('(');
+//			String number = entry.substring(0, bracket-1);
+//			String type = entry.substring(bracket+1, entry.indexOf(')'));
+			String number = m.group(1);
+			String type = m.group(2);
+			numbers.add(new PhoneNumber(Type.forIdentifier(type), number));
+		}
+		
+		return numbers.toArray(new PhoneNumber[numbers.size()]);
 	}
 	
 	private void fillOutEmailAddrs(Document doc, Club club) {
+		Map<String, String> parsedEmails = EmailParser.parseEmails(doc.outerHtml());
 		/**
 		 * This doesn't work because the email address is generated
 		 */
-//		Elements emails = 
-//				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(3).select("td");
-//		String chairmanEmail = emails.get(0).ownText(); //<td><a href="Click to create email" onclick="GenerateMailHref(this, 'StephenGaunt');">Stephen Gaunt</a></td>
-//		String secretaryEmail = emails.get(1).ownText();
-//		String matchSecEmail = emails.get(2).ownText();
-//		String treasurerEmail = emails.get(3).ownText();
-//		club.fillOutEmailAddresses(chairmanEmail, secretaryEmail, matchSecEmail, treasurerEmail);
+		Elements emails = 
+				doc.select("#ChairmanID").first().parent().parent().parent().select("tr").get(3).select("td");
+		
+		String chairmanJs = emails.get(0).select("a[onclick]").attr("onclick");
+		String chairmanIdentifier = EmailParser.parseIdentifier(chairmanJs);
+		String chairmanEmail = parsedEmails.get(chairmanIdentifier);
+		
+		String secretaryJs = emails.get(1).select("a[onclick]").attr("onclick");
+		String secretaryIdentifier = EmailParser.parseIdentifier(secretaryJs);
+		String secretaryEmail = parsedEmails.get(secretaryIdentifier);
+		
+		String matchSecJs = emails.get(2).select("a[onclick]").attr("onclick");
+		String matchSecIdentifier = EmailParser.parseIdentifier(matchSecJs);
+		String matchSecEmail = parsedEmails.get(matchSecIdentifier);
+		
+		String treasurerJs = emails.get(3).select("a[onclick]").attr("onclick");
+		String treasurerIdentifier = EmailParser.parseIdentifier(treasurerJs);
+		String treasurerEmail = parsedEmails.get(treasurerIdentifier);
+		
+		club.fillOutEmailAddresses(chairmanEmail, secretaryEmail, matchSecEmail, treasurerEmail);
+	}
+	
+	private void fillOutMatchSessions(Document doc, Club club) {
+		Elements rows = 
+				doc.select("h4:contains(MATCH SESSIONS) + table tr");
+		
+		club.setMatchSessions(parseSessions(rows));
+	}
+	
+	private List<Session> parseSessions(Elements rows) {
+		LinkedList<Session> sessions = new LinkedList<>();
+		
+		String locationName = null;
+		String locationAddr = null;
+		String days = null;
+		String numCourts = null;
+		String start = null;
+		String end = null;
+		
+		for(int i=0; i < rows.size(); i++) {
+			Element row = rows.get(i);
+			if(row.select("tr td.TableColHeading").size() > 0) continue; // heading row
+			
+			if(row.select("td[rowspan]").size() > 0) {				// venue row
+				locationName = row.select("td[rowspan] b").text();
+				locationAddr = row.select("td[rowspan]").text();				
+			}
+			
+			if(row.select("td[align]").size() > 0) {				// session details row
+				if(row.select("td:containsOwn(As Above)").size() > 0) {
+					locationName = sessions.getLast().getLocationName();
+					locationAddr = sessions.getLast().getLocationAddr();
+				}
+				Elements sessionCells = row.select("td[align] + td");
+				days = sessionCells.get(0).childNode(0).toString();
+				numCourts = sessionCells.get(0).childNode(2).toString();
+				start = sessionCells.get(1).childNode(0).toString();
+				end = sessionCells.get(1).childNode(2).toString();
+				
+				sessions.add(new Session(locationName, locationAddr, days, numCourts, start, end));
+				locationName = null;
+				locationAddr = null;
+				days = null;
+				numCourts = null;
+				start = null;
+				end = null;
+			}
+		}
+		
+		return sessions;
 	}
 	
 	private void fillOutClubSessions(Document doc, Club club) {
-		Elements clubSessionsTable = 
-				doc.select("h4:contains(CLUB SESSIONS) + table");
-		Elements rows = clubSessionsTable.select("tr td.TableColHeading[colspan=4]");
+		Elements rows = 
+				doc.select("h4:contains(CLUB SESSIONS) + table tr");
 		
-		LinkedList<Session> clubSessions = new LinkedList<>();
-		
-		for(int i=0; i < rows.size(); i++) {
-			Element location = rows.get(i).parent().nextElementSibling().child(0); //<td rowspan="2"><b>Aldermaston Recreational Society</b><br>Aldermaston<br>Berkshire RG7 4PR</td>
-			String locationName;
-			String locationAddr;
-			if("As Above".equalsIgnoreCase(location.ownText())) {
-				if(clubSessions.size() < 1) throw new DaoException("'As above' but no previous");
-				Session above = clubSessions.getLast();
-				locationName = above.getLocationName();
-				locationAddr = above.getLocationAddr();
-			}
-			else {
-				locationName = location.child(0).ownText();
-				locationAddr = location.ownText();
-			}
-			Element sessionSpecifics = location.parent().nextElementSibling().child(1); //<td>Tuesdays<br>1</td>
-			String days = sessionSpecifics.childNode(0).toString();
-			String numCourts = sessionSpecifics.childNode(2).toString();
-			Element timing = location.parent().nextElementSibling().child(3); //<td>20:00<br>23:00</td>
-			String start = timing.childNode(0).toString();
-			String end = timing.childNode(2).toString();
-			clubSessions.add(new Session(locationName, locationAddr, days, numCourts, start, end));
-		}
+		club.setClubSessions(parseSessions(rows));
 	}
 	
 	private void fillOutClub(Club club) {
 		String clubPage = ThreadLocalLoaderFilter.getLoader().load(String.format(clubUrl, club.getClubId(), club.getSeasonId()));
+		Map<String, String> emails = EmailParser.parseEmails(clubPage);
 		fillOutClub(club, Jsoup.parse(clubPage));
 	}
 }

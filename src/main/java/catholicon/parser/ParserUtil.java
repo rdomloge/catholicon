@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.util.StringUtils;
+
 public class ParserUtil {
 	
 	private static final String QUOTED_DATE_REGEXP = "new Date\\((.*?)\\)";
@@ -34,6 +36,68 @@ public class ParserUtil {
 		}
 		
 		return "TBA";
+	}
+	
+	public static String convertDayMonthYearToYearMonthDay(String dayMonthYear) {
+		SimpleDateFormat dmyFormat = new SimpleDateFormat("dd MMM yyyy");
+		SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return ymdFormat.format(dmyFormat.parse(dayMonthYear));
+		} 
+		catch (ParseException e) {
+			return "[Cannot parse] "+dayMonthYear;
+		}
+	}
+	
+	/**
+     * Returns a copy of the string, with leading and trailing whitespace
+     * omitted.
+     * <p>
+     * If this <code>String</code> object represents an empty character
+     * sequence, or the first and last characters of character sequence
+     * represented by this <code>String</code> object both have codes
+     * greater than <code>'&#92;u0020'</code> (the space character), then a
+     * reference to this <code>String</code> object is returned.
+     * <p>
+     * Otherwise, if there is no character with a code greater than
+     * <code>'&#92;u0020'</code> in the string, then a new
+     * <code>String</code> object representing an empty string is created
+     * and returned.
+     * <p>
+     * Otherwise, let <i>k</i> be the index of the first character in the
+     * string whose code is greater than <code>'&#92;u0020'</code>, and let
+     * <i>m</i> be the index of the last character in the string whose code
+     * is greater than <code>'&#92;u0020'</code>. A new <code>String</code>
+     * object is created, representing the substring of this string that
+     * begins with the character at index <i>k</i> and ends with the
+     * character at index <i>m</i>-that is, the result of
+     * <code>this.substring(<i>k</i>,&nbsp;<i>m</i>+1)</code>.
+     * <p>
+     * This method may be used to trim whitespace (as defined above) from
+     * the beginning and end of a string.
+     *
+     * @return  A copy of this string with leading and trailing white
+     *          space removed, or this string if it has no leading or
+     *          trailing white space.
+     */
+    public static String trim(String s) {
+    	char[] value = s.toCharArray();
+        int len = value.length;
+        int st = 0;
+        char[] val = value;    /* avoid getfield opcode */
+
+        while ((st < len) && (val[st] <= ' ' || val[st] == (char)160)) {
+            st++;
+        }
+        while ((st < len) && (val[len - 1] <= ' ')) {
+            len--;
+        }
+        return ((st > 0) || (len < value.length)) ? new String(value, st, len - st) : s;
+    }
+    
+    public static String nullIfEmpty(String s) {
+		if(null == s || StringUtils.isEmpty(trim(s))) return null;
+		return s;
 	}
 
 	public static String[] splitOnUnquotedCommas(String s) {
@@ -80,7 +144,7 @@ public class ParserUtil {
 		return map;
 	}
 	
-	public static Map convertJsonToMap(String json) {
+	public static Map<String,String> convertJsonToMap(String json) {
 		return pairsToMap(splitOnUnquotedCommas(json.substring(1, json.length()-1)));
 	}
 	
@@ -121,7 +185,7 @@ public class ParserUtil {
 		return parts.toArray(new String[parts.size()]);
 	}
 	
-	private static Pattern arrayPattern = Pattern.compile("\\{(.*)\\}");
+	private static Pattern arrayPattern = Pattern.compile("(?s)\\{(.*)\\}");
 
 	public static String[] splitArray(String jsonArray) {
 		Matcher m = arrayPattern.matcher(jsonArray);
@@ -132,5 +196,33 @@ public class ParserUtil {
 		}
 		
 		return parts.toArray(new String[parts.size()]);
+	}
+	
+	public static String[] splitArray2(String json) {
+		char[] chars = json.toCharArray();
+		List<String> list = new LinkedList<>();
+		int inBraceCount = 0;
+		StringBuilder buf = new StringBuilder();
+		for (char c : chars) {
+			if('{' == c) {
+				inBraceCount++;
+			}
+			else if('}' == c) {
+				inBraceCount--;
+				if(0 == inBraceCount) {
+					list.add(buf.toString());
+					buf.setLength(0);
+				}
+			}
+			else {
+				if(inBraceCount > 0) {
+					buf.append(c);
+				}
+				else {
+					//we are between strings
+				}
+			}
+		}
+		return list.toArray(new String[list.size()]);
 	}
 }

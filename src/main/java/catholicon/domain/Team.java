@@ -5,6 +5,13 @@ public class Team {
 	private int id;
 	private int score;
 
+	public Team(String name, int id, int score) {
+		super();
+		this.name = name;
+		this.id = id;
+		this.score = score;
+	}
+
 	public Team() {
 	}
 

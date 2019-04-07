@@ -18,7 +18,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class PlayerReportDao {
 	
 	private static final String url = 
-			"/Live/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
+			"/BestPlayer.asp?LeagueTypeID=%1$s&Season=%2$s&Juniors=false&Schools=false&Website=1";
 	
 	public PlayerReport[] loadPlayerReport(String season, String league) throws DaoException {
 		String formattedUrl = String.format(url, league, season);
@@ -35,7 +35,7 @@ public class PlayerReportDao {
 			String division = e.select("td:eq(3)").text();
 			String matchesPlayed = e.select("td:eq(4)").text();
 			String rubbers = e.select("td:eq(5)").text();
-			String rating = e.select("td:eq(6)").text();
+			String rating = parseRating(e.select("td:eq(6)").text());
 			String pointsDiff = e.select("td:eq(7)").text();
 			PlayerReport report = new PlayerReport(position, playerName, teamName, division, 
 					matchesPlayed, rubbers, rating, pointsDiff);
@@ -45,11 +45,19 @@ public class PlayerReportDao {
 		return reports.toArray(new PlayerReport[reports.size()]);
 	}
 	
+	private static String parseRating(String s) {
+		if(s.indexOf('%') > 0) {
+			return s.replace("%", "").trim();
+		}
+		
+		return s.trim();
+	}
+	
 	private String parsePosition(String s) {
 		if (s.indexOf(')') > 0) {
-			return s.substring(0, s.indexOf(')'));
+			return s.substring(0, s.indexOf(')')).trim();
 		}
 
-		return s;
+		return s.trim();
 	}
 }

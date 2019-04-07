@@ -18,7 +18,7 @@ import catholicon.filter.ThreadLocalLoaderFilter;
 public class MatchCardDao {
 	
 	private static final String initialUrlTemplate = 
-			"/Live/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
+			"/MatchCard.asp?FixtureID=%1$s&Juniors=false&Schools=false&Season=0&Website=1";
 	
 	private static final String NAME_WITHHELD = "Name withheld";
 	
@@ -32,7 +32,7 @@ public class MatchCardDao {
 		Document doc = Jsoup.parse(page);
 		Elements scores = doc.select("span.Boxed[id^=Score]");
 		if(scores.size() == 0) {
-			throw new DaoException("Could not load matchcard for fixture "+fixtureId);
+			throw new DaoException("Could not load matchcard for fixture "+fixtureId+" - no scores data in page "+newUrl);
 		}
 		Map<Integer, Rubber> scoreMap = new HashMap<>();
 		

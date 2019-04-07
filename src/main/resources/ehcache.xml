@@ -12,21 +12,132 @@
     This cache contains a maximum in memory of 10000 elements, and will expire
     an element if it is idle for more than 5 minutes and lives for more than
     10 minutes.
-
+    -->
+    <!--
+    	86400 == 1 day
+    	3600  == 1 hour
+    	300   == 5 mins
+    -->
+	<!-- 
     If there are more than 10000 elements it will overflow to the
     disk cache, which in this configuration will go to wherever java.io.tmp is
-    defined on your system. On a standard Linux system this will be /tmp" -->
-	<cache name="MonthCache"
+    defined on your system. On a standard Linux system this will be /tmp" 
+    -->
+    
+    
+    <!--
+    				### 1 week caching 604800s == 1 week ### 
+	-->
+    <cache name="MatchCards"
 		eternal="false"
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="0" 
-		timeToLiveSeconds="2592000"
+		timeToLiveSeconds="604800"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Committee"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="604800"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="News"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="604800"
 		memoryStoreEvictionPolicy="LFU"
 		transactionalMode="off"
 		maxElementsInMemory="100">
 	</cache>
 	
-	<cache name="HourCache"
+    <!--
+    				### 1 day caching 86400s == 1 day ### 
+	-->
+	<cache name="Season"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Clubs"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Club"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="DivisionDescriptor"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Leagues"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Translations"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="86400"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	
+	
+	
+	<!--
+    				### 1 hour caching 3600s == 1 hour ### 
+	-->
+	<cache name="Fixtures"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="3600"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
+	<cache name="Upcoming"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="3600"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
+	<cache name="PlayerReports"
 		eternal="false"
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="0" 
@@ -36,7 +147,48 @@
 		maxElementsInMemory="50">
 	</cache>
 	
-	<cache name="FiveMinCache"
+	
+	
+	<!--
+    				### 5 min caching 300s == 5 mins ### 
+	-->
+	<cache name="Recent"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
+	<cache name="Changes"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
+	<cache name="Division"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="100">
+	</cache>
+	<cache name="Matches"
+		eternal="false"
+		diskSpoolBufferSizeMB="20"
+		timeToIdleSeconds="0" 
+		timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LFU"
+		transactionalMode="off"
+		maxElementsInMemory="50">
+	</cache>
+	<cache name="MatchWebCals"
 		eternal="false"
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="0" 

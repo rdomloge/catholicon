@@ -1,0 +1,13 @@
+
+<div ng-init="showDetails = false" ng-click="showDetails = !showDetails">
+	<p class="w3-xxlarge">{{data.primaryTitle}}</p>
+	<p class="w3-xlarge">{{data.secondaryTitle}}</p>
+	<div>
+		<span class="w3-xlarge" ng-show="!showDetails" style="font-family: monospace;" ng-cloak>[+]</span>
+		<span class="w3-xlarge" ng-show="showDetails" style="font-family: monospace;" ng-cloak>[-]</span>
+		<span>{{data.added}}</span>
+	</div>
+	<p ng-repeat="p in data.paragraphs" ng-show="showDetails" ng-cloak>
+		{{p}}
+	</p>
+</div>

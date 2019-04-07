@@ -21,18 +21,35 @@ myApp.controller('matchListController',
 			
 	var firstUnplayed;
 			
-	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).success(function(data) {
-		$log.debug("Data received for matches", data);
+	matchListFactory.getMatches($routeParams.teamId, $routeParams.season).then(function(page) {
+		$log.debug("Data received for matches", page.data);
 		
-		decorateWinningTeam(data);
-		decorateFirstUnplayed(data);
+		decorateWinningTeam(page.data);
+		decorateFirstUnplayed(page.data);
 		
-		$scope.matches = data;
+		$scope.matches = page.data;
 		$scope.teamName = 
 			$scope.matches[0].homeTeam.id == $routeParams.teamId 
 			? $scope.matches[0].homeTeam.name 
 			: $scope.matches[0].awayTeam.name;
 	});
+	
+	$scope.selectUrlText = function() {
+		var copyTextarea = document.querySelector('.js-copytextarea');
+		copyTextarea.select();
+		try {
+		    var successful = document.execCommand('copy');
+		    var msg = successful ? 'successful' : 'unsuccessful';
+		    $log.debug('Copying text command was ' + msg);
+		    $scope.urlCopySuccessMsg = successful ? 'Copied' : 'Copy failed';
+		    $timeout(function() {
+		    	$scope.urlCopySuccessMsg = '';
+		    	$log.debug("Reset variable");
+		    }, 2000);
+		  } catch (err) {
+		    console.log('Oops, unable to copy');
+		  }
+	}
 	
 	$scope.getTeamId = function() {
 		return $routeParams.teamId;
@@ -89,10 +106,15 @@ myApp.controller('matchListController',
 	$scope.showFixture = function(fixtureId) {
 		$scope.$broadcast('fixture-details', {id: fixtureId});
 	}
-	
+
 	$scope.teamId = $routeParams.teamId;
 	$scope.season = $routeParams.season;
-	
+
+	$scope.openWebCal = function() {
+		return "webcal://" + $location.host() + ":" + $location.port() + '/season/' + $scope.season
+		 + "/matches/" + $scope.teamId + "/webcal";
+	}
+
 	$scope.scrollTo = function(element) {
 		
 	}

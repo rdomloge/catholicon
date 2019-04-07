@@ -12,6 +12,14 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 			'request' : function(config) {
 				$rootScope.$broadcast('started-thinking');
 				//ga('send', 'pageview', config.url); // tell Google Analytics about what URL we are fetching
+				var url = new URL(window.location.href);
+				var test = url.searchParams.get("test");
+				if(test) {
+					if( ! config.params) {
+						config.params = { };
+					}
+					config.params.test = "";
+				}
 				return config;
 			},
 
@@ -28,4 +36,9 @@ myApp.config([ "$httpProvider", function($httpProvider) {
 			}
 		};
 	});
+} ]);
+
+myApp.config([ "$compileProvider", function($compileProvider) {   
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|webcal):/);
+	// Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
 } ]);

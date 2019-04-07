@@ -14,7 +14,7 @@ import catholicon.parser.LeagueListParser;
 @Component
 public class LeagueDao {
 	
-	public static String listUrl = "/Live/Leagues.asp?Season=%1$s&website=1";
+	public static String listUrl = "/Leagues.asp?Season=%1$s&website=1";
 	
 	private static final Pattern allLeagueRegExp = Pattern.compile("var leagueMenu = (.*?)];");
 	

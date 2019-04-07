@@ -15,15 +15,18 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import catholicon.controller.MatchCardController;
 import catholicon.dao.ChangeDao;
 import catholicon.dao.DivisionDao;
 import catholicon.dao.LeagueDao;
 import catholicon.dao.Loader;
+import catholicon.dao.MatchCardDao;
 import catholicon.dao.MatchDao;
 import catholicon.domain.Change;
 import catholicon.domain.Change.ActionCode;
@@ -47,10 +50,16 @@ public class RecentMatchResultsSpider {
 	@Value("${BASE_URL:http://192.168.0.14}")
 	private String BASE;
 	
+	@Value("${RECENT_MATCH_RESULT_SPIDER_DISABLED:false}")
+	private boolean disableSpider;
+	
 	private Loader loader;
 	private MatchDao matchDao = new MatchDao();
 	private DivisionDao divisionDao = new DivisionDao();
 	private LeagueDao leagueDao = new LeagueDao();
+	
+	@Autowired
+	private MatchCardController matchCardController;
 	
 	private Set<Match> recentMatches = new HashSet<>();
 	private List<Match> sortedRecentMatches = new LinkedList<>();
@@ -62,6 +71,7 @@ public class RecentMatchResultsSpider {
 
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
 	public void spiderLatestResults() {
+		if(disableSpider) return;
 		LOGGER.info("Updating latest fixtures");
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -86,7 +96,12 @@ public class RecentMatchResultsSpider {
 			stopWatch.stop();
 			LOGGER.debug("Spider complete. Took "+stopWatch.getTotalTimeSeconds()+" seconds - found "+recentMatches.size());
 			for (Match match : sortedRecentMatches) {
-				LOGGER.debug("[RECENT] "+match.getHomeTeam().getName()+" v "+match.getAwayTeam().getName() + " on "+match.getDate() + ": "+match.getScoreExtracted());
+				LOGGER.debug("[RECENT]({}) {} v {} on {}: {}",
+						match.getFixtureId(),
+						match.getHomeTeam().getName(),
+						match.getAwayTeam().getName(),
+						match.getDate(),
+						match.getScoreExtracted());
 			}
 		}
 		catch(DaoException dex) {
@@ -147,6 +162,7 @@ public class RecentMatchResultsSpider {
 			
 			Match[] matchs = matchDao.load(0, ""+team);
 			for (Match match : matchs) {
+				if(recentMatches.contains(match)) continue;
 				if(match.isPlayed() || match.isUnConfirmed()) {
 					String dateStr = null;
 					List<Change> changeHistory = new ChangeDao().getChanges(Integer.parseInt(match.getFixtureId()), 0);
@@ -157,16 +173,20 @@ public class RecentMatchResultsSpider {
 					}
 					if(null == dateStr) {
 						dateStr = match.getDate();
-						LOGGER.warn("No changes for match "+match.getFixtureId()+" - using match date");
+						LOGGER.warn("No changes for match {} - using match date {}", 
+								match.getFixtureId(),
+								match.getDate());
 					}
 					try {
 						Date date = matchDateFormat.parse(dateStr);
 						if(date.after(cutOff)) {
-							LOGGER.debug("Match on "+match.getDate()+" is recent: "+dateStr);
 							recentMatches.add(match);
+							LOGGER.debug("Match {} on {} is recent: {}",
+									match.getFixtureId(),match.getDate(),dateStr);
+							matchCardController.loadMatchCard(match.getFixtureId()); // cache a recent match card result, for good measure
 						}
 						else {
-							LOGGER.debug("Match on "+dateStr+" is too old");
+							LOGGER.debug("Match {} on {} is too old", match.getFixtureId(), dateStr);
 						}
 					} 
 					catch (ParseException e) {

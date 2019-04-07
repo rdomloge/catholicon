@@ -4,7 +4,8 @@ myApp.factory('dataFactory', function($http, $log) {
 	
 	factory.getSeasonList = function() {
 		$log.info("Loading seasons list");
-		return $http.get(Config.BASE_URL+'/seasons');
+//		return $http.get(Config.BASE_URL+'/seasons');
+		return $http.get(Config.MS_SEASONS_BASE+'?sort=seasonStartYear,desc');
 	}
 	
 	factory.getDivisions = function(leagueTypeId, season) {
@@ -12,19 +13,9 @@ myApp.factory('dataFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');	
 	}
 
-	factory.getMatchCard = function(fixtureId) {
-		$log.info("Loading match card for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/matchcard/'+fixtureId);
-	}
-	
 	factory.getDivision = function(leagueTypeId, divisionId, season) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
 		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
-	};
-	
-	factory.getPlayerReport = function(season, league) {
-		$log.info("Loading player report");
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+league+'/report');
 	};
 	
 	return factory;
@@ -44,50 +35,34 @@ myApp.factory('errorHandlerFactory', function($log, $rootScope) {
 
 myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
-	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).success(function(data) {
-		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", data);
-		$scope.divisions = data;
+	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).then(function(page) {
+		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", page.data);
+		$scope.divisions = page.data;
 	});
 }]);
 
 myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
 	$log.debug("Fetching league "+$routeParams.leagueTypeId+' for season '+$routeParams.season);
 	
-	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).success(function (data){
-		$log.debug("Data received for league", data);
-		$scope.league = data;
+	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).then(function (page){
+		$log.debug("Data received for league", page.data);
+		$scope.league = page.data;
 	});
 }]);
 
 myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
 	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId, $routeParams.season)
-			.success(function(data) {
-		$log.debug("Data received for division "+$routeParams.divisionId, data);
-		$scope.division = data;
+			.then(function(page) {
+		$log.debug("Data received for division "+$routeParams.divisionId, page.data);
+		$scope.division = page.data;
 	});
 }]);
 
 myApp.controller('seasonListController', function($scope, $log, dataFactory) {
-	dataFactory.getSeasonList().success(function(data) {
-		$log.debug("Data received for seasons", data);
-		$scope.seasons = data;
+	dataFactory.getSeasonList().then(function(page) {
+		$log.debug("Data received for seasons", page.data._embedded.seasons);
+		$scope.seasons = page.data._embedded.seasons;
 	});
-	
-//	$scope.registerMenuItem = function() {
-//		$scope.$broadcast('menu_item_selected');
-//	}
-	
-//	$scope.$on('menu_item_selected', function(event) {
-//		$scope.show = false;
-//	});
-});
-
-myApp.controller('playerReportController', function($scope, $log, dataFactory, $routeParams) {
-	dataFactory.getPlayerReport($routeParams.season, $routeParams.league).success(function(data) {
-		$log.debug("Data received for playerReport", data);
-		$scope.playerReport = data;
-	});
-	
 });
 
 myApp.controller('thinkingController', ['$scope', '$log', function($scope, $log) {

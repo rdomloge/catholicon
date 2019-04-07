@@ -1,7 +1,11 @@
 package catholicon.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,11 +18,14 @@ import catholicon.domain.Change;
 public class ChangeController {
 
 	@RequestMapping(method=RequestMethod.GET, value="/seasons/{seasonStartYear}/fixtures/{fixtureId}/changes")
-	public List<Change> getChanges(
+	@Cacheable(cacheNames="Changes")
+	public ResponseEntity<List<Change>> getChanges(
 			@PathVariable("fixtureId") int fixtureId,
 			@PathVariable("seasonStartYear") int seasonStartYear) {
 		
-		return new ChangeDao().getChanges(fixtureId, seasonStartYear);
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+				.body(new ChangeDao().getChanges(fixtureId, seasonStartYear));
 	}
 	
 }

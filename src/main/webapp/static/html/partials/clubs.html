@@ -1,1 +1,93 @@
-<h1>Clubs</h1>
+
+<div class="w3-container" ng-init="showClubs = false">
+  <h1 class="w3-left w3-padding">Clubs</h1>
+  <div class="w3-dropdown-click w3-right">
+    <button ng-click="showClubs = ! showClubs" class="w3-button w3-black">{{selectedClub.clubName}} <i class="arrow arrowdown" style="border-color: white"></i></button>
+    <div id="clubSelector" ng-class="showClubs ? 'w3-show' : ''" class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+      <a ng-href="#!/clubs/{{clubDescr.clubId}}" 
+	      	ng-repeat="clubDescr in clubDescriptors" 
+	      	class="w3-bar-item w3-button w3-medium">
+      	{{clubDescr.clubName}}
+      </a>
+    </div>
+  </div>
+
+	<div class="w3-container w3-card-4">
+		<h1 class="w3-padding-24 w3-text-blue">{{selectedClub.clubName}}</h1>
+
+		<div class="w3-row w3-border-bottom w3-border-blue">
+			<h3 class="w3-col s12 m6 l4" ng-show="selectedClub.chairMan">{{selectedClub.chairMan.name}}</h3>
+			<h6 class="w3-col s12 m6 l4 w3-text-grey" ng-show="selectedClub.chairMan">Chairman</h6>
+			<h4 class="w3-col s12 m12 l4" ng-show="selectedClub.chairMan">
+				<span ng-hide="selectedClub.chairMan.contactNumbers">n/a</span>
+				<span ng-repeat="phone in selectedClub.chairMan.contactNumbers">
+					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.chairMan.email" class="w3-right">
+					<a href="mailto:{{selectedClub.chairMan.email}">{{selectedClub.chairMan.email}}</a>
+				</span>
+			</h4>
+		</div>
+		<div class="w3-row w3-border-bottom w3-border-blue">	
+			<h3 class="w3-col s12 m6 l4" ng-show="selectedClub.secretary">{{selectedClub.secretary.name}}</h3>
+			<h6 class="w3-col s12 m6 l4 w3-text-grey" ng-show="selectedClub.secretary">Secretary</h6>
+			<h4 class="w3-col s12 m12 l4" ng-show="selectedClub.secretary">
+				<span ng-hide="selectedClub.secretary.contactNumbers">n/a</span>
+				<span ng-repeat="phone in selectedClub.secretary.contactNumbers">
+					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.secretary.email" class="w3-right">
+					<a href="mailto:{{selectedClub.secretary.email}">{{selectedClub.secretary.email}}</a>
+				</span>
+			</h4>
+		</div>
+		<div class="w3-row w3-border-bottom w3-border-blue">	
+			<h3 class="w3-col s12 m6 l4" ng-show="selectedClub.matchSec">{{selectedClub.matchSec.name}}</h3>
+			<h6 class="w3-col s12 m6 l4 w3-text-grey" ng-show="selectedClub.matchSec">Match secretary</h6>
+			<h4 class="w3-col s12 m12 l4" ng-show="selectedClub.matchSec">
+				<span ng-hide="selectedClub.matchSec.contactNumbers">n/a</span>
+				<span ng-repeat="phone in selectedClub.matchSec.contactNumbers">
+					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.matchSec.email" class="w3-right">
+					<a href="mailto:{{selectedClub.matchSec.email}">{{selectedClub.matchSec.email}}</a>
+				</span>
+			</h4>
+		</div>
+		<div class="w3-row w3-border-bottom w3-border-blue">	
+			<h3 class="w3-col s12 m6 l4" ng-show="selectedClub.treasurer">{{selectedClub.treasurer.name}}</h3>
+			<h6 class="w3-col s12 m6 l4 w3-text-grey" ng-show="selectedClub.treasurer">Treasurer</h6>
+			<h4 class="w3-col s12 m12 l4" ng-show="selectedClub.treasurer">
+				<span ng-hide="selectedClub.treasurer.contactNumbers">n/a</span>
+				<span ng-repeat="phone in selectedClub.treasurer.contactNumbers">
+					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
+				</span>
+				<span ng-show="selectedClub.treasurer.email" class="w3-right">
+					<a href="mailto:{{selectedClub.treasurer.email}">{{selectedClub.treasurer.email}}</a>
+				</span>
+			</h4>
+		</div>
+	</div>
+	
+	<div class="w3-container w3-card-4">
+		<h3 class="w3-left w3-padding w3-text-blue">Club nights</h3>
+		<div class="w3-row w3-bottombar" ng-repeat="session in selectedClub.clubSessions">
+			<p class="w3-col s12 m6">{{session.days}}</p>
+			<p class="w3-col s12 m6">{{session.locationName}}</p>
+			<p class="w3-col s12 w3-medium w3-right">{{session.locationAddr}}</p>
+			<p class="w3-col s12 m6">{{session.start}} - {{session.end}}</p>
+			<p class="w3-col s12 m6">{{session.numCourts}} courts</p>
+		</div>
+	</div>
+	
+	<div class="w3-container w3-card-4">
+		<h3 class="w3-left w3-padding w3-text-blue">Match nights</h3>
+		<div class="w3-row w3-bottombar" ng-repeat="session in selectedClub.matchSessions">
+			<p class="w3-col s12 m6">{{session.days}}</p>
+			<p class="w3-col s12 m6">{{session.locationName}}</p>
+			<p class="w3-col s12 w3-medium w3-right">{{session.locationAddr}}</p>
+			<p class="w3-col s12 m6">{{session.start}} - {{session.end}}</p>
+			<p class="w3-col s12 m6">{{session.numCourts}} courts</p>
+		</div>
+	</div>
+</div>

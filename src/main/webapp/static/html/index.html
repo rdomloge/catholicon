@@ -30,43 +30,9 @@
 	</script>
 	<!-- <script async src="https://www.google-analytics.com/analytics_debug.js"></script> -->
 	<script async src="https://www.google-analytics.com/analytics.js"></script>
-		
-	
-	<script src="../script/angular/1.5.8/angular.js"></script>
-	<script src="../script/angular/1.5.8/angular-route.min.js"></script>
-	<script src="../script/angular/1.5.8/angular-resource.js"></script>
-	<script src="../script/angular/1.5.8/angular-cookies.js"></script>
-	
-	<script src="../libs/angular-translate.min.js"></script>
-	<script src="../libs/angular-translate-loader-url.min.js"></script>
 
-	<script src="../script/catholicon-common.js"></script>
-	<script src="../script/catholicon-configure.js"></script>
-	<script src="../script/dataController.js"></script>
-	<script src="../script/niceDate.js"></script>
-	<script src="../script/matchCard.js"></script>
-	<script src="../script/frontPageController.js"></script>
-	<script src="../script/matchListController.js"></script>
-	<script src="../script/fixtureDetailsDirective.js"></script>
-	<script src="../script/leagueMenuItemDirective.js"></script>
-	<script src="../script/divisionMenuItemDirective.js"></script>
-	<script src="../script/upcomingFixtureDirective.js"></script>
-	<script src="../script/secure.js"></script>
-	<script src="../script/jwtLogin.js"></script>
-	
-	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="../font/titillium.css" rel="stylesheet">
-	
-	<link rel="stylesheet" href="../style/w3.css">
-	<link rel="stylesheet" type="text/css" href="../style/common.css">
-	<link rel="stylesheet" type="text/css" href="../style/match.css">
-	<link rel="stylesheet" type="text/css" href="../style/league.css">
-	<link rel="stylesheet" type="text/css" href="../style/matchCard.css">
-	<link rel="stylesheet" type="text/css" href="../style/loadingAnimation.css">
-	<link rel="stylesheet" type="text/css" href="../style/niceDate.css">
-	<link rel="stylesheet" type="text/css" href="../style/frontPage.css">
 </head>
 <body>
 	<!-- Sidebar -->
@@ -83,13 +49,21 @@
 		</div>
 		
 		<div class="w3-bar-block">
-			<a class="w3-bar-item w3-button w3-green" href="#/" onclick="w3_close()" 
+			<a class="w3-bar-item w3-button w3-green" href="#" onclick="w3_close()" 
 					ga-on="click" ga-event-category="home" ga-event-action="click">
 				Home
 			</a>
-			<a class="w3-bar-item w3-button w3-green" href="#/clubs" onclick="w3_close()" 
-					ga-on="click" ga-event-category="home" ga-event-action="click">
+			<a class="w3-bar-item w3-button w3-orange" href="#!/unconfirmed" onclick="w3_close()" 
+					ga-on="click" ga-event-category="unconfirmed" ga-event-action="click">
+				Unconfirmed results
+			</a>
+			<a class="w3-bar-item w3-button w3-orange" href="#!/clubs" onclick="w3_close()" 
+					ga-on="click" ga-event-category="clubs" ga-event-action="click">
 				Clubs
+			</a>
+			<a class="w3-bar-item w3-button w3-orange" href="#!/committee" onclick="w3_close()" 
+					ga-on="click" ga-event-category="committee" ga-event-action="click">
+				League Committee
 			</a>
 			<div ng-controller="seasonListController">
 				<div ng-repeat="season in seasons" class="w3-dropdown-hover" style="padding: 5px 0 5px 0">
@@ -117,11 +91,8 @@
 <div class="w3-main" style="margin-left:200px">
 	<!-- Page Content -->
 	<div id="header" class="largeScreenBanner">
-	  <button class="w3-button w3-xlarge w3-hide-large" style="background-color: initial" onclick="w3_open()">&#9776;</button>
-	  <div class="w3-container">
-	    <h1>Catholicon</h1>
-	    <p class="w3-small"><i>Mobile BDBL</i></p>
-	  </div>
+	  <button class="w3-button w3-xlarge w3-hide-large w3-text-white" onclick="w3_open()" style="background:transparent">&#9776;</button>
+	  <h2 class="w3-button w3-text-white" style="padding: 8px 16px 8px 0px">Catholicon</h2>
 	</div>
 	
 	<div id="thinking" ng-class="contentLoading ? 'slide-in-from-left' : 'slide-out-from-left'" 
@@ -144,63 +115,11 @@
 
 	<!-- Placeholder for views -->
 	<ng-view/>
-	
-	<script>
-		myApp.config(function ($routeProvider) {
-			$routeProvider
-				.when('/season/:season', 
-					{
-						templateUrl: 'partials/leagueList.html',
-						controller: 'leagueListController'
-					})
-				.when('/season/:season/matches/:teamId/list',
-					{
-						templateUrl: 'partials/matches.html'
-					})
-				.when('/season/:season/matches/:teamId/listcompact',
-					{
-						templateUrl: 'partials/matchesCompact.html'
-					})
-				.when('/season/:season/league/:leagueTypeId/divisions',
-					{
-						templateUrl: 'partials/divisionList.html',
-						controller: 'leagueDivisionListController'
-					})
-				.when('/season/:season/league/:league/report',
-					{
-						templateUrl: 'partials/playerReport.html',
-						controller: 'playerReportController'
-					})
-				.when('/season/:season/league/:leagueTypeId/division/:divisionId', 
-					{
-						templateUrl: 'partials/division.html',
-						controller: 'divisionController'
-					})
-				.when('/matchcard/:fixtureId',
-					{
-						templateUrl: 'partials/matchcard/matchCard.html'
-					})
-				.when('/clubs',
-					{
-						templateUrl: 'partials/clubs.html',
-						controller: 'clubController'
-					})
-				.when('/',
-					{
-						templateUrl: 'partials/frontPage.html'
-					})
-				.when('/secure/login', 
-					{
-						templateUrl: 'partials/secure/login.html'
-					})
-				.when('/secure/jwtlogin', 
-					{
-						templateUrl: 'partials/secure/jwtlogin.html'
-					});
-		});
-		
-	</script>
+
 </div>
 	
 </body>
+	
+	
+	<script async src="../script/index.js"></script>
 </html>

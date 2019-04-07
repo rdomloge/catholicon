@@ -3,7 +3,8 @@ myApp.factory('leagueFactory', function($http, $log) {
 	
 	factory.getLeagues = function(season) {
 		$log.info("Fetching list of leagues");
-		return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/list');	
+		//return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/list');
+		return $http.get(Config.MS_LEAGUES_BASE+'/search/findBySeason?season='+season.apiIdentifier);
 	};
 	
 	return factory;
@@ -23,16 +24,22 @@ myApp.directive('leagueMenuItemDirective', function($log) {
 
 myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log', function($scope, leagueFactory, $log) {
 	$scope.load = function() {
-		leagueFactory.getLeagues($scope.season).success(
-			function(data) {
-				$log.debug("Data received for leagues", data);
-				$scope.leagues = data;
+		leagueFactory.getLeagues($scope.season).then(
+			function(page) {
+				$log.debug("Data received for leagues for season "+$scope.season, page.data);
+				$scope.leagues = page.data;
 			}
 		);		
 	}
 	
+	if($scope.season.apiIdentifier == 0) {
+		$scope.load();
+	}
+	
 	$scope.$on('menu_item_selected', function() {
-		$scope.show = false;
+		if($scope.season.apiIdentifier != 0) {
+			$scope.show = false;
+		}
 	});
 }]);
 

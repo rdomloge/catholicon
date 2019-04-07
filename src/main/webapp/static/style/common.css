@@ -1,6 +1,5 @@
 html,body {
 	font-size: 16px;
-	line-height: 1em;
 }
 
 .fixtureDetailsDialogue {
@@ -18,28 +17,44 @@ a, u {
 }
 
 #header {
-	line-height: 3em;
+	line-height: 2em;
+}
+
+.button {
+	font-size: 15px;
 }
 
 .largeScreenBanner {
 	background-image: url(../img/bannerImage.jpg);
     background-position: -50px -100px;	
     background-repeat:no-repeat;
-    background-color: #000724;
+}
+
+@media screen and (min-width:600px) {
+	.largeScreenBanner {
+		padding-left: 5px;
+		background-color: #000526;
+	}
+	
+	.largeScreenBanner h2 {
+		background-color: transparent;
+	}
+}
+
+@media screen and (min-width:993px) {
+	.largeScreenBanner {
+		padding: 50px 0 50px 0;
+	}
 }
 
 @media screen and (max-width:600px) {
 	html,body {
-		font-size: 130%;
+		font-size: 120%;
 	}
 	
 	.largeScreenBanner {
 		background-image: inherit;
-	}
-	
-	div#header {
-	    background-color: #009688 ! important;
-	    line-height: 1.5em;
+		background-color: #607d8a;
 	}
 	
 	span.burger {
@@ -51,14 +66,13 @@ a, u {
 	}
 	
 	table#leagueTable, table#leagueTable td {
-		font-size: 75%;
-		width=100%;
+		font-size: 65%;
+		width: 100%;
 	}
 	
 	table#playerReportTable, table#playerReportTable td {
 		font-size: 65%;
-		width=100%;
-		table-layout: fixed;
+		width: 100%;
 		word-wrap: break-word;
 	}
 	
@@ -68,12 +82,12 @@ a, u {
 	
 	table#leagueTable th {
 		font-size: 55%;
-		width=100%;
+		width: 100%;
 	}
 	
 	table#playerReportTable th {
 		font-size: 55%;
-		width=100%;
+		width: 100%;
 	}
 	
 	td a.rd-division-link-to-matches {
@@ -98,3 +112,29 @@ a, u {
 	}
 }
 
+i.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.arrowright {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.arrowleft {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.arrowup {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.arrowdown {
+    transform: rotate(45deg) translate(0px, -5px);
+    -webkit-transform: rotate(45deg) translate(0px, -5px);
+}
