@@ -154,7 +154,17 @@ pipeline {
 		    steps {
 		        script {
 		        	echo "Deploying PROD build tagged '$BUILD_NUMBER'"
-		            sh 'docker kill catholicon || true'
+		        	try {
+			            sh 'docker kill catholicon'
+		        	} catch(err) {
+		        		echo 'Failed to stop prod'      
+		        	}
+		        	
+		        	try {
+		        	    sh 'docker rm catholicon'
+		        	} catch(err) {
+						echo 'Failed to remove prod'
+		        	}
 		            sh "docker run -d --name catholicon -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
@@ -198,7 +208,17 @@ pipeline {
 		    steps{
 			    script {
 			        echo 'In a feature branch - deploying on a random port'
-			        sh 'docker kill catholicon-feature || true'
+			        try {
+			            sh 'docker kill catholicon-feature'
+		        	} catch(err) {
+		        		echo 'Failed to stop feature'      
+		        	}
+		        	
+		        	try {
+		        	    sh 'docker rm catholicon-feature'
+		        	} catch(err) {
+						echo 'Failed to remove feature'
+		        	}
 			        sh "docker run -d --name catholicon-feature -P localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 			    }
 		    }
