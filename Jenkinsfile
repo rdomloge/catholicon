@@ -177,8 +177,10 @@ pipeline {
 		stage('Deploy-feature') {
 		    when{
 		        not {
-		            branch "develop"
-		            branch "master"
+		        	anyOf{
+			            branch "develop"
+			            branch "master"
+		        	}
 		        }
 		    }
 		    
