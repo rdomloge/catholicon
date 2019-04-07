@@ -146,7 +146,7 @@ pipeline {
 		    steps {
 		        script {
 		            sh 'docker kill catholicon || true'
-		            sh 'docker run -d -p 8080:8080 localhost:5000/rdomloge/catholicon'
+		            sh "docker run -d -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
 		}
