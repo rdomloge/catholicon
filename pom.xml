@@ -5,7 +5,7 @@
 	<groupId>com.domloge</groupId>
 	<artifactId>Catholicon</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.89</version>
+	<version>1.0.90-SNAPSHOT</version>
 	<name>Catholicon - 'Better BDBL'</name>
 	<!-- Test comment to provoke CICD build -->
 
@@ -327,6 +327,6 @@
 	   <connection>scm:git:git@github.com:rdomloge/catholicon.git</connection>
 	   <url>scm:git:git@github.com:rdomloge/catholicon.git</url>
 	   <developerConnection>scm:git:git@github.com:rdomloge/catholicon.git</developerConnection>
-    <tag>Catholicon-1.0.89</tag>
+    <tag>Catholicon-1.0.18</tag>
   </scm>
 </project>
