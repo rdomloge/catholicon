@@ -171,7 +171,7 @@ pipeline {
 		        	try {
 			            sh 'docker kill catholicon-pre-prod'
 		        	} catch(err) {
-		        		echo err      
+		        		echo 'Failed to stop pre-prod'      
 		        	}
 
 		            sh "docker run -d --name catholicon-pre-prod -p 8090:8090 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
