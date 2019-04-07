@@ -80,7 +80,7 @@ pipeline {
 					// This installs the standard wget - the one that ships with Jenkins BO doesn't have all the options available					
 					sh 'apk add wget'
 					// This makes the script wait until the container has warmed up
-					timeout(30) {
+					timeout(time: 30, unit: 'SECONDS') {
 						waitUntil {
 							sleep 4
 							def r = sh script: "wget -q http://${CONTAINER_IP}:8080/seasons -O /dev/null", returnStatus: true
