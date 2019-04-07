@@ -184,12 +184,13 @@ pipeline {
 		        }
 		    }
 		    
-		    script {
-		        echo 'In a feature branch - deploying on a random port'
-		        sh 'docker kill catholicon-feature || true'
-		        sh "docker run -d --name catholicon-feature -P localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
+		    steps{
+			    script {
+			        echo 'In a feature branch - deploying on a random port'
+			        sh 'docker kill catholicon-feature || true'
+			        sh "docker run -d --name catholicon-feature -P localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
+			    }
 		    }
-
 		}
 
 	}
