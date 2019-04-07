@@ -135,9 +135,10 @@ pipeline {
 		    }
 		    post {
 			failure {
-				cat ~/.ssh/id_rsa.pub
+			    script {
+				sh 'cat ~/.ssh/id_rsa.pub'
+			    }
 		        }
-
     		    }
 		}
 	}
