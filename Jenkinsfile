@@ -173,7 +173,13 @@ pipeline {
 		        	} catch(err) {
 		        		echo 'Failed to stop pre-prod'      
 		        	}
-
+		        	
+		        	try {
+		        	    sh 'docker rm catholicon-pre-prod'
+		        	} catch(err) {
+						echo 'Failed to remove pre-prod'
+		        	}
+		        	
 		            sh "docker run -d --name catholicon-pre-prod -p 8090:8090 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
