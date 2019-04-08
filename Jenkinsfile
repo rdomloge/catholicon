@@ -133,7 +133,7 @@ pipeline {
 
 		    steps {
 		        script {
-		            sh "mvn -Dmaven.test.skip=true release:clean release:prepare release:perform -B"
+		            sh "mvn -Dmaven.test.skip=true release:clean release:prepare -DscmCommentPrefix='[skip ci]' release:perform -B"
 		        }
 
 		    }
