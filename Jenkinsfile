@@ -140,7 +140,7 @@ pipeline {
 		    post {
 				failure {
 			    	script {
-						sh 'cat ~/.ssh/id_rsa.pub'
+						sh 'ssh -vT git@github.com'
 			    	}
 		        }
     		}
