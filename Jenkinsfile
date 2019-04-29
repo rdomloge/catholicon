@@ -166,7 +166,7 @@ pipeline {
 		        	} catch(err) {
 						echo 'Failed to remove prod'
 		        	}
-		            sh "docker run -d --name catholicon -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
+		            sh "docker run -d --network=catholicon --name catholicon -p 8080:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
 		        }
 		    }
 		}
