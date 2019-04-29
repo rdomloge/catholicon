@@ -129,6 +129,7 @@ pipeline {
 		stage('Tag & Release') {
 			when{
 			    branch "master"
+			    changelog '^((?!maven-release-plugin).)*$'
 			}
 
 		    steps {
