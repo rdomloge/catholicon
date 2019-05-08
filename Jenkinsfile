@@ -43,7 +43,7 @@ pipeline {
 	    		script {
 		        	def workspace = env.WORKSPACE
         			echo "workspace directory is ${workspace}"
-	        		IMAGE = docker.build(registry + ":$BUILD_NUMBER")
+	        		IMAGE = docker.build(registry + ":latest")
 	        	}
 	      	}
 	    }
@@ -71,7 +71,7 @@ pipeline {
 	    			// Start the container to run the integration tests against
 	    			sh '''
 	    				docker run --rm -d --network="cicd" --name catholicon-integration-test -p 9090:8080 \
-	    				rdomloge/catholicon:$BUILD_NUMBER
+	    				rdomloge/catholicon
 					'''
 					
 					CONTAINER_IP = sh(script: "docker container inspect -f '{{ .NetworkSettings.Networks.cicd.IPAddress }}' catholicon-integration-test", returnStdout:	true).trim()
@@ -166,7 +166,7 @@ pipeline {
 		        	} catch(err) {
 						echo 'Failed to remove prod'
 		        	}
-		            sh "docker run -d --network=catholicon --name catholicon -p 80:8080 localhost:5000/rdomloge/catholicon:$BUILD_NUMBER"
+		            sh "docker run -d --network=catholicon --name catholicon -p 80:8080 localhost:5000/rdomloge/catholicon"
 		        }
 		    }
 		}
