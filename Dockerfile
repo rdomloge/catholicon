@@ -1,18 +1,10 @@
-FROM openjdk:8-jdk-alpine
-RUN apk update
+FROM arm32v7/openjdk:8-jdk-alpine
 
-## UTF-8
-#RUN locale-gen en_US.UTF-8
-ENV LANG       en_US.UTF-8
-ENV LC_ALL     en_US.UTF-8
+# Enable us to build ARM images in an i386 environment
+COPY qemu-arm-static /usr/bin/qemu-arm-static
 
 COPY target/catholicon.war ./catholicon.war
-RUN echo java -jar catholicon.war\ 
- --BASE_URL=http://bdbl.org.uk \
- --SPIDER_FORCE_REFRESH=true \
-> catholicon.sh
-RUN chmod a+x catholicon.sh
 
 EXPOSE 81
 
-ENTRYPOINT ["sh", "catholicon.sh"]
+ENTRYPOINT ["/usr/bin/java", "-jar", "catholicon.war", "--BASE_URL=http://bdbl.org.uk", "--SPIDER_FORCE_REFRESH=true"]
