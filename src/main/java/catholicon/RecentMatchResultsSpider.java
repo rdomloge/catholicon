@@ -24,7 +24,6 @@ import org.springframework.util.StopWatch;
 import catholicon.controller.MatchCardController;
 import catholicon.dao.ChangeDao;
 import catholicon.dao.DivisionDao;
-import catholicon.dao.LeagueDao;
 import catholicon.dao.Loader;
 import catholicon.dao.MatchCardDao;
 import catholicon.dao.MatchDao;
@@ -33,7 +32,6 @@ import catholicon.domain.Change.ActionCode;
 import catholicon.domain.Division;
 import catholicon.domain.Division.TeamPosition;
 import catholicon.domain.DivisionDescriptor;
-import catholicon.domain.League;
 import catholicon.domain.Match;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
@@ -56,7 +54,6 @@ public class RecentMatchResultsSpider {
 	private Loader loader;
 	private MatchDao matchDao = new MatchDao();
 	private DivisionDao divisionDao = new DivisionDao();
-	private LeagueDao leagueDao = new LeagueDao();
 	
 	@Autowired
 	private MatchCardController matchCardController;
@@ -84,7 +81,6 @@ public class RecentMatchResultsSpider {
 		sortedRecentMatches.clear();
 		ThreadLocalLoaderFilter.set(loader);
 		try {
-			new LeagueSpider().run();
 			lastSpiderFailed = false;
 			sortedRecentMatches.addAll(recentMatches);
 			Collections.sort(sortedRecentMatches, new Comparator<Match>(){
@@ -115,18 +111,6 @@ public class RecentMatchResultsSpider {
 		return sortedRecentMatches;
 	}
 
-	class LeagueSpider implements Runnable {
-		
-		@Override
-		public void run() {
-			
-			List<League> leagues = leagueDao.list(0);
-			for (League league : leagues) {
-				new DivisionSpider(league.getLeagueTypeId()).run();
-			}
-		}
-	}
-	
 	class DivisionSpider extends Wrapper {
 		
 		private int leagueTypeId;

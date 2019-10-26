@@ -17,18 +17,14 @@ import catholicon.controller.ClubController;
 import catholicon.controller.CommitteeController;
 import catholicon.controller.DivisionController;
 import catholicon.controller.FixtureDetailsController;
-import catholicon.controller.LeagueController;
 import catholicon.controller.MatchCardController;
 import catholicon.controller.MatchController;
-import catholicon.controller.SeasonController;
 import catholicon.dao.Loader;
 import catholicon.domain.Club;
 import catholicon.domain.Division;
 import catholicon.domain.Division.TeamPosition;
 import catholicon.domain.DivisionDescriptor;
-import catholicon.domain.League;
 import catholicon.domain.Match;
-import catholicon.domain.Season;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
 @Component
@@ -46,15 +42,6 @@ public class CachePrimerSpider {
 	
 	@Value("${SPIDER_MAX_SEASONS:1}")
 	private int maxSeasonsToSpider;
-	
-	@Autowired
-	private SeasonController seasonController;
-	
-	@Autowired
-	private LeagueController leagueController;
-	
-	@Autowired
-	private DivisionController divisionController;
 	
 	@Autowired
 	private MatchController matchController;
@@ -79,7 +66,6 @@ public class CachePrimerSpider {
 			
 			exec.execute(new ClubsSpider());
 			exec.execute(new CommitteeSpider());
-			exec.execute(new SeasonSpider());
 		}
 		else {
 			LOGGER.info("Cache primer Spider disabled");
@@ -142,79 +128,49 @@ public class CachePrimerSpider {
 		
 	}
 	
-	class SeasonSpider extends Wrapper {
-		@Override
-		public void _run() {
-			LOGGER.debug("Cache primer spider loading seasons");
-			
-			Season[] seasons = seasonController.getSeasonList().getBody();
-			for (int i = 0; i < Math.min(seasons.length, maxSeasonsToSpider); i++) {
-				exec.execute(new LeagueSpider(seasons[i]));
-			}
-		}
-	}
+//	class DivisionsSpider extends Wrapper {
+//		
+//		private League league;
+//		
+//		public DivisionsSpider(League league) {
+//			this.league = league;
+//		}
+//
+//		@Override
+//		public void _run() {
+//			LOGGER.debug("Spider loading divisions for league "+league.getLeagueTypeId()+" for "+league.getSeason());
+//			
+//			List<DivisionDescriptor> divisionsForLeague = divisionController.getDivisionsForLeague(league.getLeagueTypeId(), league.getSeason()).getBody();
+//			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
+//				exec.execute(new DivisionSpider(divisionDescriptor));
+//			}
+//		}
+//	}
 	
-	class LeagueSpider extends Wrapper {
-		private Season season;
-		
-		public LeagueSpider(Season season) {
-			this.season = season;
-		}
-
-		@Override
-		public void _run() {
-			LOGGER.debug("Spider loading leagues for "+season.getSeasonStartYear());
-			List<League> leagues = leagueController.listLeagues(season.getApiIdentifier()).getBody();
-			
-			for (League league : leagues) {
-				exec.execute(new DivisionsSpider(league));
-			}
-		}
-	}
-	
-	class DivisionsSpider extends Wrapper {
-		
-		private League league;
-		
-		public DivisionsSpider(League league) {
-			this.league = league;
-		}
-
-		@Override
-		public void _run() {
-			LOGGER.debug("Spider loading divisions for league "+league.getLeagueTypeId()+" for "+league.getSeason());
-			
-			List<DivisionDescriptor> divisionsForLeague = divisionController.getDivisionsForLeague(league.getLeagueTypeId(), league.getSeason()).getBody();
-			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
-				exec.execute(new DivisionSpider(divisionDescriptor));
-			}
-		}
-	}
-	
-	class DivisionSpider extends Wrapper {
-		
-		private DivisionDescriptor divisionDescriptor;
-
-		public DivisionSpider(DivisionDescriptor divisionDescriptor) {
-			this.divisionDescriptor = divisionDescriptor;
-		}
-
-		@Override
-		public void _run() {
-			String leagueTypeId = ""+divisionDescriptor.getLeagueTypeId();
-			int divisionId = divisionDescriptor.getDivisionId();
-			int seasonStartYear = divisionDescriptor.getSeason();
-			LOGGER.debug("Spider loading division "+divisionId+" for league "+leagueTypeId+" in "+seasonStartYear);
-			Division division = divisionController.getDivision(
-					leagueTypeId, 
-					divisionId, 
-					seasonStartYear).getBody();
-			TeamPosition[] teamPositions = division.getPositions();
-			for (TeamPosition teamPosition : teamPositions) {
-				exec.execute(new MatchesSpider(seasonStartYear, teamPosition));
-			}
-		}
-	}
+//	class DivisionSpider extends Wrapper {
+//		
+//		private DivisionDescriptor divisionDescriptor;
+//
+//		public DivisionSpider(DivisionDescriptor divisionDescriptor) {
+//			this.divisionDescriptor = divisionDescriptor;
+//		}
+//
+//		@Override
+//		public void _run() {
+//			String leagueTypeId = ""+divisionDescriptor.getLeagueTypeId();
+//			int divisionId = divisionDescriptor.getDivisionId();
+//			int seasonStartYear = divisionDescriptor.getSeason();
+//			LOGGER.debug("Spider loading division "+divisionId+" for league "+leagueTypeId+" in "+seasonStartYear);
+//			Division division = divisionController.getDivision(
+//					leagueTypeId, 
+//					divisionId, 
+//					seasonStartYear).getBody();
+//			TeamPosition[] teamPositions = division.getPositions();
+//			for (TeamPosition teamPosition : teamPositions) {
+//				exec.execute(new MatchesSpider(seasonStartYear, teamPosition));
+//			}
+//		}
+//	}
 	
 	class MatchesSpider extends Wrapper {
 
