@@ -5,7 +5,7 @@ myApp.factory('matchCardFactory', function($http, $log) {
 	
 	factory.getMatchCard = function(fixtureId) {
 		$log.info("Loading match card for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/matchcard/'+fixtureId);
+		return $http.get(Config.BASE_URL+'/matchcards/search/findByFixtureId?fixtureId='+fixtureId);
 	}
 	
 	return factory;
