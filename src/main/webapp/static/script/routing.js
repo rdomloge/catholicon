@@ -25,8 +25,7 @@ myApp.config(function ($routeProvider) {
 			})
 		.when('/season/:season/league/:leagueTypeId/division/:divisionId', 
 			{
-				templateUrl: 'partials/division.html',
-				controller: 'divisionController'
+				templateUrl: 'partials/division.html'
 			})
 		.when('/matchcard/:fixtureId',
 			{

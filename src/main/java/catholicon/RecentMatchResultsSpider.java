@@ -17,21 +17,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+import org.springframework.web.client.RestTemplate;
 
 import catholicon.controller.MatchCardController;
 import catholicon.dao.ChangeDao;
 import catholicon.dao.DivisionDao;
 import catholicon.dao.Loader;
-import catholicon.dao.MatchCardDao;
 import catholicon.dao.MatchDao;
 import catholicon.domain.Change;
 import catholicon.domain.Change.ActionCode;
 import catholicon.domain.Division;
 import catholicon.domain.Division.TeamPosition;
 import catholicon.domain.DivisionDescriptor;
+import catholicon.domain.LightWeightLeagueForSpidering;
 import catholicon.domain.Match;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
@@ -51,6 +56,8 @@ public class RecentMatchResultsSpider {
 	@Value("${RECENT_MATCH_RESULT_SPIDER_DISABLED:false}")
 	private boolean disableSpider;
 	
+	private RestTemplate restTemplate;
+	
 	private Loader loader;
 	private MatchDao matchDao = new MatchDao();
 	private DivisionDao divisionDao = new DivisionDao();
@@ -64,6 +71,11 @@ public class RecentMatchResultsSpider {
 	private Date cutOff;
 	
 	private boolean lastSpiderFailed;
+	
+	@Autowired
+	public RecentMatchResultsSpider(RestTemplateBuilder builder) {
+		this.restTemplate = builder.build();
+	}
 	
 
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
@@ -82,6 +94,7 @@ public class RecentMatchResultsSpider {
 		ThreadLocalLoaderFilter.set(loader);
 		try {
 			lastSpiderFailed = false;
+			new LeagueSpider().run();
 			sortedRecentMatches.addAll(recentMatches);
 			Collections.sort(sortedRecentMatches, new Comparator<Match>(){
 				@Override
@@ -110,27 +123,18 @@ public class RecentMatchResultsSpider {
 		if(lastSpiderFailed) throw new DaoException("Spider failed");
 		return sortedRecentMatches;
 	}
-
-	class DivisionSpider extends Wrapper {
-		
-		private int leagueTypeId;
-
-		public DivisionSpider(int leagueTypeId) {
-			this.leagueTypeId = leagueTypeId;
-		}
+	
+	class LeagueSpider extends Wrapper {
 
 		@Override
 		protected void _run() {
-			List<DivisionDescriptor> divisionsForLeague = divisionDao.getDivisionsForLeague(leagueTypeId, 0);
-			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
-				Division division = divisionDao.load(""+leagueTypeId, divisionDescriptor.getDivisionId(), 0);
-				TeamPosition[] teamPositions = division.getPositions();
-				for (TeamPosition teamPosition : teamPositions) {
-					MatchSpider matchSpider = new MatchSpider(teamPosition.getTeamId());
-					matchSpider.run();
-				}
-			}
+			System.out.println("************************************************");
+			System.out.println("**                                            **");
+			System.out.println("** Recent match spider broken - please fixme  **");
+			System.out.println("**                                            **");
+			System.out.println("************************************************");
 		}
+		
 	}
 	
 	class MatchSpider extends Wrapper {

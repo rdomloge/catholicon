@@ -1,15 +1,3 @@
-myApp.factory('leagueFactory', function($http, $log) {
-	var factory = {};
-	
-	factory.getLeagues = function(season) {
-		$log.info("Fetching list of leagues");
-		//return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/list');
-		return $http.get(Config.MS_LEAGUES_BASE+'/search/findBySeason?season='+season.apiIdentifier);
-	};
-	
-	return factory;
-});
-
 myApp.directive('leagueMenuItemDirective', function($log) {
 	return {
 		restrict : 'AE',
@@ -22,14 +10,11 @@ myApp.directive('leagueMenuItemDirective', function($log) {
 	}
 });
 
-myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log', function($scope, leagueFactory, $log) {
+myApp.controller('leagueMenuItemController', function($scope, seasonFactory, $log, $q) {
 	$scope.load = function() {
-		leagueFactory.getLeagues($scope.season).then(
-			function(page) {
-				$log.debug("Data received for leagues for season "+$scope.season, page.data);
-				$scope.leagues = page.data;
-			}
-		);		
+		$q.when(seasonFactory.getSeasonList()).then(function(page) {
+			$scope.leagues = $scope.season.leagues;
+		});
 	}
 	
 	if($scope.season.apiIdentifier == 0) {
@@ -41,5 +26,5 @@ myApp.controller('leagueMenuItemController', ['$scope', 'leagueFactory', '$log',
 			$scope.show = false;
 		}
 	});
-}]);
+});
 

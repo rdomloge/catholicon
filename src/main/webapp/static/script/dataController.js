@@ -1,22 +1,14 @@
 
-myApp.factory('dataFactory', function($http, $log) {
+myApp.factory('seasonFactory', function($http, $log) {
 	var factory = {};
+	var seasons;
+	
+	$log.info("Loading seasons list");
+	seasons = $http.get(Config.MS_SEASONS_BASE+'?sort=seasonStartYear,desc');
 	
 	factory.getSeasonList = function() {
-		$log.info("Loading seasons list");
-//		return $http.get(Config.BASE_URL+'/seasons');
-		return $http.get(Config.MS_SEASONS_BASE+'?sort=seasonStartYear,desc');
+		return seasons;
 	}
-	
-	factory.getDivisions = function(leagueTypeId, season) {
-		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+'/divisions');	
-	}
-
-	factory.getDivision = function(leagueTypeId, divisionId, season) {
-		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
-		return $http.get(Config.BASE_URL+'/season/'+season+'/league/'+leagueTypeId+"/division/"+divisionId);
-	};
 	
 	return factory;
 });
@@ -33,33 +25,8 @@ myApp.factory('errorHandlerFactory', function($log, $rootScope) {
 	return fac;
 });
 
-myApp.controller('leagueDivisionListController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	$log.debug("Fetching league "+$routeParams.leagueTypeId +" divisions");
-	dataFactory.getDivisions($routeParams.leagueTypeId, $routeParams.season).then(function(page) {
-		$log.debug("Data received for league "+$routeParams.leagueTypeId+" divisions", page.data);
-		$scope.divisions = page.data;
-	});
-}]);
-
-myApp.controller('leagueController', ['$routeParams', 'dataFactory', '$log', '$scope', function($routeParams, dataFactory, $log, $scope) {
-	$log.debug("Fetching league "+$routeParams.leagueTypeId+' for season '+$routeParams.season);
-	
-	dataFactory.getLeague($routeParams.leagueTypeId, $routeParams.season).then(function (page){
-		$log.debug("Data received for league", page.data);
-		$scope.league = page.data;
-	});
-}]);
-
-myApp.controller('divisionController', ['$routeParams', 'dataFactory', '$log', '$scope', '$timeout', '$rootScope', function($routeParams, dataFactory, $log, $scope, $timeout, $rootScope) {
-	dataFactory.getDivision($routeParams.leagueTypeId, $routeParams.divisionId, $routeParams.season)
-			.then(function(page) {
-		$log.debug("Data received for division "+$routeParams.divisionId, page.data);
-		$scope.division = page.data;
-	});
-}]);
-
-myApp.controller('seasonListController', function($scope, $log, dataFactory) {
-	dataFactory.getSeasonList().then(function(page) {
+myApp.controller('seasonListController', function($scope, $log, seasonFactory, $q) {
+	$q.when(seasonFactory.getSeasonList()).then(function(page) {
 		$log.debug("Data received for seasons", page.data._embedded.seasons);
 		$scope.seasons = page.data._embedded.seasons;
 	});

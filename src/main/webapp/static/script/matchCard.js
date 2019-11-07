@@ -8,6 +8,11 @@ myApp.factory('matchCardFactory', function($http, $log) {
 		return $http.get(Config.BASE_URL+'/matchcards/search/findByFixtureId?fixtureId='+fixtureId);
 	}
 	
+	factory.getMatchResult = function(fixtureId) {
+		$log.info("Loading result for "+fixtureId);
+		return $http.get(Config.BASE_URL+'/matchcards/search/findByFixtureId?fixtureId='+fixtureId+'&projection=result');
+	}
+	
 	return factory;
 });
 

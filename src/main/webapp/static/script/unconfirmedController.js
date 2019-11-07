@@ -24,8 +24,7 @@ myApp.controller('unconfirmedController',
 			}, errorHandlerFactory.getHandler());
 			
 			$scope.mergeFixtureDetails = function(result) {
-				matchCardFactory.getMatchCard(result.fixtureId).then(function(page) {
-//					$scope.details[fixtureId] = page.data;
+				matchCardFactory.getMatchResult(result.fixtureId).then(function(page) {
 					angular.extend(result, page.data);
 					result.merged = true;
 				});

@@ -22,3 +22,4 @@ catholicon.log
 
 .idea/*
 /target/
+.vscode/

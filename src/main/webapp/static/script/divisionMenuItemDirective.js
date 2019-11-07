@@ -1,14 +1,3 @@
-myApp.factory('divisionFactory', function($http, $log) {
-	var factory = {};
-	
-	factory.getDivisions = function(season, leagueTypeId) {
-		$log.info("Loading divisions for league " + leagueTypeId);
-		return $http.get(Config.BASE_URL+'/season/'+season.apiIdentifier+'/league/'+leagueTypeId+'/divisions');		
-	};
-	
-	return factory;
-});
-
 myApp.directive('divisionMenuItemDirective', function($log) {
 	return {
 		restrict : 'AE',
@@ -22,11 +11,11 @@ myApp.directive('divisionMenuItemDirective', function($log) {
 	}
 });
 
-myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$log', '$rootScope', function($scope, divisionFactory, $log, $rootScope) {
+myApp.controller('divisionMenuItemController', function($scope, seasonFactory, $log, $rootScope, $q) {
 	$scope.load = function() {
-		divisionFactory.getDivisions($scope.season, $scope.league.leagueTypeId).then(function(page) {
-			$log.debug("Data received for divisions", page.data);
-			$scope.divisions = page.data;
+		
+		$q.when(seasonFactory.getSeasonList()).then(function(page) {
+			$scope.divisions = $scope.league.divisions;
 		});
 	}
 	
@@ -45,5 +34,5 @@ myApp.controller('divisionMenuItemController', ['$scope', 'divisionFactory', '$l
 		$rootScope.$broadcast('menu_item_selected');
 		w3_close();
 	}
-}]);
+});
 

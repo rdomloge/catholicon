@@ -7,7 +7,7 @@
 		<span class="w3-xlarge" ng-show="showDetails" style="font-family: monospace;" ng-cloak>[-]</span>
 		<span>{{data.added}}</span>
 	</div>
-	<p ng-repeat="p in data.paragraphs" ng-show="showDetails" ng-cloak>
+	<p ng-repeat="p in data.paragraphs track by $index" ng-show="showDetails" ng-cloak>
 		{{p}}
 	</p>
 </div>
