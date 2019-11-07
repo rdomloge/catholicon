@@ -1,0 +1,7 @@
+FROM openjdk:8-jdk-alpine
+
+COPY target/catholicon.war ./catholicon.war
+
+EXPOSE 81
+
+ENTRYPOINT ["/usr/bin/java", "-jar", "catholicon.war", "--BASE_URL=http://bdbl.org.uk", "--SPIDER_FORCE_REFRESH=true"]
