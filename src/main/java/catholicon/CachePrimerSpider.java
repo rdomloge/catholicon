@@ -15,15 +15,11 @@ import org.springframework.stereotype.Component;
 
 import catholicon.controller.ClubController;
 import catholicon.controller.CommitteeController;
-import catholicon.controller.DivisionController;
 import catholicon.controller.FixtureDetailsController;
 import catholicon.controller.MatchCardController;
 import catholicon.controller.MatchController;
 import catholicon.dao.Loader;
 import catholicon.domain.Club;
-import catholicon.domain.Division;
-import catholicon.domain.Division.TeamPosition;
-import catholicon.domain.DivisionDescriptor;
 import catholicon.domain.Match;
 import catholicon.filter.ThreadLocalLoaderFilter;
 
@@ -171,32 +167,6 @@ public class CachePrimerSpider {
 //			}
 //		}
 //	}
-	
-	class MatchesSpider extends Wrapper {
-
-		private TeamPosition teamPosition;
-		
-		private int seasonStartYear;
-		
-		public MatchesSpider(int seasonStartYear, TeamPosition teamPosition) {
-			this.teamPosition = teamPosition;
-			this.seasonStartYear = seasonStartYear;
-		}
-
-		@Override
-		public void _run() {
-			LOGGER.debug("Spider loading matches for team "+teamPosition.getTeamId()+" in "+seasonStartYear);
-			Match[] matches = matchController.loadMatches(""+teamPosition.getTeamId(), seasonStartYear).getBody();
-			for (Match match : matches) {
-				if(null != match.getFixtureId()) {
-					exec.execute(new FixtureDetailsSpider(match));
-				}
-				if(match.isPlayed()) {
-					exec.execute(new MatchSpider(match));
-				}
-			}
-		}
-	}
 	
 	class FixtureDetailsSpider extends Wrapper {
 
