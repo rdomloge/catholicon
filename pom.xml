@@ -124,18 +124,6 @@
 			<version>1.0.2</version>
 		</dependency>
 
-		<!-- SWAGGER -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.6.1</version>
-		</dependency>
-		
 		<!--  T E S T I N G -->
 		
 		<dependency>
@@ -245,6 +233,7 @@
 								<include>${basedir}/src/main/webapp/static/script/committeeController.js</include>
 								<include>${basedir}/src/main/webapp/static/script/niceDate.js</include>
 								<include>${basedir}/src/main/webapp/static/script/unconfirmedController.js</include>
+								<include>${basedir}/src/main/webapp/static/script/divisionReportController.js</include>
 							</includes>
 							<!-- files to exclude, path relative to output's directory <excludes> 
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
