@@ -4,7 +4,7 @@ myApp.factory('divisionReportFactory', function($http, $log) {
 	
 	divisionReportFactory.getDivisionReport = function(leagueTypeId, divisionId, season) {
 		$log.info("Loading division "+divisionId+" for "+leagueTypeId);
-		return $http.get(Config.BASE_URL+'/divisions/'+divisionId+'/report');
+		return $http.get(Config.BASE_URL+'/divisions/'+divisionId+'/report?season='+season);
 	};
 	
 	return divisionReportFactory;
