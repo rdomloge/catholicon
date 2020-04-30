@@ -15,17 +15,12 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import org.springframework.web.client.RestTemplate;
 
-import catholicon.controller.MatchCardController;
 import catholicon.dao.ChangeDao;
-import catholicon.dao.DivisionDao;
 import catholicon.dao.Loader;
 import catholicon.dao.MatchDao;
 import catholicon.domain.Change;
@@ -43,20 +38,14 @@ public class RecentMatchResultsSpider {
 	
 	private static final DateFormat matchDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
 	
-	@Value("${BASE_URL:http://192.168.0.14}")
+	@Value("${BASE_URL:http://bdbl.org.uk}")
 	private String BASE;
 	
 	@Value("${RECENT_MATCH_RESULT_SPIDER_DISABLED:false}")
 	private boolean disableSpider;
 	
-	private RestTemplate restTemplate;
-	
 	private Loader loader;
 	private MatchDao matchDao = new MatchDao();
-	private DivisionDao divisionDao = new DivisionDao();
-	
-	@Autowired
-	private MatchCardController matchCardController;
 	
 	private Set<Match> recentMatches = new HashSet<>();
 	private List<Match> sortedRecentMatches = new LinkedList<>();
@@ -65,10 +54,6 @@ public class RecentMatchResultsSpider {
 	
 	private boolean lastSpiderFailed;
 	
-	@Autowired
-	public RecentMatchResultsSpider(RestTemplateBuilder builder) {
-		this.restTemplate = builder.build();
-	}
 	
 
 	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
@@ -164,7 +149,6 @@ public class RecentMatchResultsSpider {
 							recentMatches.add(match);
 							LOGGER.debug("Match {} on {} is recent: {}",
 									match.getFixtureId(),match.getDate(),dateStr);
-							matchCardController.loadMatchCard(match.getFixtureId()); // cache a recent match card result, for good measure
 						}
 						else {
 							LOGGER.debug("Match {} on {} is too old", match.getFixtureId(), dateStr);

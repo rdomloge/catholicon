@@ -16,8 +16,6 @@ import org.springframework.stereotype.Component;
 import catholicon.controller.ClubController;
 import catholicon.controller.CommitteeController;
 import catholicon.controller.FixtureDetailsController;
-import catholicon.controller.MatchCardController;
-import catholicon.controller.MatchController;
 import catholicon.dao.Loader;
 import catholicon.domain.Club;
 import catholicon.domain.Match;
@@ -40,13 +38,7 @@ public class CachePrimerSpider {
 	private int maxSeasonsToSpider;
 	
 	@Autowired
-	private MatchController matchController;
-	
-	@Autowired
 	private FixtureDetailsController fixtureDetailsController;
-	
-	@Autowired
-	private MatchCardController matchCardController;
 	
 	@Autowired
 	private ClubController clubController;
@@ -124,49 +116,6 @@ public class CachePrimerSpider {
 		
 	}
 	
-//	class DivisionsSpider extends Wrapper {
-//		
-//		private League league;
-//		
-//		public DivisionsSpider(League league) {
-//			this.league = league;
-//		}
-//
-//		@Override
-//		public void _run() {
-//			LOGGER.debug("Spider loading divisions for league "+league.getLeagueTypeId()+" for "+league.getSeason());
-//			
-//			List<DivisionDescriptor> divisionsForLeague = divisionController.getDivisionsForLeague(league.getLeagueTypeId(), league.getSeason()).getBody();
-//			for (DivisionDescriptor divisionDescriptor : divisionsForLeague) {
-//				exec.execute(new DivisionSpider(divisionDescriptor));
-//			}
-//		}
-//	}
-	
-//	class DivisionSpider extends Wrapper {
-//		
-//		private DivisionDescriptor divisionDescriptor;
-//
-//		public DivisionSpider(DivisionDescriptor divisionDescriptor) {
-//			this.divisionDescriptor = divisionDescriptor;
-//		}
-//
-//		@Override
-//		public void _run() {
-//			String leagueTypeId = ""+divisionDescriptor.getLeagueTypeId();
-//			int divisionId = divisionDescriptor.getDivisionId();
-//			int seasonStartYear = divisionDescriptor.getSeason();
-//			LOGGER.debug("Spider loading division "+divisionId+" for league "+leagueTypeId+" in "+seasonStartYear);
-//			Division division = divisionController.getDivision(
-//					leagueTypeId, 
-//					divisionId, 
-//					seasonStartYear).getBody();
-//			TeamPosition[] teamPositions = division.getPositions();
-//			for (TeamPosition teamPosition : teamPositions) {
-//				exec.execute(new MatchesSpider(seasonStartYear, teamPosition));
-//			}
-//		}
-//	}
 	
 	class FixtureDetailsSpider extends Wrapper {
 
@@ -185,19 +134,4 @@ public class CachePrimerSpider {
 		
 	}
 	
-	class MatchSpider extends Wrapper {
-
-		private Match match;
-		
-		public MatchSpider(Match match) {
-			this.match = match;
-		}
-		
-		@Override
-		public void _run() {
-			LOGGER.debug("Spider loading match "+match.getFixtureId());
-			matchCardController.loadMatchCard(match.getFixtureId());
-		}
-		
-	}
 }
