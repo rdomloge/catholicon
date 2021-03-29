@@ -5,12 +5,12 @@ myApp.factory('matchCardFactory', function($http, $log) {
 	
 	factory.getMatchCard = function(fixtureId) {
 		$log.info("Loading match card for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/matchcards/search/findByFixtureId?fixtureId='+fixtureId);
+		return $http.get(Config.BASE_URL+'/fixtures/search/findByExternalFixtureId?externalFixtureId='+fixtureId);
 	}
 	
 	factory.getMatchResult = function(fixtureId) {
 		$log.info("Loading result for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/matchcards/search/findByFixtureId?fixtureId='+fixtureId+'&projection=result');
+		return $http.get(Config.BASE_URL+'/fixtures/search/findResultByExternalFixtureId?externalFixtureId='+fixtureId);
 	}
 	
 	return factory;
@@ -20,7 +20,7 @@ myApp.controller('matchCardController', function ($scope, $log, $http, matchCard
 	$log.debug("Getting match card for "+$routeParams.fixtureId);
 	matchCardFactory.getMatchCard($routeParams.fixtureId).then(function(page) {
 		$log.debug("Data received for match card", page.data);
-		$scope.matchCard = page.data;
+		$scope.matchCard = page.data.matchCard;
 	});
 
 	$scope.hideNames = function() {

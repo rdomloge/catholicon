@@ -5,21 +5,21 @@
 <table class="w3-panel w3-table-all">
 	<tr ng-repeat="result in unconfirmed | orderBy:'matchDate'" ng-init="mergeFixtureDetails(result)">
 		<td>
-			{{result.matchDate | date:'dd MMM'}}
+			{{result.matchCard.matchDate | date:'dd MMM'}}
 		</td>
 		<td>
-			{{result.homeTeamName}} 
+			{{result.matchCard.homeTeamName}} 
 			<span ng-show="homeTeamToAction(result)">*</span>
 		</td>
 		<td>
-			{{result.awayTeamName}}
+			{{result.matchCard.awayTeamName}}
 			<span ng-hide="homeTeamToAction(result)">*</span>
 		</td>
 		</td>
 		<td>
-			<a ng-href="#!/matchcard/{{result.fixtureId}}" style="width: 100%" 
+			<a ng-href="#!/matchcard/{{result.externalFixtureId}}" style="width: 100%" 
 						ng-class="isWin(match) ? 'w3-text-green w3-right' : 'w3-text-red w3-right'">
-				{{result.homeScore}} - {{result.awayScore}}
+				{{result.matchCard.homeScore}} - {{result.matchCard.awayScore}}
 			</a>
 		</td>
 	</tr>
