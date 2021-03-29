@@ -18,8 +18,6 @@ import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import catholicon.RecentMatchResultsSpider;
-
 @Component
 @Scope("prototype")
 public class StaticEtagFilter implements Filter {
