@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,8 @@ public class CachePrimerSpider {
 	@Autowired
 	private CommitteeController committeeController;
 
-	@EventListener(ContextRefreshedEvent.class)
+	// @EventListener(ContextRefreshedEvent.class)
+	@PostConstruct
 	public void startSpider() {
 		if( ! disableSpider) {
 			LOGGER.info("Starting spider...");

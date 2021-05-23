@@ -21,6 +21,7 @@ myApp.controller('matchCardController', function ($scope, $log, $http, matchCard
 	matchCardFactory.getMatchCard($routeParams.fixtureId).then(function(page) {
 		$log.debug("Data received for match card", page.data);
 		$scope.matchCard = page.data.matchCard;
+		$scope.fixture = page.data;
 	});
 
 	$scope.hideNames = function() {

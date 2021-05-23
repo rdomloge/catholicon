@@ -56,7 +56,7 @@ public class RecentMatchResultsSpider {
 	
 	
 
-	@Scheduled(fixedDelay = HOURLY, initialDelay = 0)
+	@Scheduled(fixedDelay = HOURLY, initialDelay = 60000)
 	public void spiderLatestResults() {
 		if(disableSpider) return;
 		LOGGER.info("Updating latest fixtures");

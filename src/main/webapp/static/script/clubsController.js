@@ -4,12 +4,12 @@ myApp.factory('clubsFactory', function($http, $log) {
 	
 	clubsFactory.getClubDescriptors = function() {
 		$log.info("Loading club descriptors");
-		return $http.get(Config.BASE_URL+'/clubs?fetch=clubId,clubName');
+		return $http.get(Config.BASE_URL+'/clubs/search/findClubBySeason?season=0');
 	};
 	
-	clubsFactory.getClub = function(clubId) {
-		$log.info("Loading club "+clubId);
-		return $http.get(Config.BASE_URL+'/clubs/'+clubId);
+	clubsFactory.getClub = function(clubId, season) {
+		$log.info("Loading club "+clubId+" for season "+season);
+		return $http.get(Config.BASE_URL+'/clubs/search/findClubByClubIdAndSeasonId?clubId='+clubId+"&season="+season);
 	};
 	
 	return clubsFactory;
@@ -32,7 +32,7 @@ myApp.controller('clubsController',
 						clubId = page.data[0].clubId;						
 					}
 					
-					clubsFactory.getClub(clubId).then(function(page) {
+					clubsFactory.getClub(clubId, 0).then(function(page) {
 						$log.debug("Data received for club "+clubId, page.data);
 						$scope.selectedClub = page.data;
 					}, errorHandlerFactory.getHandler());

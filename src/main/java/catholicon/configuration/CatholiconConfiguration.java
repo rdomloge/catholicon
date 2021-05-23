@@ -11,18 +11,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class CatholiconConfiguration extends WebMvcConfigurerAdapter {
 
-	public static final int CACHE_TIME_ONE_HOUR = 60*60;
+    public static final int CACHE_TIME_ONE_MIN = 60;
+	public static final int CACHE_TIME_ONE_HOUR = CACHE_TIME_ONE_MIN * 60;
 	public static final int CACHE_TIME_ONE_DAY = CACHE_TIME_ONE_HOUR * 24;
 	public static final int CACHE_TIME_ONE_WEEK = CACHE_TIME_ONE_DAY * 7;
 	public static final int CACHE_TIME_ONE_MONTH = CACHE_TIME_ONE_WEEK * 4;
+    public static final int CACHE_TIME_ONE_YEAR = CACHE_TIME_ONE_WEEK * 52;
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		registry.addResourceHandler("/static/html/**").addResourceLocations("/static/html/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-//		registry.addResourceHandler("/static/script/**").addResourceLocations("/static/script/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-//		registry.addResourceHandler("/static/style/**").addResourceLocations("/static/style/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-//		registry.addResourceHandler("/static/img/**").addResourceLocations("/static/img/").setCachePeriod(CACHE_TIME_ONE_WEEK);
-//		registry.addResourceHandler("/static/font/**").addResourceLocations("/static/font/").setCachePeriod(CACHE_TIME_ONE_MONTH);
+		registry.addResourceHandler("/static/html/**").addResourceLocations("/static/html/").setCachePeriod(CACHE_TIME_ONE_MIN);
+		registry.addResourceHandler("/static/script/**").addResourceLocations("/static/script/").setCachePeriod(CACHE_TIME_ONE_MIN);
+		registry.addResourceHandler("/static/style/**").addResourceLocations("/static/style/").setCachePeriod(CACHE_TIME_ONE_MIN);
+		registry.addResourceHandler("/static/img/**").addResourceLocations("/static/img/").setCachePeriod(CACHE_TIME_ONE_MIN);
+		registry.addResourceHandler("/static/font/**").addResourceLocations("/static/font/").setCachePeriod(CACHE_TIME_ONE_MIN);
 	}
 	
 //	@Bean
