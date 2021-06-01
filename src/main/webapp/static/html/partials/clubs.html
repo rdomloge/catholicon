@@ -5,7 +5,7 @@
     <button ng-click="showClubs = ! showClubs" class="w3-button w3-black">{{selectedClub.clubName}} <i class="arrow arrowdown" style="border-color: white"></i></button>
     <div id="clubSelector" ng-class="showClubs ? 'w3-show' : ''" class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
       <a ng-href="#!/clubs/{{clubDescr.clubId}}" 
-	      	ng-repeat="clubDescr in clubDescriptors" 
+	      	ng-repeat="clubDescr in clubDescriptors | orderBy: 'clubName'" 
 	      	class="w3-bar-item w3-button w3-medium">
       	{{clubDescr.clubName}}
       </a>
@@ -24,7 +24,7 @@
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
 				<span ng-show="selectedClub.chairMan.email" class="w3-right">
-					<a href="mailto:{{selectedClub.chairMan.email}">{{selectedClub.chairMan.email}}</a>
+					<a href="mailto:{{selectedClub.chairMan.email}}">{{selectedClub.chairMan.email}}</a>
 				</span>
 			</h4>
 		</div>
@@ -37,7 +37,7 @@
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
 				<span ng-show="selectedClub.secretary.email" class="w3-right">
-					<a href="mailto:{{selectedClub.secretary.email}">{{selectedClub.secretary.email}}</a>
+					<a href="mailto:{{selectedClub.secretary.email}}">{{selectedClub.secretary.email}}</a>
 				</span>
 			</h4>
 		</div>
@@ -50,7 +50,7 @@
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
 				<span ng-show="selectedClub.matchSec.email" class="w3-right">
-					<a href="mailto:{{selectedClub.matchSec.email}">{{selectedClub.matchSec.email}}</a>
+					<a href="mailto:{{selectedClub.matchSec.email}}">{{selectedClub.matchSec.email}}</a>
 				</span>
 			</h4>
 		</div>
@@ -63,7 +63,7 @@
 					<a href="tel:{{phone.number}}">{{phone.number}}</a> ({{phone.type}})
 				</span>
 				<span ng-show="selectedClub.treasurer.email" class="w3-right">
-					<a href="mailto:{{selectedClub.treasurer.email}">{{selectedClub.treasurer.email}}</a>
+					<a href="mailto:{{selectedClub.treasurer.email}}">{{selectedClub.treasurer.email}}</a>
 				</span>
 			</h4>
 		</div>

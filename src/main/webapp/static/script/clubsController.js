@@ -17,19 +17,19 @@ myApp.factory('clubsFactory', function($http, $log) {
 
 
 myApp.controller('clubsController', 
-		['$scope', '$log', 'clubsFactory', 'errorHandlerFactory', '$cookies', '$timeout', '$routeParams',
-        function($scope, $log, clubsFactory, errorHandlerFactory, $cookies, $timeout, $routeParams) {
+		['$scope', '$log', 'clubsFactory', 'errorHandlerFactory', '$cookies', '$timeout', '$routeParams', '$filter',
+        function($scope, $log, clubsFactory, errorHandlerFactory, $cookies, $timeout, $routeParams, $filter) {
 	
 			clubsFactory.getClubDescriptors().then(function(page) {
-				$log.debug("Data received for club descriptors", page.data);
-				$scope.clubDescriptors = page.data;
+				$scope.clubDescriptors = $filter('orderBy')(page.data, 'clubName');
+				$log.debug("Data received for club descriptors", $scope.clubDescriptors);
 				if(page.data.length) {
 					var clubId;
 					if($routeParams.clubId) {
 						clubId = $routeParams.clubId;
 					}
 					else {
-						clubId = page.data[0].clubId;						
+						clubId = $scope.clubDescriptors[0].clubId;						
 					}
 					
 					clubsFactory.getClub(clubId, 0).then(function(page) {
