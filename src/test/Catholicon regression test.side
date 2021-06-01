@@ -1,0 +1,661 @@
+{
+  "id": "ad4e6c11-b8d2-42e0-a7c9-ba6c1f18f8fb",
+  "version": "2.0",
+  "name": "Catholicon regression test",
+  "url": "http://rdomloge.entrydns.org:81",
+  "tests": [{
+    "id": "0375f923-7029-4a7a-bcb6-2b9f91689664",
+    "name": "Clubs",
+    "commands": [{
+      "id": "88f8b637-4441-4988-842a-fbf0db7543a3",
+      "comment": "",
+      "command": "open",
+      "target": "/static/html/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2aaff987-d59a-43f8-b7bd-17fe9d95857b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1296x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "51b73e1b-bd8c-4d2f-b887-cfa1893a14b4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Clubs",
+      "targets": [
+        ["linkText=Clubs", "linkText"],
+        ["css=.w3-orange:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Clubs')]", "xpath:link"],
+        ["xpath=(//a[@onclick='w3_close()'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='mySidebar']/div[2]/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#!/clubs')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Clubs')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1dafadf7-7bba-4e48-bfc7-5b260cfa111f",
+      "comment": "Assert page shows title",
+      "command": "assertText",
+      "target": "css=.ng-scope > .w3-left",
+      "targets": [
+        ["css=.ng-scope > .w3-left", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Clubs')]", "xpath:innerText"]
+      ],
+      "value": "Clubs"
+    }, {
+      "id": "9d040006-8ea0-4450-b196-ba154da640d3",
+      "comment": "Assert first club name",
+      "command": "assertText",
+      "target": "css=.w3-padding-24",
+      "targets": [
+        ["css=.w3-padding-24", "css:finder"],
+        ["xpath=//div[2]/h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Aldermaston')]", "xpath:innerText"]
+      ],
+      "value": "Aldermaston"
+    }, {
+      "id": "9cfc11b6-64af-4ad5-a392-3bed5c0e7611",
+      "comment": "Assert first club first committee name",
+      "command": "assertText",
+      "target": "css=.w3-border-bottom:nth-child(3) > .ng-binding",
+      "targets": [
+        ["css=.w3-border-bottom:nth-child(3) > .ng-binding", "css:finder"],
+        ["xpath=//div[2]/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Stephen Gaunt')]", "xpath:innerText"]
+      ],
+      "value": "Stephen Gaunt"
+    }, {
+      "id": "66bd6acd-8888-4955-9004-7c343a37d54f",
+      "comment": "Assert first club first committee role",
+      "command": "assertText",
+      "target": "css=.w3-row:nth-child(3) > .w3-text-grey",
+      "targets": [
+        ["css=.w3-row:nth-child(3) > .w3-text-grey", "css:finder"],
+        ["xpath=//div[2]/h6", "xpath:position"],
+        ["xpath=//h6[contains(.,'Secretary')]", "xpath:innerText"]
+      ],
+      "value": "Secretary"
+    }, {
+      "id": "1df6e7bb-3721-4e1d-ad01-fbf181e56709",
+      "comment": "Assert first club first committee phone num",
+      "command": "assertText",
+      "target": "css=.w3-row:nth-child(3) span:nth-child(1)",
+      "targets": [
+        ["css=.w3-row:nth-child(3) span:nth-child(1)", "css:finder"],
+        ["xpath=//div[2]/h4/span", "xpath:position"]
+      ],
+      "value": "n/a"
+    }, {
+      "id": "2bce67b3-7126-4d41-a18b-2deb47aff40c",
+      "comment": "Assert first club first committee email address",
+      "command": "assertText",
+      "target": "linkText=stephen1.gaunt@gmail.com",
+      "targets": [
+        ["linkText=stephen1.gaunt@gmail.com", "linkText"],
+        ["css=.w3-row:nth-child(3) > .w3-col .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'stephen1.gaunt@gmail.com')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:{{selectedClub.secretary.email}')]", "xpath:href"],
+        ["xpath=//div[2]/h4/span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'stephen1.gaunt@gmail.com')]", "xpath:innerText"]
+      ],
+      "value": "stephen1.gaunt@gmail.com"
+    }, {
+      "id": "4e658822-955e-4ef3-9565-cc4fbb511800",
+      "comment": "Assert first club first committee email address is a mailto",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[contains(@href, 'mailto:stephen1.gaunt@gmail.com')]",
+      "targets": [
+        ["linkText=stephen1.gaunt@gmail.com", "linkText"],
+        ["css=.w3-row:nth-child(3) > .w3-col .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'stephen1.gaunt@gmail.com')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:{{selectedClub.secretary.email}')]", "xpath:href"],
+        ["xpath=//div[2]/h4/span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'stephen1.gaunt@gmail.com')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1c3add5-dad8-4464-8d22-5910211c22cd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.w3-black",
+      "targets": [
+        ["css=.w3-black", "css:finder"],
+        ["xpath=//ng-view/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Aldermaston ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9b8d1a4-ba34-41b6-9b42-e7dd0369e3f8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=BH Pegasus",
+      "targets": [
+        ["linkText=BH Pegasus", "linkText"],
+        ["css=.w3-bar-item:nth-child(5)", "css:finder"],
+        ["xpath=//a[contains(text(),'BH Pegasus')]", "xpath:link"],
+        ["xpath=//div[@id='clubSelector']/a[5]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#!/clubs/7')]", "xpath:href"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'BH Pegasus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cdaa579-cfa0-4277-a96f-ac08559a07b3",
+      "comment": "Assert club night day of week",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(1)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(1)", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Tuesdays')]", "xpath:innerText"]
+      ],
+      "value": "Tuesdays"
+    }, {
+      "id": "634b2804-86c0-4d3b-afde-fa0ca690a930",
+      "comment": "Assert max's phone number is shown",
+      "command": "assertText",
+      "target": "css=.w3-col > .ng-binding",
+      "targets": [
+        ["css=.w3-col > .ng-binding", "css:finder"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'07713899542 (Mobile)')]", "xpath:innerText"]
+      ],
+      "value": "07713899542 (Mobile)"
+    }, {
+      "id": "4e046c30-6749-432d-963f-5042abe76e69",
+      "comment": "Assert Max's role is chairman",
+      "command": "assertText",
+      "target": "css=.w3-row:nth-child(2) > .w3-text-grey",
+      "targets": [
+        ["css=.w3-row:nth-child(2) > .w3-text-grey", "css:finder"],
+        ["xpath=//h6", "xpath:position"],
+        ["xpath=//h6[contains(.,'Chairman')]", "xpath:innerText"]
+      ],
+      "value": "Chairman"
+    }, {
+      "id": "ef581610-780b-4619-b0e0-6d1cce134374",
+      "comment": "Assert Max's phone number is a tel:",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[contains(@href, 'unsafe:tel:07713899542')]",
+      "targets": [
+        ["linkText=07713899542", "linkText"],
+        ["css=.ng-binding > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'07713899542')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'unsafe:tel:07713899542')]", "xpath:href"],
+        ["xpath=//span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'07713899542')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "802295cb-fafe-4aad-af91-d04ed8cb1b75",
+      "comment": "Assert club nights header",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) > .w3-left",
+      "targets": [
+        ["css=.w3-container:nth-child(4) > .w3-left", "css:finder"],
+        ["xpath=//ng-view/div/div[3]/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Club nights')]", "xpath:innerText"]
+      ],
+      "value": "Club nights"
+    }, {
+      "id": "23e6b462-839f-47cc-97bb-27ee871e8d34",
+      "comment": "Assert club night venue",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(2)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(2)", "css:finder"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'Basingstoke Sports Centre')]", "xpath:innerText"]
+      ],
+      "value": "Basingstoke Sports Centre"
+    }, {
+      "id": "84c55fcf-dd47-49f6-85c1-0da5fffd6cdd",
+      "comment": "Assert club night address",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-medium",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-medium", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Basingstoke Sports Centre Festival Place Basingstoke Hants RG21 7LE')]", "xpath:innerText"]
+      ],
+      "value": "Basingstoke Sports Centre Festival Place Basingstoke Hants RG21 7LE"
+    }, {
+      "id": "1ceaa8f9-2b38-4423-a818-1739b119d838",
+      "comment": "Assert club night time",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(4)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(4)", "css:finder"],
+        ["xpath=//p[4]", "xpath:position"],
+        ["xpath=//p[contains(.,'19:40 - 22:20')]", "xpath:innerText"]
+      ],
+      "value": "19:40 - 22:20"
+    }, {
+      "id": "a140c5d9-20ab-4f34-ad2b-5065e908d5d7",
+      "comment": "Assert club night number of courts",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(5)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(5)", "css:finder"],
+        ["xpath=//p[5]", "xpath:position"],
+        ["xpath=//p[contains(.,'4 courts')]", "xpath:innerText"]
+      ],
+      "value": "4 courts"
+    }, {
+      "id": "c07ff057-fff1-45a1-93e1-ad760297eeb0",
+      "comment": "Assert match night header",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(5) > .w3-left",
+      "targets": [
+        ["css=.w3-container:nth-child(5) > .w3-left", "css:finder"],
+        ["xpath=//ng-view/div/div[4]/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Match nights')]", "xpath:innerText"]
+      ],
+      "value": "Match nights"
+    }, {
+      "id": "cf81376f-5638-4d61-8d3e-3371098dfc1e",
+      "comment": "Assert match night DOW",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(5) .w3-col:nth-child(1)",
+      "targets": [
+        ["css=.w3-container:nth-child(5) .w3-col:nth-child(1)", "css:finder"],
+        ["xpath=//div[4]/div/p", "xpath:position"]
+      ],
+      "value": "Tuesdays"
+    }, {
+      "id": "cb465444-bedc-4e87-b2a8-072750ad6414",
+      "comment": "Assert match night venue",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(5) .w3-col:nth-child(2)",
+      "targets": [
+        ["css=.w3-container:nth-child(5) .w3-col:nth-child(2)", "css:finder"],
+        ["xpath=//div[4]/div/p[2]", "xpath:position"]
+      ],
+      "value": "Basingstoke Sports Centre"
+    }, {
+      "id": "8ebdb42e-61ef-428f-9bca-312f511ecf7b",
+      "comment": "Assert match night address",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(5) .w3-medium",
+      "targets": [
+        ["css=.w3-container:nth-child(5) .w3-medium", "css:finder"],
+        ["xpath=//div[4]/div/p[3]", "xpath:position"]
+      ],
+      "value": "Basingstoke Sports Centre Festival Place Basingstoke Hants RG21 7LE"
+    }, {
+      "id": "dec34e4e-78d7-4420-9702-0ae183c79738",
+      "comment": "Assert match night time",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(4)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(4)", "css:finder"],
+        ["xpath=//p[4]", "xpath:position"],
+        ["xpath=//p[contains(.,'19:40 - 22:20')]", "xpath:innerText"]
+      ],
+      "value": "19:40 - 22:20"
+    }, {
+      "id": "40343e19-d6ae-4987-bd45-12b72c42108e",
+      "comment": "Assert match night courts",
+      "command": "assertText",
+      "target": "css=.w3-container:nth-child(4) .w3-col:nth-child(5)",
+      "targets": [
+        ["css=.w3-container:nth-child(4) .w3-col:nth-child(5)", "css:finder"],
+        ["xpath=//p[5]", "xpath:position"],
+        ["xpath=//p[contains(.,'4 courts')]", "xpath:innerText"]
+      ],
+      "value": "4 courts"
+    }]
+  }, {
+    "id": "6dc4891e-a8e5-4a8f-8743-3c0befe5edd4",
+    "name": "Front page",
+    "commands": [{
+      "id": "32ffe58d-b956-4e90-b934-c94c21c9dd99",
+      "comment": "",
+      "command": "open",
+      "target": "/static/html/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2bbfb95-3476-4446-9589-36fc9bedeecc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1296x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a9e053df-121e-463e-9b0f-0cfae952ae89",
+      "comment": "Assert page shows 'News'",
+      "command": "assertText",
+      "target": "css=.ng-scope > .w3-padding-32",
+      "targets": [],
+      "value": "News"
+    }, {
+      "id": "f9b310d6-4f6a-45d4-98f8-748c8b96d3c4",
+      "comment": "Assert card title",
+      "command": "assertText",
+      "target": "css=.w3-card:nth-child(2) .w3-xxlarge",
+      "targets": [
+        ["css=.w3-card:nth-child(2) .w3-xxlarge", "css:finder"],
+        ["xpath=//div[5]/div/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Season 2020/21 Cancelled')]", "xpath:innerText"]
+      ],
+      "value": "Season 2020/21 Cancelled"
+    }, {
+      "id": "4be1f408-3b61-4fda-a052-f2e40d8f43e1",
+      "comment": "Assert card sub title",
+      "command": "assertText",
+      "target": "css=.w3-card:nth-child(2) > .ng-isolate-scope > .w3-xlarge",
+      "targets": [
+        ["css=.w3-card:nth-child(2) > .ng-isolate-scope > .w3-xlarge", "css:finder"],
+        ["xpath=//p[2]", "xpath:position"]
+      ],
+      "value": "Season 2020/21 Cancelled"
+    }, {
+      "id": "717a37b6-b86b-4458-a08f-da4dfc2e6ee1",
+      "comment": "Assert card date",
+      "command": "assertText",
+      "target": "css=.w3-card:nth-child(2) > .ng-isolate-scope > div > .ng-binding",
+      "targets": [
+        ["css=.w3-card:nth-child(2) > .ng-isolate-scope > div > .ng-binding", "css:finder"],
+        ["xpath=//div/span[3]", "xpath:position"],
+        ["xpath=//span[contains(.,'12 December 2020')]", "xpath:innerText"]
+      ],
+      "value": "12 December 2020"
+    }, {
+      "id": "dec1bac6-ef83-4c57-b3e3-34b632537e31",
+      "comment": "Assert detail present",
+      "command": "assertElementPresent",
+      "target": "css=.w3-card:nth-child(2) .ng-binding:nth-child(4)",
+      "targets": [
+        ["css=.w3-card:nth-child(2) .ng-binding:nth-child(4)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'It has been decided to cancel this season and start afresh next year. We will arrange an AGM, hopefully, in July to finalise the details and teams. Please try to keep your clubs running during this difficult time , the best you can.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4bd79d1f-dd1d-476f-9819-cce7a0160794",
+      "comment": "Check card detail row is hidden",
+      "command": "assertElementPresent",
+      "target": "css=.w3-card:nth-child(2) .ng-binding:nth-child(4).ng-hide",
+      "targets": [
+        ["css=.w3-card:nth-child(2) .ng-binding:nth-child(4)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'It has been decided to cancel this season and start afresh next year. We will arrange an AGM, hopefully, in July to finalise the details and teams. Please try to keep your clubs running during this difficult time , the best you can.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "410db005-8088-471a-aba6-e04e69ceda28",
+      "comment": "",
+      "command": "click",
+      "target": "css=.w3-card:nth-child(2) .w3-xlarge:nth-child(1)",
+      "targets": [
+        ["css=.w3-card:nth-child(2) .w3-xlarge:nth-child(1)", "css:finder"],
+        ["xpath=//div/div/div/span", "xpath:position"],
+        ["xpath=//span[contains(.,'[+]')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8bfb53af-2a1f-470c-ad13-4e16a9f920ae",
+      "comment": "Check card detail row is visible",
+      "command": "assertElementNotPresent",
+      "target": "css=.w3-card:nth-child(2) .ng-binding:nth-child(4).ng-hide",
+      "targets": [
+        ["css=.w3-card:nth-child(2) .ng-binding:nth-child(4)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'It has been decided to cancel this season and start afresh next year. We will arrange an AGM, hopefully, in July to finalise the details and teams. Please try to keep your clubs running during this difficult time , the best you can.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5e2f227-352e-4a47-ac25-56cce9c31dd5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.w3-card:nth-child(2) > .ng-isolate-scope > div > .w3-xlarge:nth-child(2)",
+      "targets": [
+        ["css=.w3-card:nth-child(2) > .ng-isolate-scope > div > .w3-xlarge:nth-child(2)", "css:finder"],
+        ["xpath=//div/div/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'[-]')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6ff3bef4-b1e7-48ad-9ab7-1407b87b036e",
+    "name": "League committee",
+    "commands": [{
+      "id": "359f1336-4140-4263-867b-e7e6fc2abc13",
+      "comment": "",
+      "command": "open",
+      "target": "/static/html/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b29b7892-4df3-4477-a523-e8d37006e7b9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1296x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "efba69f3-544f-4096-94ed-55924ee36132",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=League Committee",
+      "targets": [
+        ["linkText=League Committee", "linkText"],
+        ["css=.w3-bar-item:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'League Committee')]", "xpath:link"],
+        ["xpath=(//a[@onclick='w3_close()'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='mySidebar']/div[2]/a[3]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#!/committee')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'League Committee')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c20b798-17d9-4ed3-930a-6266d312238d",
+      "comment": "Assert title",
+      "command": "assertText",
+      "target": "css=.w3-padding",
+      "targets": [
+        ["css=.w3-padding", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Committee')]", "xpath:innerText"]
+      ],
+      "value": "Committee"
+    }, {
+      "id": "f6b54dd9-bade-4169-b939-0266ba0d531a",
+      "comment": "Assert chairman label",
+      "command": "assertText",
+      "target": "css=.w3-card-4:nth-child(2) > .w3-text-blue > .ng-binding",
+      "targets": [
+        ["css=.w3-card-4:nth-child(2) > .w3-text-blue > .ng-binding", "css:finder"],
+        ["xpath=//header/h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Chairman')]", "xpath:innerText"]
+      ],
+      "value": "Chairman"
+    }, {
+      "id": "724099e3-331e-435e-9ee1-dde15f0352da",
+      "comment": "Assert chairman name",
+      "command": "assertText",
+      "target": "css=.w3-card-4:nth-child(2) > .w3-container:nth-child(2) > .ng-binding:nth-child(1)",
+      "targets": [
+        ["css=.w3-card-4:nth-child(2) > .w3-container:nth-child(2) > .ng-binding:nth-child(1)", "css:finder"],
+        ["xpath=//div/div/h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Horace Mitchell')]", "xpath:innerText"]
+      ],
+      "value": "Horace Mitchell"
+    }, {
+      "id": "2a9927bf-940b-434a-96bd-9c7de3e8343c",
+      "comment": "Assert chairman club",
+      "command": "assertText",
+      "target": "css=.w3-card-4:nth-child(2) > .w3-container > .ng-binding:nth-child(2)",
+      "targets": [
+        ["css=.w3-card-4:nth-child(2) > .w3-container > .ng-binding:nth-child(2)", "css:finder"],
+        ["xpath=//h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Viking Badminton Club')]", "xpath:innerText"]
+      ],
+      "value": "Viking Badminton Club"
+    }, {
+      "id": "5e2c2e51-22b9-4764-9082-a2eb4cc2d95b",
+      "comment": "Assert chairman's phone",
+      "command": "assertText",
+      "target": "css=.w3-card-4:nth-child(2) h2:nth-child(1) > .ng-binding",
+      "targets": [
+        ["linkText=07786867718", "linkText"],
+        ["css=.w3-card-4:nth-child(2) h2:nth-child(1) > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'07786867718')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'unsafe:tel:07786867718')]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"],
+        ["xpath=//a[contains(.,'07786867718')]", "xpath:innerText"]
+      ],
+      "value": "07786867718"
+    }, {
+      "id": "3e6e8b0b-cb64-48a0-94c8-614b49fd79a3",
+      "comment": "Assert chairman's phone is a tel:",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[contains(@href, 'unsafe:tel:07786867718')]",
+      "targets": [
+        ["linkText=07786867718", "linkText"],
+        ["css=.w3-card-4:nth-child(2) h2:nth-child(1) > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'07786867718')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'unsafe:tel:07786867718')]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"],
+        ["xpath=//a[contains(.,'07786867718')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9aa85e85-b72d-45fb-91d8-f35384e111bc",
+      "comment": "Assert chairman's email",
+      "command": "assertText",
+      "target": "css=.w3-card-4:nth-child(2) h2:nth-child(2) > .ng-binding",
+      "targets": [
+        ["linkText=horacemitchell@virginmedia.com", "linkText"],
+        ["css=.w3-card-4:nth-child(2) h2:nth-child(2) > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'horacemitchell@virginmedia.com')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:horacemitchell@virginmedia.com')]", "xpath:href"],
+        ["xpath=//h2[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'horacemitchell@virginmedia.com')]", "xpath:innerText"]
+      ],
+      "value": "horacemitchell@virginmedia.com"
+    }, {
+      "id": "fdf24604-ffa0-4357-b558-cdb3b099cbd9",
+      "comment": "Assert chairman's email is a mailto:",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[contains(@href, 'mailto:horacemitchell@virginmedia.com')]",
+      "targets": [
+        ["linkText=horacemitchell@virginmedia.com", "linkText"],
+        ["css=.w3-card-4:nth-child(2) h2:nth-child(2) > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'horacemitchell@virginmedia.com')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:horacemitchell@virginmedia.com')]", "xpath:href"],
+        ["xpath=//h2[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'horacemitchell@virginmedia.com')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "f398858e-b6d5-4388-ba64-8692614fbc2c",
+    "name": "Unconfirmed results",
+    "commands": [{
+      "id": "636a8777-e55f-40c4-ad81-501565f3fa14",
+      "comment": "",
+      "command": "open",
+      "target": "/static/html/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a035204d-dbe3-49d4-a7ae-229740d77ae4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1296x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "94a653d3-43f4-4e13-8de7-71f8781ca8d4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Unconfirmed results",
+      "targets": [
+        ["linkText=Unconfirmed results", "linkText"],
+        ["css=.w3-bar-item:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Unconfirmed results')]", "xpath:link"],
+        ["xpath=//div[@id='mySidebar']/div[2]/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#!/unconfirmed')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Unconfirmed results')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ca1e6e7c-81ec-49c9-87d2-faef62c429d2",
+      "comment": "Assert title",
+      "command": "assertText",
+      "target": "css=.w3-xxlarge",
+      "targets": [
+        ["css=.w3-xxlarge", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Unconfirmed results')]", "xpath:innerText"]
+      ],
+      "value": "Unconfirmed results"
+    }, {
+      "id": "f6955523-d1aa-4961-994f-8dfe1d421013",
+      "comment": "Assert first row first column exists",
+      "command": "assertElementPresent",
+      "target": "css=.ng-scope:nth-child(1) > .ng-binding:nth-child(1)",
+      "targets": [
+        ["css=.ng-scope:nth-child(1) > .ng-binding:nth-child(1)", "css:finder"],
+        ["xpath=//td", "xpath:position"],
+        ["xpath=//td[contains(.,'25 Sep')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2dab2764-4695-4e97-a066-80152c8d03ee",
+      "comment": "Assert first row first column value",
+      "command": "assertElementPresent",
+      "target": "xpath=//td[contains(text(), '2\\\\d Sep')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f873c903-b4eb-4a20-837f-6759eece86fa",
+      "comment": "Click first result",
+      "command": "click",
+      "target": "xpath=//td[4]/a",
+      "targets": [
+        ["linkText=7 - 2", "linkText"],
+        ["css=.ng-scope:nth-child(1) > td > .ng-binding", "css:finder"],
+        ["xpath=//a[contains(text(),'7 - 2')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#!/matchcard/2228')]", "xpath:href"],
+        ["xpath=//td[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'7 - 2')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c54a759-456d-4e4c-951f-f259f81ed1aa",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Unconfirmed results",
+      "targets": [
+        ["linkText=Unconfirmed results", "linkText"],
+        ["css=.w3-bar-item:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Unconfirmed results')]", "xpath:link"],
+        ["xpath=//div[@id='mySidebar']/div[2]/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#!/unconfirmed')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Unconfirmed results')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e0f681e5-71db-4b3b-b234-53139ba4436c",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["0375f923-7029-4a7a-bcb6-2b9f91689664"]
+  }],
+  "urls": ["http://rdomloge.entrydns.org/", "http://rdomloge.entrydns.org:81/"],
+  "plugins": []
+}
