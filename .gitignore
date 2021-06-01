@@ -14,6 +14,7 @@ hs_err_pid*
 .project
 *.DS_Store
 .settings/*
+.factorypath
 *.prefs
 target/*
 bin/
