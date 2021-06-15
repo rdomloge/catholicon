@@ -6,40 +6,58 @@ import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
-import catholicon.dao.FixtureDao;
-import catholicon.dao.MatchDao;
-import catholicon.domain.FixtureDetails;
-import catholicon.domain.Match;
+import catholicon.Util;
+import catholicon.dto.Club;
+import catholicon.dto.Session;
 import catholicon.ex.DaoException;
+
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.ValidationException;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
-import net.fortuna.ical4j.model.property.Description;
-import net.fortuna.ical4j.model.property.Location;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
 
-@RestController
 public class WebCalController {
 
-	@Autowired
-	private MatchDao matchDao;
+	private RestTemplate fixtureTemplate;
 
-	@Autowired
-	private FixtureDao fixtureDao;
+	private RestTemplate seasonTemplate;
+
+	private RestTemplate clubTemplate;
+
+	@Value("${MATCHCARDS_SVC_BASE_URL:http://catholicon-ms-matchcard-service:84}")
+	private String MATCHCARD_SVC_BASE_URL;
+
+	@Value("${SEASONS_SVC_BASE_URL:http://catholicon-ms-seasons-service:81}")
+	private String SEASONS_SVC_BASE_URL;
+
+	@Value("${CLUBS_SVC_BASE_URL:http://catholicon-ms-club-service:85/clubs}")
+	private String CLUBS_SVC_BASE_URL;
+	
+
+	public WebCalController(@Autowired RestTemplateBuilder builder) {
+        this.fixtureTemplate = builder.build();
+		this.seasonTemplate = builder.build();
+		this.clubTemplate = builder.build();
+    }
+
 
 	@RequestMapping(method = RequestMethod.GET, value = "/season/{seasonStartYear}/matches/{team}/webcal")
 	@Cacheable(cacheNames = "MatchWebCals")
@@ -57,7 +75,10 @@ public class WebCalController {
 			int seasonStartYear, String team) throws ParseException,
 			IOException, ValidationException {
 
-		Match[] matches = matchDao.load(seasonStartYear, team);
+		// Fixture[] matches = matchDao.load(seasonStartYear, team);
+		Fixture[] matches = fixtureTemplate.getForEntity(MATCHCARD_SVC_BASE_URL
+			+ "/search/findByHomeTeamIdOrAwayTeamIdAndSeason?season={}&homeTeamId={}&awayTeamId={}", 
+			Fixture[].class, seasonStartYear, team, team).getBody();
 
 		OutputStream out = response.getOutputStream();
 		response.setContentType("text/calendar");
@@ -68,7 +89,7 @@ public class WebCalController {
 		icsCalendar.getProperties().add(CalScale.GREGORIAN);
 		icsCalendar.getProperties().add(Version.VERSION_2_0);
 
-		for (Match match : matches) {
+		for (Fixture match : matches) {
 			icsCalendar.getComponents().add(createEvent(match));
 		}
 
@@ -77,30 +98,36 @@ public class WebCalController {
 
 	}
 
-	private VEvent createEvent(Match match) throws ParseException, SocketException {
+	private VEvent createEvent(Fixture fixture) throws ParseException, SocketException {
 		
-		String eventName = String.format("Match: %s v %s", match.getHomeTeam()
-				.getName(), match.getAwayTeam().getName());
+		String eventName = String.format("Match: %s v %s", fixture.getHomeTeamName(), fixture.getAwayTeamName());
 
-		FixtureDetails fixture = fixtureDao.load(Integer.parseInt(match.getFixtureId()));
+		// FixtureDetails fixture = fixtureDao.load(fixture.getExternalFixtureId());
+		ResponseEntity<Club> clubResponse = clubTemplate.getForEntity(CLUBS_SVC_BASE_URL, Club.class, f.getHomeTeamId());
+		Club c = clubResponse.getBody();
+		Session matchSession = Util.resolveMatchSession(fixture, c);
 
-		DateTime startDate = createDate(match.getDate(), fixture.getMatchTime());
-		DateTime endDate = createDate(match.getDate(), "22:00");
+		DateTime startDate = createDate(fixture.getMatchDate(), matchSession.getStart());
+		DateTime endDate = createDate(fixture.getMatchDate(), "22:00");
 
 		VEvent meeting = new VEvent(startDate, endDate, eventName);
 
-		meeting.getProperties().add(new Uid(match.getDate()+'_'+match.getHomeTeam().getName()+'_'+match.getAwayTeam().getName()));
+		meeting.getProperties().add(new Uid(fixture.getMatchDate()+'_'+fixture.getHomeTeamName()+'_'+fixture.getAwayTeamName()));
 		
-		String description = String.format(
-				"BDBL Badminton %s Match\nHome Team: %s\nAway Team: %s",
-				fixture.getLeague(),
-				match.getHomeTeam().getName(),
-				match.getAwayTeam().getName());
+		LinkedHashMap<String,String> seasons = seasonTemplate
+			.getForObject(SEASONS_SVC_BASE_URL + "/seasons?sort=seasonStartYear,desc", LinkedHashMap.class);
+		
 
-		String address = fixture.getVenue();
+		// String description = String.format(
+		// 		"BDBL Badminton %s Match\nHome Team: %s\nAway Team: %s",
+		// 		fixture.getLeague(),
+		// 		fixture.getHomeTeamName(),
+		// 		fixture.getAwayTeamName());
 
-		meeting.getProperties().add(new Description(description));
-		meeting.getProperties().add(new Location(address));
+		// String address = fixture.getVenue();
+
+		// meeting.getProperties().add(new Description(description));
+		// meeting.getProperties().add(new Location(address));
 
 		return meeting;
 	}

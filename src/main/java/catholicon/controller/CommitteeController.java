@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import catholicon.dao.CommitteeDao;
-import catholicon.domain.Contact;
+import catholicon.dto.Contact;
 
 @RestController
 public class CommitteeController {

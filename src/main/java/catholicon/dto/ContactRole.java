@@ -1,6 +1,7 @@
-package catholicon.domain;
+package catholicon.dto;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+
 
 public enum ContactRole {
 	CHAIRMAN("Chairman"), 

@@ -3,33 +3,25 @@ package catholicon.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpCoreContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
-import catholicon.domain.Login;
 import catholicon.ex.DaoException;
 
 public class Loader {
@@ -109,33 +101,6 @@ public class Loader {
 		finally {
 			stopWatch.stop();
 			LOGGER.debug("Load took "+stopWatch.getTotalTimeMillis()+"ms: "+url);
-		}
-	}
-
-	public String sendLogin(String url, Login login) throws DaoException {
-		String fullUrl = BASE+url;
-		LOGGER.info(fullUrl);
-		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		formparams.add(new BasicNameValuePair("Username", login.getName()));
-		formparams.add(new BasicNameValuePair("Password", login.getPassword()));
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
-		HttpPost post = new HttpPost(fullUrl);
-		post.setEntity(entity);
-		
-		ResponseHandler<String> handler = new ResponseHandler<String>() {
-			@Override
-			public String handleResponse(HttpResponse resp) throws ClientProtocolException, IOException {
-				return streamToString(resp.getEntity().getContent());
-			}};
-		
-		try {
-			return client.execute(post, handler, ctx);
-		} 
-		catch (IOException e) {
-			throw new DaoException(e);
-		} 
-		finally {
-			post.releaseConnection();
 		}
 	}
 

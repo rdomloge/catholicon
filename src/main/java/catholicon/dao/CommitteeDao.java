@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import catholicon.domain.Contact;
-import catholicon.domain.ContactRole;
-import catholicon.domain.PhoneNumber;
-import catholicon.domain.PhoneNumber.Type;
+import catholicon.dto.Contact;
+import catholicon.dto.ContactRole;
+import catholicon.dto.PhoneNumber;
+import catholicon.dto.PhoneNumberType;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
 import catholicon.parser.EmailParser;
@@ -43,11 +43,11 @@ public class CommitteeDao {
 				List<PhoneNumber> numbers = new LinkedList<>();
 				String mobile = map.get("mobileTel");
 				if(null != ParserUtil.nullIfEmpty(mobile)) {
-					numbers.add(new PhoneNumber(Type.MOBILE, mobile));
+					numbers.add(new PhoneNumber(PhoneNumberType.MOBILE, mobile));
 				}
 				String name = map.get("name").replace("&nbsp;", " ");
 				String clubName = map.get("clubName");
-				Contact c = new Contact(name, email, role, numbers.toArray(new PhoneNumber[numbers.size()]), clubName);
+				Contact c = new Contact(name, email, role, numbers, clubName);
 				list.add(c);
 			}
 		}

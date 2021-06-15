@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
 
-import catholicon.domain.Login;
 import catholicon.domain.WelcomePageItem;
 import catholicon.ex.DaoException;
 import catholicon.filter.ThreadLocalLoaderFilter;
@@ -77,71 +76,4 @@ public class WelcomeDao {
 
 		return item;
 	}
-	
-	
-//	var data =
-//	{
-//		login:true,
-//		IsLoggedIn:true,
-//		Username:"RDomloge",
-//		DisplayName:"Ramsay Domloge",
-//		UserLogID:1744,
-//		UserID:24,
-//		UserRolesInfo:{'1_28':{WebsiteID:1,UserRoleID:28,AdultClubList:[7],JuniorClubList:[],SchoolList:[],AdultLeagueList:[],JuniorLeagueList:[],SchoolLeagueList:[],AdultTeamList:[215],JuniorTeamList:[],SchoolTeamList:[]}},
-//		PlayerID:211,
-//		CanLockLogins:false,
-//		CanChangePassword:true,
-//		SysAdmin:false
-//	};
-
-//<td colspan="3"><b>Invalid Username or Password</b></td>
-	public Map<String,String> login(Login login) throws AuthenticationException, DaoException {
-		String responsePage = ThreadLocalLoaderFilter.getLoader().sendLogin(url, login);
-		
-		if(responsePage.indexOf("Invalid Username or Password") > 0) {
-			throw new AuthenticationException();
-		}
-			
-		try(Scanner s = new Scanner(responsePage)) {
-			StringBuilder buf = new StringBuilder();
-			boolean started = false;
-			while(true) {
-				String line = s.nextLine().trim();
-				if( ! started) {
-					if(line.contains("var data =")) {
-						started= true;
-					}
-					continue;
-				}
-				
-				if(line.contains("};")) {
-					break;
-				}
-				else if(line.trim().equals('{')) {
-					continue;
-				}
-				buf.append(line);
-			}
-			//{login:true,IsLoggedIn:true,Username:"rdomloge",DisplayName:"Ramsay Domloge",UserLogID:1771,
-			//UserID:24,UserRolesInfo:{'1_28':{WebsiteID:1,UserRoleID:28,AdultClubList:[7],JuniorClubList:[],
-			//SchoolList:[],AdultLeagueList:[],JuniorLeagueList:[],SchoolLeagueList:[],AdultTeamList:[215],
-			//JuniorTeamList:[],SchoolTeamList:[]}},PlayerID:211,CanLockLogins:false,CanChangePassword:true,//
-			//SysAdmin:false
-			Map<String, String> map = parse(buf.toString());
-			if(map.containsKey("IsLoggedIn")) {
-				boolean isLoggedIn = Boolean.parseBoolean(map.get("IsLoggedIn"));
-				if(isLoggedIn) {
-					return map;					
-				}
-			}
-			
-			throw new AuthenticationException();
-		}
-	}
-	
-	private Map<String, String> parse(String s) {
-		String[] parts = ParserUtil.splitOnUnquotedCommas(s);
-		return ParserUtil.pairsToMap(parts);
-	}
-	
 }
