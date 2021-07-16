@@ -4,7 +4,7 @@ myApp.factory('fixtureDetailFactory', function($http, $log) {
 	
 	fixtureDetailFactory.getFixtureDetail = function(fixtureId) {
 		$log.info("Loading fixture detail for "+fixtureId);
-		return $http.get(Config.BASE_URL+'/fixture/'+fixtureId);
+		return $http.get(Config.BASE_URL+'/function/catholicon-fn-club-fixture-agg?fixtureId='+fixtureId);
 	};
 	
 	return fixtureDetailFactory;

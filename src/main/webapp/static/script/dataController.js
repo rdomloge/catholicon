@@ -17,7 +17,7 @@ myApp.factory('errorHandlerFactory', function($log, $rootScope) {
 	var fac = {};
 	fac.getHandler = function() {
 		return function(error, status, headers, config, statusText) {
-			$log.debug('Call failed ('+status+'): ', config.url);
+			$log.debug('Call failed ('+error.status+' '+error.statusText+'): ', error.config.url);
 			$rootScope.$broadcast('finished-thinking');
 			$rootScope.$broadcast('error-occurred');
 		};

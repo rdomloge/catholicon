@@ -4,7 +4,8 @@ myApp.factory('matchListFactory', function($http, $log) {
 	
 	factory.getMatches = function(team, season) {
 		$log.info("Loading matches for "+team);
-		return $http.get(Config.BASE_URL+'/season/'+season+'/matches/'+team+'/list');
+		// return $http.get(Config.BASE_URL+'/season/'+season+'/matches/'+team+'/list');
+		return $http.get(Config.BASE_URL+'/fixtures/search/findFixturesForTeam?season='+season+'&teamId='+team);
 	}
 	
 	factory.getFixtureDetail = function(fixtureId) {
@@ -29,9 +30,9 @@ myApp.controller('matchListController',
 		
 		$scope.matches = page.data;
 		$scope.teamName = 
-			$scope.matches[0].homeTeam.id == $routeParams.teamId 
-			? $scope.matches[0].homeTeam.name 
-			: $scope.matches[0].awayTeam.name;
+			$scope.matches[0].homeTeamId == $routeParams.teamId 
+			? $scope.matches[0].homeTeamName 
+			: $scope.matches[0].awayTeamName;
 	});
 	
 	$scope.selectUrlText = function() {
@@ -60,19 +61,23 @@ myApp.controller('matchListController',
 	}
 	
 	$scope.getOpposition = function(match) {
-		return match.homeTeam.id == $routeParams.teamId ? match.awayTeam : match.homeTeam;
+		return match.homeTeamId == $routeParams.teamId ? match.awayTeamName : match.homeTeamName;
+	}
+
+	$scope.getOppositionTeamId = function(fixture) {
+		return fixture.homeTeamId == $routeParams.teamId ? fixture.awayTeamId : fixture.homeTeamId;
 	}
 	
 	$scope.isHome = function(match) {
-		return match.homeTeam.id == $routeParams.teamId;
+		return match.homeTeamId == $routeParams.teamId;
 	}
 	
 	$scope.isWin = function(match) {
-		var isHome = match.homeTeam.id == $routeParams.teamId;
+		var isHome = match.homeTeamId == $routeParams.teamId;
 		if(isHome)
-			return match.homeTeam.score > match.awayTeam.score;
+			return match.matchCard.homeScore > match.matchCard.awayScore;
 		else
-			return match.awayTeam.score > match.homeTeam.score;
+			return match.matchCard.awayScore > match.matchCard.homeScore;
 	}
 	
 	function decorateWinningTeam(data) {
