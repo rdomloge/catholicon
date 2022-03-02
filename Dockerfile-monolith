@@ -1,0 +1,5 @@
+FROM openjdk:11-jre
+
+COPY target/catholicon.war catholicon.war
+
+ENTRYPOINT [ "java", "-jar", "catholicon.war" ]
