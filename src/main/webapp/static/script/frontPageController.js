@@ -15,7 +15,7 @@ myApp.factory('frontPageFactory', function($http, $log) {
 	frontPageFactory.getRecentMatches = function() {
 		$log.info("Loading recent");
 		var fromDate = new Date(new Date().setDate(new Date().getDate()-17)).toISOString();
-		fromDate = '2020-03-10T00:00:00.000Z'; // temp hack until new season
+		//fromDate = '2020-03-10T00:00:00.000Z'; // temp hack until new season
 		var toDate = new Date().toISOString();
 		return $http.get(Config.BASE_URL+'/fixtures/search/findResultsByTimeRange?isoDateFrom='+fromDate+'&isoDateTo='+toDate);
 	};
