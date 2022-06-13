@@ -52,10 +52,10 @@
 	  		<div class="w3-col m2 s10">
 	  			{{fixture.matchDate | date: 'dd MMM'}}
 	  		</div>
-	  		<div class="w3-col m2 s2 w3-block" ng-if="fixture.matchCard">
+	  		<div class="w3-col m2 s2 w3-block" ng-if="fixture.matchcard">
 				<a ng-href="#!/matchcard/{{fixture.externalFixtureId}}" style="width: 100%" 
 						ng-class="isWin(fixture) ? 'w3-text-green w3-right' : 'w3-text-red w3-right'">
-					{{fixture.matchCard.homeScore}} - {{fixture.matchCard.awayScore}}
+					{{fixture.matchcard.homeScore}} - {{fixture.matchcard.awayScore}}
 				</a>
 			</div>
 	  	</div>
