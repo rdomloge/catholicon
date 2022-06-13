@@ -22,3 +22,6 @@ catholicon.log
 
 .idea/*
 /target/
+.factorypath
+launch.json
+settings.json
